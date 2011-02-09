@@ -1,0 +1,2 @@
+class Url < Content
+end

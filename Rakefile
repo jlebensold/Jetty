@@ -5,7 +5,7 @@ require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
 require 'rcov/rcovtask'
-
+require 'simple-navigation'
 
 if defined?(Rcov)
   class Rcov::CodeCoverageAnalyzer

@@ -1,0 +1,2 @@
+class Patron < User
+end

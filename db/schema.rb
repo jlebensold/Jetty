@@ -10,19 +10,38 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110205113748) do
+ActiveRecord::Schema.define(:version => 20110207172237) do
 
-  create_table "user_types", :force => true do |t|
-    t.string   "name"
-    t.integer  "permission_code"
+  create_table "administrators", :force => true do |t|
+    t.string   "email"
+    t.string   "password"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "contents", :force => true do |t|
+    t.string   "type"
+    t.string   "title"
+    t.string   "description"
+    t.string   "value"
+    t.string   "value_file_name"
+    t.string   "value_content_type"
+    t.string   "thumbnail"
+    t.integer  "parent_id"
+    t.integer  "course_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "courses", :force => true do |t|
+    t.string   "title"
+    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email"
-    t.string   "password"
-    t.integer  "usertype_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

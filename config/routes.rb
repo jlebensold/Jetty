@@ -1,7 +1,11 @@
 Jetty::Application.routes.draw do
+  resources :administrators
+
+  resources :contents
+
   resources :users
 
-  match '/' => 'home#index';
+  root :to => 'home#index';
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
