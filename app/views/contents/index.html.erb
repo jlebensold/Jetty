@@ -2,6 +2,9 @@
 
 <table>
   <tr>
+    <th>title</th>
+    <th>value</th>
+    <th>status</th>
     <th></th>
     <th></th>
     <th></th>
@@ -9,9 +12,12 @@
 
 <% @contents.each do |content| %>
   <tr>
+    <td><%= content.title %></td>
+    <td><%= content.value %></td>
+    <td><%= content.status %></td>
     <td><%= link_to 'Show', content %></td>
     <td><%= link_to 'Edit', edit_content_path(content) %></td>
-    <td><%= link_to 'Destroy', content, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', "contents/destroy/" + content.id.to_s  %></td>
   </tr>
 <% end %>
 </table>

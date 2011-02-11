@@ -38,5 +38,10 @@ module Jetty
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+
+
+    %w(observers mailers middleware).each do |dir|
+      config.autoload_paths << "#{config.root}/app/#{dir}"
+    end
   end
 end

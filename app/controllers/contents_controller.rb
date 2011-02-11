@@ -25,17 +25,51 @@ class ContentsController < ApplicationController
   end
 
   def create
-    @content = Content.new(params[:content])
-    respond_to do |format|
-      if @content.save
-        format.js
-        format.html { redirect_to(@content, :notice => 'Content was successfully created.') }
-      else
-        format.html { render :action => "new" }
+
+    if params[:Filedata]
+      async_upload
+    else
+      @content = Content.new(params[:content])
+      respond_to do |format|
+        if @content.save
+          format.js
+          format.html { redirect_to(@content, :notice => 'Content was successfully created.') }
+        else
+          format.html { render :action => "new" }
+        end
       end
     end
   end
+  def async_upload
+      @content = Content.new(:value => params[:Filedata])
+      if @content.save
+        render :partial => 'photo', :object => @photo
+      else
+        render :text => "error"
+      end
+  end
+  
+  def foo
+   if params[:Filedata]
+     logger.info params[:Filedata]
+      @content = Content.new(:value => params[:Filedata])
+      if @content.save
+        render :partial => 'photo', :object => @photo
+      else
+        render :text => "error"
+      end
+    else
+      @content = Content.new params[:photo]
+      if @content.save
+        flash[:notice] = 'Your photo has been uploaded!'
+      else
+        format.html {render :action => :new }
 
+      end
+
+    end
+    
+  end
   # PUT /contents/1
   def update
     @content = Content.find(params[:id])
@@ -57,7 +91,7 @@ class ContentsController < ApplicationController
     @content.destroy
 
     respond_to do |format|
-      format.html { redirect_to(contents_url) }
+      format.html { redirect_to(@content) }
       format.xml  { head :ok }
     end
   end

@@ -3,7 +3,13 @@
 <head>
   <title>Jetty</title>
   <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag "application" %>
+  
+  <%= javascript_include_tag "application", 
+                             "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js",
+                             "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js",
+                             "jquery.remotipart",
+                             "http://github.com/malsup/form/raw/master/jquery.form.js?v2.44" %>
+  <%= yield :javascript %>
   <%= csrf_meta_tag %>
 </head>
 <body>

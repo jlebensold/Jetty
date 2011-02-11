@@ -1,53 +1,29 @@
-<%= form_for(@content,:html => { :multipart => true }, :remote => true ) do |f| %>
-  
+hello
 
-  <% if @content.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@content.errors.count, "error") %> prohibited this content from being saved:</h2>
+<div class="photo">
 
-      <ul>
-      <% @content.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-  
-  <p>
-    <%= f.label :title, 'Title' %>
-    <%= f.text_field :title%>
-  </p>
-  <p>
-  <div class="photo">
-    <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;">
-      <span id="spanButtonPlaceholder"></span>
-    </div>
-    <div class="buttons">
-      <a id="upload" class="upload">Upload</a>
-    </div>
-    <div id="divFileProgressContainer" class="progressContainer" ><div class="progress"></div></div>
-  </div>
+  <br class="clearer" />
 
+<div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;">
+			<span id="spanButtonPlaceholder"></span>
+</div>
 
-  </p>
-
-  <div class="actions">
-    <%= f.submit 'Save' %>
-  </div>
-<% end %>
-
+<div class="buttons">
+<button id="upload" class="upload">Upload</button>
+</div>
+	<div id="divFileProgressContainer" class="progressContainer" ><div class="progress"></div></div>
 
 <% content_for(:javascript) do %>
   <%= javascript_include_tag 'swfupload' %>
   <%= javascript_include_tag 'upload' %>
-<script type="text/javascript">
+  <script type="text/javascript">
     var swfu;
 
     // Dom Ready
     $(document).ready(function() {
     // Setup SWFU object
     var settings = {
-    upload_url: "<%= contents_path %>/create/<%= @content.id %>",
+    upload_url: "<%= contents_path %>/foo/23",
     flash_url: "/flash/swfupload.swf",
 
 
@@ -57,7 +33,7 @@
                     "<%= key = Rails.application.config.session_options[:key] %>" : "<%= cookies[key] %>",
                     "<%= request_forgery_protection_token %>"    : "<%= form_authenticity_token %>"
     },
-    file_queue_limit : 1,
+
     file_size_limit: "<%= 300.megabytes %>",
     file_types: "*.jpg;*.mov;",
     file_types_description: "Files",
@@ -99,5 +75,6 @@
     $('#browse').click(function() { swfu.selectFiles(); });
     $('#upload').click(function() { swfu.startUpload(); });
     });
-</script>
+  </script>
 <% end %>
+</div>

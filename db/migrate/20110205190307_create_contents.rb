@@ -7,6 +7,7 @@ class CreateContents < ActiveRecord::Migration
       t.string "value_file_name"
       t.string "value_content_type"
       t.string "thumbnail"
+      t.string "status"
       t.integer "parent_id"
       t.integer "creator_id"
       t.date "publish"

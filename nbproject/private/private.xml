@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/Users/jon/Sites/rails/jetty/app/views/contents/foo.html.erb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/views/layouts/application.html.erb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/public/javascripts/jquery.remotipart.js</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/controllers/contents_controller.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/Gemfile</file>
+        <file>file:/Users/jon/Sites/rails/jetty/config/routes.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/models/content.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/public/javascripts/upload.js</file>
+        <file>file:/Users/jon/Sites/rails/jetty/config/application.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/config/initializers/session_store.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/config/environment.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/public/stylesheets/site.css</file>
+    </open-files>
 </project-private>

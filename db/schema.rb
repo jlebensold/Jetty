@@ -22,14 +22,15 @@ ActiveRecord::Schema.define(:version => 20110207172237) do
   create_table "contents", :force => true do |t|
     t.string   "type"
     t.string   "title"
-    t.string   "description"
     t.string   "value"
     t.string   "value_file_name"
     t.string   "value_content_type"
     t.string   "thumbnail"
+    t.string   "status"
     t.integer  "parent_id"
-    t.integer  "course_id"
-    t.integer  "user_id"
+    t.integer  "creator_id"
+    t.date     "publish"
+    t.date     "expire"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
