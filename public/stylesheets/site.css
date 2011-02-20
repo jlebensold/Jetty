@@ -9,7 +9,10 @@ body
     padding: 10px;
     background: #FFF;
 }
-
+.hide
+{
+    display: none;
+}
 
 
 /*** SWFUPLOAD ***/

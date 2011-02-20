@@ -2,6 +2,7 @@
 
 <table>
   <tr>
+    <th>type</th>
     <th>title</th>
     <th>value</th>
     <th>status</th>
@@ -10,12 +11,13 @@
     <th></th>
   </tr>
 
-<% @contents.each do |content| %>
+<% @contents.each do |content|  %>
   <tr>
+    <td><%= content.type %></td>
     <td><%= content.title %></td>
     <td><%= content.value %></td>
     <td><%= content.status %></td>
-    <td><%= link_to 'Show', content %></td>
+    <td><%= link_to 'Show', content.becomes(Content) %></td>
     <td><%= link_to 'Edit', edit_content_path(content) %></td>
     <td><%= link_to 'Destroy', "contents/destroy/" + content.id.to_s  %></td>
   </tr>

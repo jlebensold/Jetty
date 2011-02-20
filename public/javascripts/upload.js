@@ -1,12 +1,51 @@
-/*
-SWFUpload Test
---------------
-By Jim Neath
-http://jimneath.org
-Checkout the SWFUpload Docs for help
-http://demo.swfupload.org/Documentation/
+function loadSwfUpload()
+    {
 
-*/
+    swfu = new SWFUpload({
+      upload_url: swfparams.upload_url,
+      flash_url: "/flash/swfupload.swf",
+
+
+    // Backend Settings
+      file_post_name    : "Filedata",
+      post_params: swfparams.post_params,
+      file_queue_limit : 1,
+      file_size_limit: "314572800",
+      file_types: "*.jpg;*.mov;",
+      file_types_description: "Files",
+
+      file_queued_handler: Upload.file_queued,
+      file_dialog_complete_handler: Upload.file_dialog_complete,
+      upload_start_handler: Upload.upload_start,
+      upload_progress_handler: Upload.upload_progress,
+      upload_error_handler: Upload.upload_error,
+      upload_success_handler: Upload.upload_success,
+      upload_complete_handler: Upload.upload_complete,
+
+  // Set to true to find out why things aren't working
+      debug: false,
+
+      // Button Settings
+      button_image_url : "images/SmallSpyGlassWithTransperancy_17x18.png",
+      button_placeholder_id : "spanButtonPlaceholder",
+      button_width: 180,
+      button_height: 18,
+      button_text : '<span class="button">Select Images <span class="buttonSmall">300 MB MAX</span></span>',
+      button_text_style : '.button { font-family: Helvetica, Arial, sans-serif; font-size: 12pt; } .buttonSmall { font-size: 10pt; }',
+      button_text_top_padding: 0,
+      button_text_left_padding: 18,
+      button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
+      button_cursor: SWFUpload.CURSOR.HAND,
+
+      custom_settings : {
+              upload_target : "divFileProgressContainer"
+      }
+    });
+    // Add Event Handlers
+    $('#browse').click(function() { swfu.selectFiles(); });
+    $('#upload').click(function() { swfu.startUpload(); });
+}
+
 
 var Upload = {
 // The total number of files queued with SWFUpload

@@ -10,21 +10,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110207172237) do
-
-  create_table "administrators", :force => true do |t|
-    t.string   "email"
-    t.string   "password"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20110212190749) do
 
   create_table "contents", :force => true do |t|
     t.string   "type"
     t.string   "title"
-    t.string   "value"
-    t.string   "value_file_name"
-    t.string   "value_content_type"
+    t.string   "local_value"
+    t.string   "local_value_file_name"
+    t.string   "local_value_content_type"
+    t.string   "local_value_updated_at"
+    t.string   "remote_value"
+    t.string   "remote_value_file_name"
+    t.string   "remote_value_content_type"
+    t.string   "remote_value_updated_at"
     t.string   "thumbnail"
     t.string   "status"
     t.integer  "parent_id"
@@ -42,7 +40,26 @@ ActiveRecord::Schema.define(:version => 20110207172237) do
     t.datetime "updated_at"
   end
 
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
   create_table "users", :force => true do |t|
+    t.string   "email"
+    t.string   "password"
+    t.string   "paypal_username"
+    t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

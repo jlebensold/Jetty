@@ -1,103 +1,64 @@
-<%= form_for(@content,:html => { :multipart => true }, :remote => true ) do |f| %>
-  
+<%= form_for(@content.becomes(Content),:html => { :multipart => true }, :remote => true ) do |f| %>
+<h2><a href="/contents">Go Back</a></h2>
+<h1>Add Your Content</h1>
 
-  <% if @content.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@content.errors.count, "error") %> prohibited this content from being saved:</h2>
+  <%= f.label :type, 'Type' %>
+<select  id="content_type" name="content[type]">
+  <option panel="file" value="Image">Image</option>
+  <option panel="file" value="Video">Video</option>
+  <option panel="file" value="BinaryFile">File</option>
+  <option panel="url" value="Url">URL</option>
+</select>
+<ul class="filetypes">
+  <li class="file active">
+    <p>
+      <%= f.label :title, 'Title' %>
+      <%= f.text_field :title%>
+    </p>
+      <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;">
+        <span id="spanButtonPlaceholder"></span>
+      </div>
+      <div class="buttons">
+        <a id="upload" class="upload">Upload</a>
+      </div>
+      <div id="divFileProgressContainer" class="progressContainer" ><div class="progress"></div></div>
+  </li>
+  <li class="url hide">
+    <p>
+      <%= f.label :title, 'Title' %>
+      <%= f.text_field :title%>
+    </p>
+    <p>
+      <%= f.label :value, 'Url' %>
+      <%= f.text_field :value%>
+    </p>
+  </li>
+</ul>
+<div class="actions">
+  <%= f.submit 'Save' %>
+</div>
 
-      <ul>
-      <% @content.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-  
-  <p>
-    <%= f.label :title, 'Title' %>
-    <%= f.text_field :title%>
-  </p>
-  <p>
-  <div class="photo">
-    <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;">
-      <span id="spanButtonPlaceholder"></span>
-    </div>
-    <div class="buttons">
-      <a id="upload" class="upload">Upload</a>
-    </div>
-    <div id="divFileProgressContainer" class="progressContainer" ><div class="progress"></div></div>
-  </div>
-
-
-  </p>
-
-  <div class="actions">
-    <%= f.submit 'Save' %>
-  </div>
 <% end %>
 
-
 <% content_for(:javascript) do %>
-  <%= javascript_include_tag 'swfupload' %>
-  <%= javascript_include_tag 'upload' %>
+<%= javascript_include_tag 'swfupload','upload','contentmanager' %>
 <script type="text/javascript">
-    var swfu;
+$(function()
+{
+  initContentmanager();
+})
+//swfupload
+var swfparams = {
+    post_params : {
+                  "<%= key = Rails.application.config.session_options[:key] %>" : "<%= cookies[key] %>",
+                  "<%= request_forgery_protection_token %>"    : "<%= form_authenticity_token %>"
+                  },
+    upload_url : "<%= contents_path %>/<%= @content.id %>"
+};
+var swfu;
+$(document).ready(function() { loadSwfUpload();});
 
-    // Dom Ready
-    $(document).ready(function() {
-    // Setup SWFU object
-    var settings = {
-    upload_url: "<%= contents_path %>/create/<%= @content.id %>",
-    flash_url: "/flash/swfupload.swf",
-
-
-  // Backend Settings
-    file_post_name    : "Filedata",
-    post_params: {
-                    "<%= key = Rails.application.config.session_options[:key] %>" : "<%= cookies[key] %>",
-                    "<%= request_forgery_protection_token %>"    : "<%= form_authenticity_token %>"
-    },
-    file_queue_limit : 1,
-    file_size_limit: "<%= 300.megabytes %>",
-    file_types: "*.jpg;*.mov;",
-    file_types_description: "Files",
-
-    file_queued_handler: Upload.file_queued,
-    file_dialog_complete_handler: Upload.file_dialog_complete,
-    upload_start_handler: Upload.upload_start,
-    upload_progress_handler: Upload.upload_progress,
-    upload_error_handler: Upload.upload_error,
-    upload_success_handler: Upload.upload_success,
-    upload_complete_handler: Upload.upload_complete,
-
-// Set to true to find out why things aren't working
-    debug: false,
-
-    // Button Settings
-    button_image_url : "images/SmallSpyGlassWithTransperancy_17x18.png",
-    button_placeholder_id : "spanButtonPlaceholder",
-    button_width: 180,
-    button_height: 18,
-    button_text : '<span class="button">Select Images <span class="buttonSmall">300 MB MAX</span></span>',
-    button_text_style : '.button { font-family: Helvetica, Arial, sans-serif; font-size: 12pt; } .buttonSmall { font-size: 10pt; }',
-    button_text_top_padding: 0,
-    button_text_left_padding: 18,
-    button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
-    button_cursor: SWFUpload.CURSOR.HAND,
-
-    custom_settings : {
-            upload_target : "divFileProgressContainer"
-    }
-    };
-
-    swfu = new SWFUpload(settings);
-
-    // Disable Upload Button
-    $('#upload').addClass('disabled').attr('disabled', 'true');
-
-    // Add Event Handlers
-    $('#browse').click(function() { swfu.selectFiles(); });
-    $('#upload').click(function() { swfu.startUpload(); });
-    });
 </script>
+
+
 <% end %>

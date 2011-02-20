@@ -12,16 +12,24 @@ class ContentsController < ApplicationController
 
   def show
     @content = Content.find(params[:id])
-
   end
 
   def new
     @content = Content.new
-
+    @content.save()
   end
 
   def edit
     @content = Content.find(params[:id])
+    #logger.info pp(@content) #@content
+  end
+
+  def save
+    
+  end
+
+  def upload
+    
   end
 
   def create
@@ -42,42 +50,18 @@ class ContentsController < ApplicationController
   end
   def async_upload
       @content = Content.new(:value => params[:Filedata])
-      if @content.save
-        render :partial => 'photo', :object => @photo
-      else
-        render :text => "error"
-      end
   end
-  
-  def foo
-   if params[:Filedata]
-     logger.info params[:Filedata]
-      @content = Content.new(:value => params[:Filedata])
-      if @content.save
-        render :partial => 'photo', :object => @photo
-      else
-        render :text => "error"
-      end
-    else
-      @content = Content.new params[:photo]
-      if @content.save
-        flash[:notice] = 'Your photo has been uploaded!'
-      else
-        format.html {render :action => :new }
 
-      end
-
-    end
-    
-  end
   # PUT /contents/1
   def update
-    @content = Content.find(params[:id])
-
+    @content = Content.find(params[:id]).becomes(Content)
+    if params[:Filedata]
+      @content.value = params[:Filedata]
+    end
     respond_to do |format|
       if @content.update_attributes(params[:content])
-        format.html { redirect_to(@content, :notice => 'Content was successfully updated.') }
         format.xml  { head :ok }
+        format.json { head :ok}
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @content.errors, :status => :unprocessable_entity }

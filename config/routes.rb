@@ -1,11 +1,16 @@
 Jetty::Application.routes.draw do
   resources :administrators
 
-  resources :contents
-
   resources :users
 
   root :to => 'home#index';
+
+  match "contents/", :to => "gallery#index", :via => "get"
+  match "contents/rename", :to => "contents#save" , :via =>"post"
+  match "contents/retrieve", :to => "contents#upload"
+  match "contents/delete", :to => "contents#delete"
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

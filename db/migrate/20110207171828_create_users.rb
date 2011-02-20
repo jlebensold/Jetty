@@ -1,7 +1,10 @@
 class CreateUsers < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
-
+      t.string  "email"
+      t.string  "password"
+      t.string  "paypal_username"
+      t.string  "type"
       t.timestamps
     end
   end
