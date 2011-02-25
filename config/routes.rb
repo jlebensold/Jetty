@@ -10,6 +10,7 @@ Jetty::Application.routes.draw do
   match "contents/new", :to => "contents#new", :via => "get"
   match "contents/rename", :to => "contents#save" , :via =>"post"
   match "contents/retrieve", :to => "contents#upload"
+  match "contents/postprocess", :to => "contents#postprocess" , :via =>"post"
   match "contents/delete", :to => "contents#delete"
 
 

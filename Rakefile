@@ -3,23 +3,32 @@
 
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
-
 require 'rcov/rcovtask'
 require 'simple-navigation'
+require 'metric_fu'
 
-if defined?(Rcov)
-  class Rcov::CodeCoverageAnalyzer
-    def update_script_lines__
-      if '1.9'.respond_to?(:force_encoding)
-        SCRIPT_LINES__.each do |k,v|
-          v.each { |src| src.force_encoding('utf-8') }
-        end
+class Rcov::CodeCoverageAnalyzer
+  def update_script_lines__
+    if '1.9'.respond_to?(:force_encoding)
+      SCRIPT_LINES__.each do |k,v|
+        v.each { |src| src.force_encoding('utf-8') }
       end
-      @script_lines__ = @script_lines__.merge(SCRIPT_LINES__)
     end
+    @script_lines__ = @script_lines__.merge(SCRIPT_LINES__)
   end
 end
 
+ MetricFu::Configuration.run do |config|
+        config.rcov[:test_files] = ['spec/**/*_spec.rb']
+        config.rcov[:rcov_opts] << "-Ispec" # Needed to find spec_helper
+end
+
+if Rails.env.test?
+  require 'rcov/rcovtask'
+
+  if defined?(Rcov)
+  end
+end
 
 
 desc "Create a cross-referenced code coverage report."

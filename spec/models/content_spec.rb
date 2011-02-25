@@ -28,6 +28,16 @@ describe Content do
     v = Factory(:video)
     v.creator.should be_kind_of User
   end
+  it "starts with file offline" do
+    v = Factory(:video)
+    v.status.should eql(Content::STATUS_OFFLINE)
+  end
+
+  it "has s3 keys" do
+    v = Factory(:video)
+    v.s3_keys.should have_key(:access_key_id)
+    v.s3_keys.should have_key(:secret_access_key)
+  end
 
 
 end

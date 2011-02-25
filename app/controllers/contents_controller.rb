@@ -10,9 +10,14 @@ class ContentsController < ApplicationController
 
   def new
     @content = Content.new
+    @content.creator = User.find(session[:user_id])
     @content.save()
   end
-
+  def postprocess
+    @content = Content.find(params[:id])
+    @content.after_s3
+    render :json => {:status => "OK"}
+  end
   def edit
     @content = Content.find(params[:id])
   end
@@ -31,7 +36,6 @@ class ContentsController < ApplicationController
   def upload
       @content = Content.find(params[:id])
       @content.value = params[:Filedata]
-      @content.status = Content::STATUS_COMPLETE.to_s
       @content.save()
       render :status => 200
   end

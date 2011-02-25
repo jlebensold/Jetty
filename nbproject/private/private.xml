@@ -2,8 +2,9 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/Users/jon/Sites/rails/jetty/app/controllers/home_controller.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/controllers/contents_controller.rb</file>
         <file>file:/Users/jon/Sites/rails/jetty/app/views/contents/_form.html.erb</file>
-        <file>file:/Users/jon/Sites/rails/jetty/app/views/layouts/application.html.erb</file>
-        <file>file:/Users/jon/Sites/rails/jetty/config/initializers/session_store.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/models/content.rb</file>
     </open-files>
 </project-private>

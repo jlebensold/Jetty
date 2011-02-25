@@ -19,9 +19,15 @@ class Content < ActiveRecord::Base
   def self.attributes_protected_by_default
   end
   
-  before_save :default_values
+  after_initialize :default_values
   def default_values
-    self.status = STATUS_OFFLINE.to_s unless self.status
+    #self.status = STATUS_OFFLINE.to_s unless self.status
+    self.status ||= STATUS_OFFLINE.to_s
+    self.check_status
+  end
+  def check_status
+        self.status = STATUS_COMPLETE
+        self.save!
   end
 
 
@@ -36,7 +42,7 @@ class Content < ActiveRecord::Base
     :storage => :s3,
     :s3_credentials => S3_PATH ,
     :bucket => S3_BUCKET,
-    :path => "uid/:id.:extension"
+    :path => "files/:creatorid/:id/original.:extension"
 
   before_post_process :preprocess
   def preprocess
@@ -44,34 +50,26 @@ class Content < ActiveRecord::Base
   c.status = Content::STATUS_UPLOAD_IN_PROGRESS.to_s
   c.save!
   end
-
-
-  after_initialize :check_status
-  def check_status
-    if (self.status == Content::STATUS_CONVERSION_IN_PROGRESS.to_s)
-      # todo: find a way to parse this out
-      AWS::S3::Base.establish_connection!(s3_keys)
-      if(AWS::S3::S3Object.exists? "uid/"+id.to_s+'.mp4', Content::S3_BUCKET.to_s)
-        self.status = STATUS_COMPLETE
-        self.save!
-      end
-    end
-  end
   def s3_keys
     creds = YAML::load(ERB.new(File.read(Content::S3_PATH)).result).stringify_keys
     (creds[Rails.env] || creds).symbolize_keys
   end
 
-  after_save :queue_upload_to_s3
-  def queue_upload_to_s3
-    delay(:upload_to_s3) if self.local_value_updated_at_changed?
+  after_save :after_save
+  def after_save
+    before_s3
+    logger.info "queue delayed job?"
+    delay.upload_to_s3 if self.local_value_updated_at_changed?
   end
-
+  def after_s3
+  end
+  def before_s3
+  end
   def upload_to_s3
     logger.info "uploading to S3! " + self.type
     self.remote_value = local_value.to_file
     self.save!
-    encode_video if (type == "Video")
+    after_s3
   end
 
   alias_method :value=, :local_value=
@@ -80,7 +78,10 @@ class Content < ActiveRecord::Base
   end
 
   def bucketpath
-    "files/#{creator.id}/#{id}/"
+    "files/#{creator.id}/#{id}"
+  end
+  def extension
+    local_value_file_name.split('.').last.to_s
   end
 
 

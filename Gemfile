@@ -9,7 +9,6 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'aws-s3'
 gem 'zencoder'
 gem "rcov"
-
 gem 'simple-navigation' , '3.1.1'
 gem "paperclip", "~> 2.3"
 gem 'delayed_job'
@@ -40,6 +39,7 @@ gem 'mime-types'
 # end
 
 group :development, :test do
+  gem 'metric_fu'
   gem "rspec-rails", ">= 2.5.0"
   gem "factory_girl"  
 end

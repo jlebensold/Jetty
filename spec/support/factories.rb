@@ -18,7 +18,6 @@ Factory.sequence :email do |n|
 end
 
 Factory.define :video do |v|
-  v.status Content::STATUS_COMPLETE
   v.title "My favourite video"
   v.updated_at 2.weeks.ago
   v.creator { single_instances[:publisher] }

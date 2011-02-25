@@ -1,5 +1,16 @@
 function initContentmanager(basepath)
 {
+  $(".reprocess").click(function()
+    {
+    $.ajax({
+        url: basepath + "/postprocess",
+        type: 'POST',
+        data: {
+            id : $("#content_id").val()
+        },
+        dataType : 'json',
+        success : function(resp) {}});
+    });
   $("#type").change(function()
   {
     $(".filetypes > li").hide();

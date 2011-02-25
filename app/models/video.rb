@@ -16,39 +16,52 @@ class Video < Content
     Content::S3_WEB.to_s + bucketpath + "/ipad.mp4"
   end
 
-  def encode_video
-      logger.info "is video... encoding"
-      extension = local_value_file_name.split('.').last.to_s
+  def check_status
+    if (self.status == Content::STATUS_CONVERSION_IN_PROGRESS.to_s)
+      AWS::S3::Base.establish_connection!(s3_keys)
+      if(AWS::S3::S3Object.exists? bucketpath + "/iphone.mp4", Content::S3_BUCKET.to_s)
+        self.status = STATUS_COMPLETE
+        self.save!
+      end
+    end
+  end
+  def after_s3
       self.status = Content::STATUS_CONVERSION_IN_PROGRESS
       self.save!
-      @bucket = Content::S3_BUCKET.to_s
+      @bucket = Content::S3_BUCKET.to_s + "/" + bucketpath
       Zencoder.api_key = ZC_KEY
       Zencoder::Job.create({
-                      :input => "s3://"+@bucket+"/uid/"+id.to_s+"."+extension,
-                      :outputs => [{
-                                    :label => 'vp8',
-                                    :url => 's3://'+@bucket+'/uid/'+id.to_s+'.webm'
-                                   },
+                      :input => "s3://"+@bucket +"/original."+extension,
+                      :outputs => [
                                    {
                                     :label => 'iphone',
-                                    :url => 's3://'+@bucket+'/uid/'+id.to_s+'-iphone.mp4',
+                                    :url => 's3://'+@bucket + "/iphone.mp4",
                                     :width => 480,
-                                    :height => 320
+                                    :height => 320,
+                                    :public => 1
                                    },
                                    {
                                     :label => 'ipad',
-                                    :url => 's3://'+@bucket+'/uid/'+id.to_s+'-ipad.mp4',
+                                    :url => 's3://'+@bucket + "/ipad.mp4",
                                     :width => 960,
-                                    :height => 640
+                                    :height => 640,
+                                    :public => 1
+                                   },
+                                   {
+                                    :label => 'vp8',
+                                    :url => 's3://'+@bucket + "/desktop.webm",
+                                    :public => 1
                                    },
                                    {
                                     :label => 'ogv',
-                                    :url => 's3://'+@bucket+'/uid/'+id.to_s+'.ogv'
+                                    :url => 's3://'+@bucket + "/desktop.ogv",
+                                    :public => 1
                                    },
                                    {
                                      :thumbnails =>
-                                       { "number" => 1,
-                                         "base_url" =>'s3://'+@bucket+'/uid/t'+id.to_s
+                                       { :number => 1,
+                                         :base_url =>'s3://'+@bucket+'/t',
+                                          :public => 1
                                        }
                                    }
                                  ]})
