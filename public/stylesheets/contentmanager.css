@@ -1,0 +1,22 @@
+.maincontent
+{
+    list-style: none;
+    position: relative;
+}
+    .maincontent .left,
+    .maincontent .right
+    {
+        height: 150px;
+        border: 1px solid #AFAFAF;
+        padding: 10px;
+        width: 340px;
+        float: left;
+    }
+    .maincontent .right
+    {
+        margin-left: 20px;
+    }
+.clear
+{
+    clear: both;
+}
