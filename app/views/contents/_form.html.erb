@@ -1,64 +1,85 @@
+<%= stylesheet_link_tag "contentmanager","video-js" %>
 <%= form_for(@content.becomes(Content),:html => { :multipart => true }, :remote => true ) do |f| %>
 <h2><a href="/contents">Go Back</a></h2>
 <h1>Add Your Content</h1>
+    <div class="maincontent">
+      <div class="left">
+        <%= f.label :type, 'Type' %>
+        <%= f.hidden_field :id, :value => @content.id %>
+        <select id="content_type" name="content[type]">
+          <option value="Video">Video</option>
+          <option value="BinaryFile">File</option>
+        </select>
+        <p>
+          <%= f.label :title, 'Title' %>
+          <%= f.text_field :title%>
+        </p>
+        <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;">
+          <span id="spanButtonPlaceholder"></span>
+        </div>
+        <div class="buttons">
+          <a id="upload" class="upload">Upload</a>
+        </div>
+        <div id="divFileProgressContainer" class="progressContainer" ><div class="progress"></div></div>
+      </div>
+      <div class="right">
+        <p>File Status: <%= @content.status %> </p>
+        
+        <% if @content.status == Content::STATUS_COMPLETE.to_s && @content.type == "Video" %>
 
-  <%= f.label :type, 'Type' %>
-<select  id="content_type" name="content[type]">
-  <option panel="file" value="Image">Image</option>
-  <option panel="file" value="Video">Video</option>
-  <option panel="file" value="BinaryFile">File</option>
-  <option panel="url" value="Url">URL</option>
-</select>
-<ul class="filetypes">
-  <li class="file active">
-    <p>
-      <%= f.label :title, 'Title' %>
-      <%= f.text_field :title%>
-    </p>
-      <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;">
-        <span id="spanButtonPlaceholder"></span>
+   <div class="video-js-box">
+    <!-- Using the Video for Everybody Embed Code http://camendesign.com/code/video_for_everybody -->
+    <video id="example_video_1" class="video-js" width="640" height="264" controls="controls" preload="auto"
+            poster="<%= @content.poster %>">
+      <source src="<%= @content.mp4 %>" type='video/mp4' />
+      <source src="<%= @content.webm %>" type='video/webm' />
+      <source src="<%= @content.ogv %>" type='video/ogg; codecs="theora, vorbis"' />
+      <!-- Flash Fallback. Use any flash video player here. Make sure to keep the vjs-flash-fallback class. -->
+    <object id="flash_fallback_1" class="vjs-flash-fallback" width="640" height="264" type="application/x-shockwave-flash" data="/flash/flowplayer-3.2.1.swf">
+        <param name="movie" value="/flash/flowplayer-3.2.1.swf" />
+        <param name="allowfullscreen" value="true" />
+        <param name="flashvars" value='config={"playlist":["<%= @content.poster %>", {"url": "<%= @content.mp4 %>","autoPlay":false,"autoBuffering":true}]}' />
+        <!-- Image Fallback. Typically the same as the poster image. -->
+        <img src="<%= @content.poster %>" width="640" height="264" alt="Poster Image" title="No video playback capabilities." />
+      </object>
+    </video>
+    
+   
+   </div>
+        <% end %>
       </div>
-      <div class="buttons">
-        <a id="upload" class="upload">Upload</a>
-      </div>
-      <div id="divFileProgressContainer" class="progressContainer" ><div class="progress"></div></div>
-  </li>
-  <li class="url hide">
-    <p>
-      <%= f.label :title, 'Title' %>
-      <%= f.text_field :title%>
-    </p>
-    <p>
-      <%= f.label :value, 'Url' %>
-      <%= f.text_field :value%>
-    </p>
-  </li>
-</ul>
-<div class="actions">
-  <%= f.submit 'Save' %>
-</div>
+
+    </div>
+    <div class="clear"></div>
+    <%= f.submit 'Save' %>
 
 <% end %>
 
 <% content_for(:javascript) do %>
-<%= javascript_include_tag 'swfupload','upload','contentmanager' %>
+<%= javascript_include_tag 'swfupload','upload','contentmanager', 'video' %>
+
 <script type="text/javascript">
-$(function()
-{
-  initContentmanager();
-})
-//swfupload
-var swfparams = {
-    post_params : {
-                  "<%= key = Rails.application.config.session_options[:key] %>" : "<%= cookies[key] %>",
-                  "<%= request_forgery_protection_token %>"    : "<%= form_authenticity_token %>"
-                  },
-    upload_url : "<%= contents_path %>/<%= @content.id %>"
-};
-var swfu;
-$(document).ready(function() { loadSwfUpload();});
+  
+  var swfparams;
+  var swfu;
+  $(function()
+  {
+    var contents_path = "<%= contents_path %>";
+    initContentmanager(contents_path);
+  })
+  $(document).ready(function() {
+  swfparams = {
+    post_params :
+    {
+      "<%= key = Rails.application.config.session_options[:key] %>" : "<%= cookies[key] %>",
+      "<%= request_forgery_protection_token %>" : "<%= form_authenticity_token %>",
+      "id" : $("#content_id").val()
+      },
+      upload_url : "<%= contents_path %>/upload"
+    };
+    loadSwfUpload();
+    VideoJS.setupAllWhenReady();
 
+  });
 </script>
-
-
 <% end %>

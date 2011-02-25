@@ -14,7 +14,6 @@ gem 'simple-navigation' , '3.1.1'
 gem "paperclip", "~> 2.3"
 gem 'delayed_job'
 
-# gem 'remotipart'
 
 gem 'mime-types'
 # Use unicorn as the web server
@@ -39,3 +38,9 @@ gem 'mime-types'
 # group :development, :test do
 #   gem 'webrat'
 # end
+
+group :development, :test do
+  gem "rspec-rails", ">= 2.5.0"
+  gem "factory_girl"  
+end
+
