@@ -25,6 +25,12 @@ class ContentsController < ApplicationController
   def save
     @content = Content.find(params[:id])
     if @content.update_attributes(params[:content])
+      if (params[:subcontent])
+        params[:subcontent].each { |key,item|
+          Url.new(:parent => @content , :title => item[:title], :meta => item[:value])
+        }
+      end
+
       render :json => {:status => "OK"}
     else
       render :json => {:status => "FAIL"}

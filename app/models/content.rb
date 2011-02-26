@@ -18,25 +18,12 @@ class Content < ActiveRecord::Base
 
   def self.attributes_protected_by_default
   end
-  
-  after_initialize :default_values
-  def default_values
-    #self.status = STATUS_OFFLINE.to_s unless self.status
-    self.status ||= STATUS_OFFLINE.to_s
-    self.check_status
-  end
-  def check_status
-        self.status = STATUS_COMPLETE
-        self.save!
-  end
 
 
   has_attached_file :local_value,
     :path => "files/:creatorid/:id/original.:extension"
 
-  Paperclip.interpolates :creatorid do |attachment, style|
-    attachment.instance.creator_id.to_s
-  end
+
 
   has_attached_file :remote_value,
     :storage => :s3,
@@ -44,11 +31,30 @@ class Content < ActiveRecord::Base
     :bucket => S3_BUCKET,
     :path => "files/:creatorid/:id/original.:extension"
 
+  Paperclip.interpolates :creatorid do |attachment, style|
+    attachment.instance.creator_id.to_s
+  end
+
   before_post_process :preprocess
   def preprocess
   c = Content.find(id)
   c.status = Content::STATUS_UPLOAD_IN_PROGRESS.to_s
   c.save!
+  end
+
+  alias_method :value=, :local_value=
+  def value
+    self.remote_value? ? self.remote_value : self.local_value
+  end
+  
+  after_initialize :default_values
+  def default_values
+    self.status ||= STATUS_OFFLINE.to_s
+    self.check_status
+  end
+  def check_status
+        self.status = STATUS_COMPLETE
+        self.save!
   end
   def s3_keys
     creds = YAML::load(ERB.new(File.read(Content::S3_PATH)).result).stringify_keys
@@ -72,10 +78,6 @@ class Content < ActiveRecord::Base
     after_s3
   end
 
-  alias_method :value=, :local_value=
-  def value
-    self.remote_value? ? self.remote_value : self.local_value
-  end
 
   def bucketpath
     "files/#{creator.id}/#{id}"

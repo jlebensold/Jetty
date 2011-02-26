@@ -1,5 +1,6 @@
 require 'PP'
 class Image < Content
+
   def large
     bucketpath + "/l." + extension
   end

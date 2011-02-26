@@ -1,15 +1,18 @@
 <%= stylesheet_link_tag "contentmanager","video-js" %>
 <%= form_for(@content.becomes(Content),:html => { :multipart => true }, :remote => true ) do |f| %>
+<div id="addsubcontent" class="hide" ><%= render 'addsubcontent' %></div>
+ 
 <h2><a href="/contents">Go Back</a></h2>
 <h1>Add Your Content</h1>
     <div class="maincontent">
+      
       <div class="left">
         <%= f.label :type, 'Type' %>
         <%= f.hidden_field :id, :value => @content.id %>
         <select id="content_type" name="content[type]">
-          <option value="Video">Video</option>
-          <option value="BinaryFile">File</option>
-          <option value="Image">Image</option>
+          <option <%= (@content.instance_of? Video) ? 'selected="selected"': "" %> value="Video">Video</option>
+          <option <%= (@content.instance_of? BinaryFile) ? 'selected="selected"': "" %> value="BinaryFile">File</option>
+          <option <%= (@content.instance_of? Image) ? 'selected="selected"': "" %> value="Image">Image</option>
         </select>
         <p>
           <%= f.label :title, 'Title' %>
@@ -19,40 +22,29 @@
           <span id="spanButtonPlaceholder"></span>
         </div>
         <div class="buttons">
-          <a id="upload" class="upload">Upload</a>
+          <a id="upload" class="upload">Upload Main Content</a>
         </div>
-        <div id="divFileProgressContainer" class="progressContainer" ><div class="progress"></div></div>
+        <a class="addsubcontent" href="#">Add sub-content</a>
+        <ul class="subcontents">
+          
+        </ul>
+        
       </div>
       <div class="right">
         <p>File Status: <%= @content.status %> </p>
         
         <% if @content.status == Content::STATUS_COMPLETE.to_s && @content.type == "Video" %>
-
-   <div class="video-js-box">
-    <!-- Using the Video for Everybody Embed Code http://camendesign.com/code/video_for_everybody -->
-    <video id="example_video_1" class="video-js" width="640" height="264" controls="controls" preload="auto"
-            poster="<%= @content.poster %>">
-      <source src="<%= @content.iphone %>" type='video/mp4' />
-      <source src="<%= @content.webm %>" type='video/webm' />
-      <source src="<%= @content.ogv %>" type='video/ogg; codecs="theora, vorbis"' />
-      <!-- Flash Fallback. Use any flash video player here. Make sure to keep the vjs-flash-fallback class. -->
-    <object id="flash_fallback_1" class="vjs-flash-fallback" width="640" height="264" type="application/x-shockwave-flash" data="/flash/flowplayer-3.2.1.swf">
-        <param name="movie" value="/flash/flowplayer-3.2.1.swf" />
-        <param name="allowfullscreen" value="true" />
-        <param name="flashvars" value='config={"playlist":["<%= @content.poster %>", {"url": "<%= @content.iphone %>","autoPlay":false,"autoBuffering":true}]}' />
-        <!-- Image Fallback. Typically the same as the poster image. -->
-        <img src="<%= @content.poster %>" width="640" height="264" alt="Poster Image" title="No video playback capabilities." />
-      </object>
-    </video>
-    
-   
-   </div>
+          <%= render "shared/videobox" %>
+        <% end %>
+        <% if @content.status == Content::STATUS_COMPLETE.to_s && @content.type == "Image" %>
+          <img src="<%= Content::S3_WEB + @content.small   %>" />
         <% end %>
       </div>
 
     </div>
     <div class="clear"></div>
     <%= f.submit 'Save' %> <a class="reprocess" href="#">re-process</a>
+    <div id="divFileProgressContainer" class="progressContainer" ><div class="progress"></div></div>
 
 <% end %>
 
