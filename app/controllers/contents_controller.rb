@@ -1,4 +1,5 @@
 class ContentsController < ApplicationController
+  before_filter :authenticate_user!
   def index
     @contents = Content.all
 
@@ -10,7 +11,7 @@ class ContentsController < ApplicationController
 
   def new
     @content = Content.new
-    @content.creator = User.find(session[:user_id])
+    @content.creator = User.find(current_user.id)
     @content.save()
   end
   def postprocess

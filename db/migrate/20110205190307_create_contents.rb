@@ -12,6 +12,7 @@ class CreateContents < ActiveRecord::Migration
       t.string "remote_value_content_type"
       t.string "remote_value_updated_at"
       t.string "thumbnail"
+      t.string "meta"
       t.string "status"
       t.integer "parent_id"
       t.integer "creator_id"

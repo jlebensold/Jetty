@@ -43,7 +43,7 @@ function loadSwfUpload()
     });
     // Add Event Handlers
     $('#browse').click(function() { swfu.selectFiles(); });
-    $('#upload').click(function() { swfu.startUpload(); });
+    $('.upload').click(function() { swfu.startUpload(); });
 }
 
 

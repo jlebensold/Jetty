@@ -12,7 +12,7 @@ gem "rcov"
 gem 'simple-navigation' , '3.1.1'
 gem "paperclip", "~> 2.3"
 gem 'delayed_job'
-
+gem 'devise'
 
 gem 'mime-types'
 # Use unicorn as the web server

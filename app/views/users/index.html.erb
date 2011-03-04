@@ -1,21 +1,20 @@
-<h1>Listing users</h1>
+<%= render 'usernav' %>
+<h2>Dashboard</h2>
+<p>Welcome <%= @user.email %>!</p>
+<div class="left">
+  <h3>My Courses</h3>
 
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+</div>
+<div class="right">
+  <h3>My Content</h3>
+  <%= link_to 'New Content', new_content_path %>
+  <ul>
+  <% @user.contents.each do |content| %>
+    <li>
+      <h5><%= content.title %></h5>
+      <small><%= content.type %>,  <%= content.status %></small> <%= link_to 'edit', edit_content_path(content) %> | <%= link_to 'delete', "contents/destroy/" + content.id.to_s  %>
+    </li>
+  <% end %>
+  </ul>
 
-<% @users.each do |user| %>
-  <tr>
-    <td><%= link_to 'Show', user.becomes(User) %></td>
-    <td><%= link_to 'Edit', edit_user_path(user.becomes(User)) %></td>
-    <td><%= link_to 'Destroy', user.becomes(User), :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New User', new_user_path %>
+</div>

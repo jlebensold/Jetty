@@ -6,8 +6,6 @@ Jetty::Application.routes.draw do
 
   resources :users
   root :to => 'home#index';
-  match "signup",               :to => "home#signup" , :via =>"get"
-  match "signup",               :to => "home#create" , :via =>"post"
   match "contents/",            :to => "contents#index", :via => "get"
   match "contents/new",         :to => "contents#new", :via => "get"
   match "contents/rename",      :to => "contents#save" , :via =>"post"
@@ -15,6 +13,10 @@ Jetty::Application.routes.draw do
   match "contents/postprocess", :to => "contents#postprocess" , :via =>"post"
   match "contents/delete", :to => "contents#delete"
 
+
+  namespace :user do
+    root :to => "users#index"
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

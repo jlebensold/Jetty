@@ -1,12 +1,15 @@
+p , table, tr ,td, div, span, h1,h2,li ,ul{
+    margin: 0 0;
+    padding: 0 0;
+}
 body
 {
     background: #CFCFCF;
+    margin: 0 0;
+    padding: 0 0;
 }
 .container
 {
-    width: 800px;
-    margin: 0 auto;
-    padding: 10px;
     background: #FFF;
 }
 .hide
@@ -76,3 +79,90 @@ body
 .swfupload {
 	vertical-align: top;
 }
+/** general **/
+#flash
+{
+    width: 100%;
+    position: absolute;
+    z-index: 10;
+    display:none;
+}
+    #flash .notice, #flash .alert
+    {
+        height: 100%;
+        width: 100%;
+        background: #FFF8B2;
+        color: #000;
+        text-align: center;
+        font-size: 16px;
+    }
+    #flash .alert
+    {
+        background: #FFAAAA;
+        color: #B50000;
+    }
+#logo, #header, .container, #footer
+{
+    width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+}
+#header
+{
+    width: 800px;
+    padding: 0px 10px;
+    height: 30px;
+    background: #1F3744;
+    margin: 0 auto;
+}
+    #header .loginstatus
+    {
+        margin-top: 3px;
+        float: right;
+    }
+        #header .loginstatus p
+        {
+            display: inline;
+        }
+        #header .loginstatus a
+        {
+            color: #FFFFCC;
+            font-size: 11px;
+        }
+        #header .loginstatus a:hover
+        {
+            background: none;
+            color: #B50000;
+        }
+#footer
+{
+    background: #4A4A4A;
+    height: 50px;
+}
+.left, .right
+{
+    float: left;
+    width: 40%;
+}
+.clear
+{
+    clear: both;
+}
+/* dashboard */
+.usernav
+{
+    list-style: none;
+    height: 20px;
+    font-size: 10px;
+}
+    .usernav li:first-child
+    {
+        border-left: none;
+    }
+    .usernav li
+    {
+        display: inline;
+        border-left: 1px solid #444;
+        float: left;
+        padding: 0px 5px;
+    }
