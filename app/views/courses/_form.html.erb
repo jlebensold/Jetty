@@ -1,0 +1,18 @@
+<%= form_for(@course,:html => { :multipart => true }, :remote => true ) do |f| %>
+<div class="left">
+  <div class="maincontent">
+      <%= f.label :title, 'Title' %>
+      <%= f.text_field :title, :value => @course.title %>
+      <%= f.label :description, 'Description' %>
+      <%= f.text_area :description, :value => @course.description , :rows => 5 %>
+      <%= f.hidden_field :id, :value => @course.id %>
+
+    <button type="submit">Next »</button>
+  </div>
+
+</div>
+<div class="right">
+  
+</div>
+<% end %>
+<div class="clear"></div>

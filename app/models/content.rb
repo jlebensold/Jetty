@@ -1,9 +1,10 @@
 require 'mime/types'
 class Content < ActiveRecord::Base
 
-  belongs_to :creator , :class_name => "User" , :foreign_key => :creator_id
-  belongs_to :parent , :class_name => "Content", :foreign_key => :parent_id
-  has_many :children, :class_name => "Content" , :foreign_key => :parent_id
+  belongs_to :creator , :class_name => "User" , :foreign_key => "creator_id"
+  belongs_to :parent , :class_name => "Content", :foreign_key => "parent_id"
+  has_many  :children, :class_name => "Content", :foreign_key => "parent_id"
+  
 
 
   STATUS_OFFLINE = "offline"
@@ -38,7 +39,7 @@ class Content < ActiveRecord::Base
   before_post_process :preprocess
   def preprocess
   c = Content.find(id)
-  c.status = Content::STATUS_UPLOAD_IN_PROGRESS.to_s
+  c.status = Content::STATUS_CONVERSION_IN_PROGRESS
   c.save!
   end
 
@@ -50,19 +51,21 @@ class Content < ActiveRecord::Base
   after_initialize :default_values
   def default_values
     self.status ||= STATUS_OFFLINE.to_s
-    self.check_status
+    if self.status == STATUS_CONVERSION_IN_PROGRESS
+      check_status
+    end
   end
   def check_status
-        self.status = STATUS_COMPLETE
-        self.save!
+      self.status = STATUS_OFFLINE
+      self.save!
   end
   def s3_keys
     creds = YAML::load(ERB.new(File.read(Content::S3_PATH)).result).stringify_keys
     (creds[Rails.env] || creds).symbolize_keys
   end
 
-  after_save :after_save
-  def after_save
+  after_save :aftersave
+  def aftersave
     before_s3
     logger.info "queue delayed job?"
     delay.upload_to_s3 if self.local_value_updated_at_changed?
@@ -83,8 +86,23 @@ class Content < ActiveRecord::Base
     "files/#{creator.id}/#{id}"
   end
   def extension
+    return "" if (local_value_file_name == nil)
     local_value_file_name.split('.').last.to_s
   end
-
+  def as_json(options = {})
+    {
+      :id => id,
+      :title => title,
+      :status => status,
+      :type => type,
+      :meta => meta
+    }
+  end
+  def subcontents
+    children.find_all{|item| !item.instance_of? Url }
+  end
+  def references
+    children.find_all{|item| item.instance_of? Url }
+  end
 
 end

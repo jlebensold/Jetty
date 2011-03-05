@@ -1,17 +1,17 @@
  <div class="video-js-box">
   <!-- Using the Video for Everybody Embed Code http://camendesign.com/code/video_for_everybody -->
-  <video id="example_video_1" class="video-js" width="640" height="264" controls="controls" preload="auto"
-          poster="<%= @content.poster %>">
-    <source src="<%= @content.iphone %>" type='video/mp4' />
-    <source src="<%= @content.webm %>" type='video/webm' />
-    <source src="<%= @content.ogv %>" type='video/ogg; codecs="theora, vorbis"' />
+  <video id="example_video_1" class="video-js" width="330" height="234" controls="controls" preload="auto"
+          poster="<%= video.poster %>">
+    <source src="<%= video.iphone %>" type='video/mp4' />
+    <source src="<%= video.webm %>" type='video/webm' />
+    <source src="<%= video.ogv %>" type='video/ogg; codecs="theora, vorbis"' />
     <!-- Flash Fallback. Use any flash video player here. Make sure to keep the vjs-flash-fallback class. -->
   <object id="flash_fallback_1" class="vjs-flash-fallback" width="640" height="264" type="application/x-shockwave-flash" data="/flash/flowplayer-3.2.1.swf">
       <param name="movie" value="/flash/flowplayer-3.2.1.swf" />
       <param name="allowfullscreen" value="true" />
-      <param name="flashvars" value='config={"playlist":["<%= @content.poster %>", {"url": "<%= @content.iphone %>","autoPlay":false,"autoBuffering":true}]}' />
+      <param name="flashvars" value='config={"playlist":["<%= video.poster %>", {"url": "<%= video.iphone %>","autoPlay":false,"autoBuffering":true}]}' />
       <!-- Image Fallback. Typically the same as the poster image. -->
-      <img src="<%= @content.poster %>" width="640" height="264" alt="Poster Image" title="No video playback capabilities." />
+      <img src="<%= video.poster %>" width="640" height="264" alt="Poster Image" title="No video playback capabilities." />
     </object>
   </video>
 

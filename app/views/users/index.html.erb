@@ -3,6 +3,14 @@
 <p>Welcome <%= @user.email %>!</p>
 <div class="left">
   <h3>My Courses</h3>
+  <ul>
+  <% @user.courses.each do |course| %>
+    <li>
+      <h5><%= course.title %></h5>
+      <small><%= course.description %></small> <%= link_to 'edit', edit_course_path(course) %> | <%= link_to 'delete', "courses/destroy/" + course.id.to_s  %>
+    </li>
+  <% end %>
+  </ul>
 
 </div>
 <div class="right">

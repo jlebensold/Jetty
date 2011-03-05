@@ -1,75 +1,85 @@
 <%= stylesheet_link_tag "contentmanager","video-js" %>
 <%= form_for(@content.becomes(Content),:html => { :multipart => true }, :remote => true ) do |f| %>
+<noscript>
+  <p>File uploads require Javascript to be enabled.</p>
+</noscript>
+
 <div id="addsubcontent" class="hide" ><%= render 'addsubcontent' %></div>
- 
     <div class="maincontent">
-      
       <div class="left">
-        <%= f.label :type, 'Type' %>
         <%= f.hidden_field :id, :value => @content.id %>
-        <select id="content_type" name="content[type]">
-          <option <%= (@content.instance_of? Video) ? 'selected="selected"': "" %> value="Video">Video</option>
-          <option <%= (@content.instance_of? BinaryFile) ? 'selected="selected"': "" %> value="BinaryFile">File</option>
-          <option <%= (@content.instance_of? Image) ? 'selected="selected"': "" %> value="Image">Image</option>
-        </select>
+        <%= f.hidden_field :type, :value =>@content.type %>
         <p>
           <%= f.label :title, 'Title' %>
           <%= f.text_field :title%>
         </p>
-        <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;">
-          <span id="spanButtonPlaceholder"></span>
+
+
+        <div id="thumbnails"></div>
+	<div id="maincontent">Main Content
+	</div>
+        <div class="references">
+        <h4>References</h4>
+        <form id="referencesform" action="#" method="post">
+        <input type="text" name="tb_addurl" id="tb_addurl" /><button name="bt_addurl" id="bt_addurl"" >Add</button>
+        <ul class="clear" id="referenceslist">
+          <% @content.references.each do |url| %>
+            <li cid="<%=url.id%>"><span><%= url.meta%></span><a class="delete" href="#">x</a></li>
+          <% end %>
+        </ul>
+        </form>
         </div>
-        <div class="buttons">
-          <a id="upload" class="upload">Upload Main Content</a>
-        </div>
-        <a class="addsubcontent" href="#">Add sub-content</a>
+        <div id="subcontents" href="#">Sub-content</div>
         <ul class="subcontents">
-          
+          <% @content.subcontents.each do |c| %>
+            <li>
+            <%= c.type %>, <%= c.status %>
+            <%= render :partial => "shared/contentbox", :locals => {:content => c} %>
+            </li>
+          <% end %>
         </ul>
         
       </div>
       <div class="right">
-        <p>File Status: <%= @content.status %> </p>
-        
-        <% if @content.status == Content::STATUS_COMPLETE.to_s && @content.type == "Video" %>
-          <%= render "shared/videobox" %>
-        <% end %>
-        <% if @content.status == Content::STATUS_COMPLETE.to_s && @content.type == "Image" %>
-          <img src="<%= Content::S3_WEB + @content.small   %>" />
-        <% end %>
+        <p>File Status: <span class="filestatus"><%= @content.status %></span></p>
+  <% if @content.status.eql? Content::STATUS_CONVERSION_IN_PROGRESS  %>
+        <a href="?refresh=1">auto-refresh</a>
+  <% end %>
+        <%= render :partial => "shared/contentbox", :locals => {:content => @content} %>
       </div>
 
     </div>
     <div class="clear"></div>
     <%= f.submit 'Save' %> <a class="reprocess" href="#">re-process</a>
-    <div id="divFileProgressContainer" class="progressContainer" ><div class="progress"></div></div>
+    <div class="progressbar">
+      <div class="total">&nbsp;</div>
+    </div>
 
 <% end %>
 
 <% content_for(:javascript) do %>
-<%= javascript_include_tag 'swfupload','upload','contentmanager', 'video' %>
+<%= javascript_include_tag 'upload','contentmanager', 'video' %>
 
 <script type="text/javascript">
-  var swfparams;
-  var swfu;
-  $(function()
-  {
-    var contents_path = "<%= contents_path %>";
-    initContentmanager(contents_path);
-  })
-  $(document).ready(function() {
-  swfparams = {
-    post_params :
+  var uploadparams =
     {
       "<%= key = Rails.application.config.session_options[:key] %>" : "<%= cookies[key] %>",
       "<%= request_forgery_protection_token %>" : "<%= form_authenticity_token %>",
-      "id" : $("#content_id").val()
-      },
-      upload_url : "<%= contents_path %>/upload"
-    };
-    loadSwfUpload();
+      "id" : "<%=@content.id%>"
+      };
+  $(function()
+  {
+    <% if @content.status.eql? Content::STATUS_CONVERSION_IN_PROGRESS  %>
+    if ((document.location+"").indexOf('refresh=1') > 1)
+    {
+      setTimeout(function()
+      {
+        window.location.reload();
+      },5000);
+    }
+    <% end %>
+    initContentmanager("<%= contents_path %>");
     VideoJS.setupAllWhenReady();
-
-  });
+  })
 </script>
 <% end %>

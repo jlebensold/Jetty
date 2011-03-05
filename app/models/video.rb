@@ -1,3 +1,4 @@
+require 'aws/s3'
 class Video < Content
   ZC_KEY = '89db78eb49aaeecb61f4f877ff983051'
   def poster
@@ -26,8 +27,8 @@ class Video < Content
     end
   end
   def after_s3
-      self.status = Content::STATUS_CONVERSION_IN_PROGRESS
-      self.save!
+      #self.status = Content::STATUS_CONVERSION_IN_PROGRESS
+      Video.update(self.id , {:status => STATUS_CONVERSION_IN_PROGRESS})
       @bucket = Content::S3_BUCKET.to_s + "/" + bucketpath
       Zencoder.api_key = ZC_KEY
       Zencoder::Job.create({

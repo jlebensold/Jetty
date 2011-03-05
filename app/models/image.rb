@@ -1,5 +1,15 @@
-require 'PP'
+require 'aws/s3'
 class Image < Content
+
+  def check_status
+    if (self.status == Content::STATUS_CONVERSION_IN_PROGRESS.to_s)
+      AWS::S3::Base.establish_connection!(s3_keys)
+      if(AWS::S3::S3Object.exists? small, Content::S3_BUCKET.to_s)
+        self.status = STATUS_COMPLETE
+        self.save!
+      end
+    end
+  end
 
   def large
     bucketpath + "/l." + extension
@@ -11,6 +21,8 @@ class Image < Content
   def before_s3
     directory = Rails.root.to_s
     original_path = File.join(directory, bucketpath, "original." + extension)
+
+    return unless ( File.exist?(original_path))
     File.open(File.join(directory, small),"wb") do |f|
       f<< Paperclip::Thumbnail.new(File.open(original_path,"rb"),{:geometry => "210x320"}).make.read
     end
@@ -24,5 +36,7 @@ class Image < Content
       
       AWS::S3::S3Object.store(large,open(large),S3_BUCKET)
       AWS::S3::S3Object.store(small,open(small),S3_BUCKET)
+      self.status = Content::STATUS_COMPLETE;
+      self.save!
   end
 end

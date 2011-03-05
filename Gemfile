@@ -1,10 +1,9 @@
 source 'http://rubygems.org'
 
+gem 'mongrel', '1.2.0.pre2'
+gem 'daemons' , '1.0.10'
 gem 'rails', '3.0.3'
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
+gem 'mysql'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'aws-s3'
 gem 'zencoder'

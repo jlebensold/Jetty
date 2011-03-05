@@ -47,7 +47,7 @@ GEM
       ruby_parser (~> 2.0.4)
       sexp_processor (~> 3.0.3)
     colored (1.2)
-    daemons (1.1.0)
+    daemons (1.0.10)
     delayed_job (2.1.4)
       activesupport (~> 3.0)
       daemons
@@ -65,6 +65,7 @@ GEM
     flog (2.5.0)
       ruby_parser (~> 2.0)
       sexp_processor (~> 3.0)
+    gem_plugin (0.2.3)
     haml (3.0.25)
     hirb (0.3.6)
     hoe (2.8.0)
@@ -91,6 +92,10 @@ GEM
       reek (>= 1.2.6)
       roodi (>= 2.1.0)
     mime-types (1.16)
+    mongrel (1.2.0.pre2)
+      daemons (~> 1.0.10)
+      gem_plugin (~> 0.2.3)
+    mysql (2.8.1)
     paperclip (2.3.8)
       activerecord
       activesupport
@@ -170,11 +175,14 @@ PLATFORMS
 
 DEPENDENCIES
   aws-s3
+  daemons (= 1.0.10)
   delayed_job
   devise
   factory_girl
   metric_fu
   mime-types
+  mongrel (= 1.2.0.pre2)
+  mysql
   paperclip (~> 2.3)
   rails (= 3.0.3)
   rcov

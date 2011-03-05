@@ -3,11 +3,18 @@ Jetty::Application.routes.draw do
 
   resources :administrators
   resources :contents
-
+  resources :courses
   resources :users
   root :to => 'home#index';
+
+  
+  match "courses/",            :to => "courses#index",  :via => "get"
+  match "courses/new",         :to => "courses#new",    :via => "get"
+  match "courses/update",      :to => "courses#update", :via =>"post"
+
+
   match "contents/",            :to => "contents#index", :via => "get"
-  match "contents/new",         :to => "contents#new", :via => "get"
+  match "contents/new",         :to => "contents#new",   :via => "get"
   match "contents/rename",      :to => "contents#save" , :via =>"post"
   match "contents/retrieve",    :to => "contents#upload"
   match "contents/postprocess", :to => "contents#postprocess" , :via =>"post"

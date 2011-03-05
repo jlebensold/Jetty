@@ -25,7 +25,10 @@
     <% end -%>
     <% if user_signed_in? -%>
       Welcome, <%=  current_user.email %>
+      <%= link_to "Dashboard", "/users" %>
+      |
       <%= link_to "My Account", edit_user_registration_path %>
+      |
       <%= link_to "logout", destroy_user_session_path %>
     <% end -%>
 

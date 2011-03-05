@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20110212190749) do
   create_table "courses", :force => true do |t|
     t.string   "title"
     t.string   "description"
+    t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

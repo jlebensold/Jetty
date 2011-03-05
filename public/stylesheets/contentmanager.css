@@ -15,6 +15,24 @@
     {
         margin-left: 20px;
     }
+    .subcontent
+    {
+        list-style: none;
+    }
+        .subcontent label
+        {
+            float: left;
+        }
+    .references button,
+    .references input
+    {
+        float: left;
+
+    }
+    .references ul
+    {
+
+    }
 .clear
 {
     clear: both;
