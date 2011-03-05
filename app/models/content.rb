@@ -3,8 +3,8 @@ class Content < ActiveRecord::Base
 
   belongs_to :creator , :class_name => "User" , :foreign_key => "creator_id"
   belongs_to :parent , :class_name => "Content", :foreign_key => "parent_id"
-  has_many  :children, :class_name => "Content", :foreign_key => "parent_id"
-  
+  has_many  :children, :class_name => "Content", :foreign_key => "parent_id",  :dependent => :delete_all
+  validates :creator, :presence => true
 
 
   STATUS_OFFLINE = "offline"
@@ -19,8 +19,12 @@ class Content < ActiveRecord::Base
 
   def self.attributes_protected_by_default
   end
-
-
+  def original_file
+    S3_WEB + bucketpath + "/original.#{extension}"
+  end
+  def src_url
+    original_file
+  end
   has_attached_file :local_value,
     :path => "files/:creatorid/:id/original.:extension"
 
@@ -95,7 +99,8 @@ class Content < ActiveRecord::Base
       :title => title,
       :status => status,
       :type => type,
-      :meta => meta
+      :meta => meta,
+      :src => src_url
     }
   end
   def subcontents

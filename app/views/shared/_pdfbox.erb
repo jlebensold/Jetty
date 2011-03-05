@@ -1,1 +1,39 @@
-I am a pdfbox
+<script type="text/javascript">
+  swfobject.embedSWF("/flash/FlexPaperViewer.swf", "paper_<%=pdf.id%>","320", "240","10.0.0", "",{
+    SwfFile :"<%= Content::S3_WEB + pdf.swf_path %>",
+      Scale : 0.6,
+      ZoomTransition : "easeOut",
+      ZoomTime : 0.5,
+      ZoomInterval : 0.1,
+      FitPageOnLoad : false,
+      FitWidthOnLoad : true,
+      PrintEnabled : true,
+      FullScreenAsMaxWindow : false,
+      ProgressiveLoading : true,
+
+      PrintToolsVisible : true,
+      ViewModeToolsVisible : true,
+      ZoomToolsVisible : true,
+      FullScreenVisible : true,
+      NavToolsVisible : true,
+      CursorToolsVisible : true,
+      SearchToolsVisible : true,
+
+      localeChain: "en_US"
+      }, {
+    quality: "high",
+    bgcolor: "#ffffff",
+    allowscriptaccess : "always",
+    allowfullscreen : "true" }, {
+      id : "paper_<%=pdf.id%>",
+      name : "paper_<%=pdf.id%>"
+    });
+  swfobject.createCSS("#paper_<%=pdf.id%>", "display:block;text-align:left;");
+</script>
+<div id="paper_<%= pdf.id %>">
+  <p>To view this page ensure that Adobe Flash Player version 10.0.0 or greater is installed. </p>
+  <script type="text/javascript">
+          var pageHost = ((document.location.protocol == "https:") ? "https://" :	"http://");
+          document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='"+ pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>" );
+  </script>
+</div>

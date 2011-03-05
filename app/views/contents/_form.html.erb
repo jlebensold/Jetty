@@ -1,85 +1,57 @@
 <%= stylesheet_link_tag "contentmanager","video-js" %>
 <%= form_for(@content.becomes(Content),:html => { :multipart => true }, :remote => true ) do |f| %>
-<noscript>
-  <p>File uploads require Javascript to be enabled.</p>
-</noscript>
-
-<div id="addsubcontent" class="hide" ><%= render 'addsubcontent' %></div>
-    <div class="maincontent">
-      <div class="left">
-        <%= f.hidden_field :id, :value => @content.id %>
-        <%= f.hidden_field :type, :value =>@content.type %>
-        <p>
-          <%= f.label :title, 'Title' %>
-          <%= f.text_field :title%>
-        </p>
-
-
-        <div id="thumbnails"></div>
-	<div id="maincontent">Main Content
-	</div>
-        <div class="references">
-        <h4>References</h4>
-        <form id="referencesform" action="#" method="post">
+<noscript><p>File uploads require Javascript to be enabled.</p></noscript>
+<p>Status: <span class="filestatus"><%= @content.status %></span></p>
+<div class="progressbar">
+  <div class="total">&nbsp;</div>
+</div>
+<br/>
+<div class="maincontent">
+  <div class="left">
+    <%= f.hidden_field :id, :value => @content.id %>
+    <%= f.hidden_field :type, :value =>@content.type %>
+    <p>
+      <%= f.label :title, 'Title' %>
+      <%= f.text_field :title%>
+    </p>
+    <div id="maincontent">Upload</div>
+    <div class="references">
+      <h4>References</h4>
+      <form id="referencesform" action="#" method="post">
         <input type="text" name="tb_addurl" id="tb_addurl" /><button name="bt_addurl" id="bt_addurl"" >Add</button>
         <ul class="clear" id="referenceslist">
           <% @content.references.each do |url| %>
             <li cid="<%=url.id%>"><span><%= url.meta%></span><a class="delete" href="#">x</a></li>
           <% end %>
         </ul>
-        </form>
-        </div>
-        <div id="subcontents" href="#">Sub-content</div>
-        <ul class="subcontents">
-          <% @content.subcontents.each do |c| %>
-            <li>
-            <%= c.type %>, <%= c.status %>
-            <%= render :partial => "shared/contentbox", :locals => {:content => c} %>
-            </li>
-          <% end %>
-        </ul>
-        
-      </div>
-      <div class="right">
-        <p>File Status: <span class="filestatus"><%= @content.status %></span></p>
-  <% if @content.status.eql? Content::STATUS_CONVERSION_IN_PROGRESS  %>
-        <a href="?refresh=1">auto-refresh</a>
-  <% end %>
-        <%= render :partial => "shared/contentbox", :locals => {:content => @content} %>
-      </div>
-
+      </form>
     </div>
-    <div class="clear"></div>
-    <%= f.submit 'Save' %> <a class="reprocess" href="#">re-process</a>
-    <div class="progressbar">
-      <div class="total">&nbsp;</div>
-    </div>
-
+    <div id="subcontent" href="#">Subcontent</div>
+    <ul id="subcontentslist" class="subcontents">
+      <% @content.subcontents.each do |c| %>
+        <li cid="<%= c.id %>" type="<%= c.type %>">
+          <h4><%= c.type %>, <%= c.status %> <a href="#" class="delete">x</a></h4>
+          <p><%= render :partial => "shared/contentbox", :locals => {:content => c} %> <a href="#">more...</a></p>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="right">
+    <%= render :partial => "shared/contentbox", :locals => {:content => @content} %>
+    <h3>Publishing</h3>
+  </div>
+</div>
+<div class="clear"></div>
+<%= f.submit 'Save' %> <a class="reprocess" href="#">re-process</a>
 <% end %>
 
 <% content_for(:javascript) do %>
-<%= javascript_include_tag 'upload','contentmanager', 'video' %>
-
+<%= javascript_include_tag 'upload','contentmanager', 'video' ,'swfobject/swfobject' %>
 <script type="text/javascript">
-  var uploadparams =
-    {
+  var uploadparams = {
       "<%= key = Rails.application.config.session_options[:key] %>" : "<%= cookies[key] %>",
       "<%= request_forgery_protection_token %>" : "<%= form_authenticity_token %>",
-      "id" : "<%=@content.id%>"
-      };
-  $(function()
-  {
-    <% if @content.status.eql? Content::STATUS_CONVERSION_IN_PROGRESS  %>
-    if ((document.location+"").indexOf('refresh=1') > 1)
-    {
-      setTimeout(function()
-      {
-        window.location.reload();
-      },5000);
-    }
-    <% end %>
-    initContentmanager("<%= contents_path %>");
-    VideoJS.setupAllWhenReady();
-  })
+      "id" : "<%=@content.id%>" };
+  $(function() { initContentmanager("<%= contents_path %>");});
 </script>
 <% end %>

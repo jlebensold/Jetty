@@ -15,12 +15,35 @@
     {
         margin-left: 20px;
     }
-    .subcontent
+    #referenceslist
     {
         list-style: none;
     }
-        .subcontent label
+    .subcontents
+    {
+        list-style: none;
+    }
+        .subcontents li
         {
+            clear: left;
+        }
+        .subcontents li h4
+        {
+            padding: 0 0;
+            margin: 0 0;
+            background: #CFCFCF;
+        }
+        .subcontents li h4 a.delete
+        {
+            float: right;
+        }
+        .subcontents li p
+        {
+            float: left;
+        }
+        .subcontents img
+        {
+            height: 45px;
             float: left;
         }
     .references button,

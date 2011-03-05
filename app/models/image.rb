@@ -10,12 +10,17 @@ class Image < Content
       end
     end
   end
-
+  def src_url
+    S3_WEB + thumb
+  end
   def large
     bucketpath + "/l." + extension
   end
   def small
     bucketpath + "/s." + extension
+  end
+  def thumb
+    bucketpath + "/t." + extension
   end
 
   def before_s3
@@ -23,8 +28,13 @@ class Image < Content
     original_path = File.join(directory, bucketpath, "original." + extension)
 
     return unless ( File.exist?(original_path))
+
+    File.open(File.join(directory, thumb),"wb") do |f|
+      f<< Paperclip::Thumbnail.new(File.open(original_path,"rb"),{:geometry => "100x60#"}).make.read
+    end
+    
     File.open(File.join(directory, small),"wb") do |f|
-      f<< Paperclip::Thumbnail.new(File.open(original_path,"rb"),{:geometry => "210x320"}).make.read
+      f<< Paperclip::Thumbnail.new(File.open(original_path,"rb"),{:geometry => "210x320#"}).make.read
     end
 
     File.open(File.join(directory, large ),"wb") do |f|
@@ -36,6 +46,8 @@ class Image < Content
       
       AWS::S3::S3Object.store(large,open(large),S3_BUCKET)
       AWS::S3::S3Object.store(small,open(small),S3_BUCKET)
+      AWS::S3::S3Object.store(thumb,open(thumb),S3_BUCKET)
+      
       self.status = Content::STATUS_COMPLETE;
       self.save!
   end

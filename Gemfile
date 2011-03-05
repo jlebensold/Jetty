@@ -14,6 +14,8 @@ gem 'delayed_job'
 gem 'devise'
 
 gem 'mime-types'
+gem 'pdf_to_swf-paperclip-processor'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

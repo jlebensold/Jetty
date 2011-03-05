@@ -2,9 +2,15 @@ var basepath;
 function initContentmanager(bp)
 {
     basepath = bp;
+  loadListeners();
+  VideoJS.setupAllWhenReady();
+
+}
+function loadListeners()
+{
     createUploader($('#maincontent'));
-    createUploader($('#subcontents'));
-    $("#referenceslist li a.delete").live('click',function(evt)
+    createUploader($('#subcontent'));
+    $("li a.delete").live('click',function(evt)
     {
         $(this).parents('li').remove();
         save();
@@ -27,11 +33,6 @@ function initContentmanager(bp)
         });
         evt.preventDefault();
     });
-  
-  $(".addsubcontent").click(function(evt){
-    $("#addsubcontent li" ).clone().appendTo(".subcontents");
-    evt.preventDefault();
-  });
   $(".subcontent .type").live('change',function()
   {
         $(this).parents("li").find(".upload").toggle();
@@ -89,6 +90,13 @@ function getSubcontent()
              type : "Url"
          });
     });
+    $("#subcontentslist li").each(function(){
+        subc.push({
+             id: $(this).attr('cid'),
+             type : $(this).attr('type')
+         });
+    });
+    
     return subc;
 }
 
@@ -103,9 +111,8 @@ function createUploader(emt)
         params: uploadparams,
         onSubmit: function(id, filename)
         {
-            if(this.element.id == 'subcontents')
+            if(this.element.id == 'subcontent')
             {
-                console.log('subcontent');
                 this.params.content = {
                         id: '',
                         type: getType(filename)
@@ -150,7 +157,7 @@ function getType(filename)
         case "ogg":
             return "Video";
         case "pdf":
-            return "PDF";
+            return "Pdf";
         default:
             return "BinaryFile";
     }

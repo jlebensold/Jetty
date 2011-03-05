@@ -99,6 +99,9 @@ GEM
     paperclip (2.3.8)
       activerecord
       activesupport
+    pdf_to_swf-paperclip-processor (0.0.2)
+      paperclip (~> 2.3)
+      rails (~> 3.0)
     polyglot (0.3.1)
     rack (1.2.1)
     rack-mount (0.6.13)
@@ -184,6 +187,7 @@ DEPENDENCIES
   mongrel (= 1.2.0.pre2)
   mysql
   paperclip (~> 2.3)
+  pdf_to_swf-paperclip-processor
   rails (= 3.0.3)
   rcov
   rspec-rails (>= 2.5.0)

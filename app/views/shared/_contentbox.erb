@@ -2,8 +2,11 @@
   <%= render :partial => "shared/videobox", :locals => {:video => content} %>
 <% end %>
 <% if content.status == Content::STATUS_COMPLETE.to_s && content.type == "Image" %>
-  <img src="<%= Content::S3_WEB + content.small   %>" />
+  <img alt="image" src="<%= Content::S3_WEB + content.small   %>" />
 <% end %>
 <% if content.status == Content::STATUS_COMPLETE.to_s && content.type == "Pdf" %>
   <%= render :partial => "shared/pdfbox", :locals => {:pdf => content} %>
+<% end %>
+<% if content.status == Content::STATUS_COMPLETE.to_s && content.type == "BinaryFile" %>
+  <a href="<%= content.original_file %>">original</a>
 <% end %>

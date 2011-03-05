@@ -17,7 +17,7 @@
   <h3>My Content</h3>
   <%= link_to 'New Content', new_content_path %>
   <ul>
-  <% @user.contents.each do |content| %>
+  <% @user.maincontents.each do |content| %>
     <li>
       <h5><%= content.title %></h5>
       <small><%= content.type %>,  <%= content.status %></small> <%= link_to 'edit', edit_content_path(content) %> | <%= link_to 'delete', "contents/destroy/" + content.id.to_s  %>

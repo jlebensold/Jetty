@@ -16,7 +16,9 @@ class Video < Content
   def ipad
     Content::S3_WEB.to_s + bucketpath + "/ipad.mp4"
   end
-
+  def src_url
+    S3_WEB + poster
+  end
   def check_status
     if (self.status == Content::STATUS_CONVERSION_IN_PROGRESS.to_s)
       AWS::S3::Base.establish_connection!(s3_keys)

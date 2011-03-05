@@ -31,24 +31,31 @@ class ContentsController < ApplicationController
     @content = Content.find(params[:id])
     if @content.update_attributes(params[:content])
       if (params[:subcontent])
-        sub_ids = params[:subcontent].collect {|k,item| item[:id].to_i}
-        ref_ids = @content.references.collect { |i| i.id.to_i }
+        unless (params[:subcontent].is_a? String)
+          sub_ids = params[:subcontent].collect {|k,item| item[:id].to_i}
+          ref_ids = @content.children.collect { |i| i.id.to_i }
 
-        #filter out the missing references in the submission:
-        ref_ids.keep_if {|rid| sub_ids.select{|sid| sid == rid}.count == 0 }
-        ref_ids.each { |filter_id|
-          @content.children.find(filter_id).delete
-        }
-        params[:subcontent].each { |key,item|
-          url = Content.find_or_initialize_by_id(item[:id])
-          url.update_attributes(item)
-          url.parent = @content
-          url.save
-        }
-        #refresh
-        @content.children true
+          #filter out the missing references in the submission:
+          ref_ids.keep_if {|rid| sub_ids.select{|sid| sid == rid}.count == 0 }
+          ref_ids.each { |filter_id|
+            @content.children.find(filter_id).delete
+          }
+          params[:subcontent].each { |key,item|
+            content = Content.find_or_initialize_by_id(item[:id])
+            content.creator = @content.creator
+            content.update_attributes(item)
+            content.parent = @content
+            content.save
+          }
+        else
+          @content.children.each do |r|
+            r.delete
+          end
+        end
+          #refresh
+          @content.children true
       end
-      render :json => {:success => true, :maincontent => maincontent.as_json, :references => maincontent.references.as_json}
+      render :json => {:success => true, :maincontent => maincontent.as_json, :references => maincontent.references.as_json, :subcontents => maincontent.subcontents.as_json }
     else
       render :json => {:status => "FAIL"}
     end
@@ -61,19 +68,16 @@ class ContentsController < ApplicationController
   def upload
       #are we dealing with subcontent?
       if (params[:parent_id])
-        logger.info "subcontent..."
         @content = Content.new
         @content.creator = User.find(current_user.id)
         @content.parent = Content.find(params[:parent_id])
-        @content.update_attributes(params[:content])
-
-        @content.save!
       else
         @content = Content.find(params[:id])
         @content.type = params[:content][:type]
-        @content.update_attributes(params[:content])
       end
-
+      @content.update_attributes(params[:content])
+      @content.save!
+      #@content = Content.find(params[:id])
       @content.status = Content::STATUS_CONVERSION_IN_PROGRESS
       
       @content.value = File.new(async_upload params)

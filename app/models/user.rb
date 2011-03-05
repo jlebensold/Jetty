@@ -15,7 +15,9 @@ class User < ActiveRecord::Base
 
   def self.attributes_protected_by_default
   end
-  
+  def maincontents
+    contents.find_all {|c| c.parent == nil}
+  end
   after_initialize :default_values
   def default_values
     self.type = "Publisher"
