@@ -1,4 +1,4 @@
 class Url < Content
-  def after_save    
+  def aftersave    
   end
 end

@@ -56,10 +56,16 @@ describe Video do
         end
       end
     end
+    #mock status check
+    class Video
+      def check_status
+      end
+    end
     v.update_attributes(:value => test_video );
     v.save!
     v.after_s3
-    v.status.should eq(Content::STATUS_CONVERSION_IN_PROGRESS)
+
+    Video.find(v.id).status.should eq(Content::STATUS_CONVERSION_IN_PROGRESS)
   end
 
 

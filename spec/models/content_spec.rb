@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'PP'
 describe Content do
 
   it "can have a valid video" do
@@ -39,5 +38,13 @@ describe Content do
     v.s3_keys.should have_key(:secret_access_key)
   end
 
+   it "can have publish and expire dates" do
+     v = Factory(:video)
+     v.publish = Date.parse "03/12/2011"
+     v.expire = Date.parse "03/12/2011"
+     v.save!
+     v.publish.should be_kind_of Date
+     v.expire.should be_kind_of Date
+   end
 
 end

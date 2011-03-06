@@ -1,4 +1,4 @@
-<%= stylesheet_link_tag "contentmanager","video-js" %>
+<%= stylesheet_link_tag "contentmanager","video-js","jquery-ui" %>
 <%= form_for(@content.becomes(Content),:html => { :multipart => true }, :remote => true ) do |f| %>
 <noscript><p>File uploads require Javascript to be enabled.</p></noscript>
 <p>Status: <span class="filestatus"><%= @content.status %></span></p>
@@ -18,7 +18,7 @@
     <div class="references">
       <h4>References</h4>
       <form id="referencesform" action="#" method="post">
-        <input type="text" name="tb_addurl" id="tb_addurl" /><button name="bt_addurl" id="bt_addurl"" >Add</button>
+        <input type="text" name="tb_addurl" id="tb_addurl" /><button name="bt_addurl" id="bt_addurl" >Add</button>
         <ul class="clear" id="referenceslist">
           <% @content.references.each do |url| %>
             <li cid="<%=url.id%>"><span><%= url.meta%></span><a class="delete" href="#">x</a></li>
@@ -39,6 +39,11 @@
   <div class="right">
     <%= render :partial => "shared/contentbox", :locals => {:content => @content} %>
     <h3>Publishing</h3>
+    <%= f.label :publish, 'Publish on:' %>
+    <%= f.text_field :publish, :value => @content.publish , :class => 'datepicker'%>
+    <%= f.label :expire, 'Expires on:' %>
+    <%= f.text_field :expire, :value => @content.expire, :class => 'datepicker'%>
+
   </div>
 </div>
 <div class="clear"></div>

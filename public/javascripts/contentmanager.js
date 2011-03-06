@@ -10,6 +10,7 @@ function loadListeners()
 {
     createUploader($('#maincontent'));
     createUploader($('#subcontent'));
+    $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
     $("li a.delete").live('click',function(evt)
     {
         $(this).parents('li').remove();
@@ -54,8 +55,10 @@ function save()
             id : $("#content_id").val(),
             subcontent: getSubcontent(),
             content: {
-                'type' : $("#content_type").val(),
-                'title': $("#content_title").val()
+                'type'   : $("#content_type").val(),
+                'title'  : $("#content_title").val(),
+                'publish': $("#content_publish").val(),
+                'expire': $("#content_expire").val()
               },
             name : $('meta[name=csrf-param]').attr('content'),
             value : $('meta[name=csrf-token]').attr('content')

@@ -5,6 +5,8 @@ class Content < ActiveRecord::Base
   belongs_to :parent , :class_name => "Content", :foreign_key => "parent_id"
   has_many  :children, :class_name => "Content", :foreign_key => "parent_id",  :dependent => :delete_all
   validates :creator, :presence => true
+#  validates :publish, :date_or_blank => true
+#  validates :expire, :date_or_blank => true
 
 
   STATUS_OFFLINE = "offline"
@@ -67,7 +69,6 @@ class Content < ActiveRecord::Base
     creds = YAML::load(ERB.new(File.read(Content::S3_PATH)).result).stringify_keys
     (creds[Rails.env] || creds).symbolize_keys
   end
-
   after_save :aftersave
   def aftersave
     before_s3

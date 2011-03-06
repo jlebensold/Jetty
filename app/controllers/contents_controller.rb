@@ -26,9 +26,19 @@ class ContentsController < ApplicationController
   def deleteref
     
   end
-
+  def convert_date str
+    begin
+      str.to_s.to_date
+    rescue ArgumentError
+      ""
+    end
+  end
   def save
     @content = Content.find(params[:id])
+
+    params[:content][:publish] = convert_date params[:content][:publish]
+    params[:content][:expire] = convert_date params[:content][:expire]
+    
     if @content.update_attributes(params[:content])
       if (params[:subcontent])
         unless (params[:subcontent].is_a? String)
@@ -73,6 +83,7 @@ class ContentsController < ApplicationController
         @content.parent = Content.find(params[:parent_id])
       else
         @content = Content.find(params[:id])
+        @content.value = nil
         @content.type = params[:content][:type]
       end
       @content.update_attributes(params[:content])
