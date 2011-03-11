@@ -1,0 +1,69 @@
+<%= stylesheet_link_tag "coursemanager" %>
+<%= render 'users/usernav' %>
+<h2>Course Manager</h2>
+<p>Build courses that will inspire folks</p>
+<div class="landscape">
+  <div id="courses" class="panel">
+    <div class="top">
+      <h3>Courses</h3>
+      <button>New Course</button>
+    </div>
+    <div class="body">
+      <dl>
+        <dt class="closed">
+          <a href="#">+</a>
+          <h4>Getting Started With Zend Framework</h4>
+        </dt>
+        <dd class="hide">
+        </dd>
+        <dt class="active">
+         <a href="#">—</a>
+        <h4><input value="Getting Started With Zend Framework" type="text"></input></h4>
+        </dt>
+        <dd>
+          <label>Description</label>
+          <textarea cols="20" rows="4">Learn about how to setup a Zend Framework project over the course of these videos</textarea>
+          <a href="">delete</a>
+          <button>Save</button>
+          <button>Cancel</button>
+          <div class="clear" />
+        </dd>
+        <dt class="closed">
+          <a href="#">+</a>
+          <h4>Introduction to Zend_Form
+          </h4>
+        </dt>
+        <dd class="hide">
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div id="contents" class="panel" >
+    <div class="top">
+      <h3 class="small">Getting Started With Zend…</h3>
+      <button>Add Content</button>
+    </div>
+    <div class="body">
+      <ul>
+        <li>
+          Setting up the Zend Framework »
+        </li>
+        <li class="active">
+          Hello World! »
+        </li>
+        <li>
+          Share your view on the world »
+        </li>
+        <li>
+          Final Thoughts »
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div id="content_details" class="panel">
+    <div class="top">
+      <h3>Details</h3>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
