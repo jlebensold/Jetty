@@ -23,9 +23,7 @@ class ContentsController < ApplicationController
   def edit
     @content = Content.find(params[:id])
   end
-  def deleteref
-    
-  end
+
   def convert_date str
     begin
       str.to_s.to_date

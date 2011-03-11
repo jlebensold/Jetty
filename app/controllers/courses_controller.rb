@@ -7,7 +7,7 @@ class CoursesController < ApplicationController
     @course.save!
   end
   def index
-    redirect_to "/users"
+    #redirect_to "/users"
   end
   def update
     @course = Course.find(params[:id])
