@@ -1,0 +1,139 @@
+.landscape .panel .top h3.small
+{
+    font-size: 12px;
+    overflow:hidden;
+}
+  .landscape
+  {
+    width: 100%;
+    margin: 0 0;
+    padding: 5px 0;
+    background: #ddd;
+  }
+  .landscape > div
+  {
+  }
+  .landscape > div
+  {
+      border-radius: 5px;
+  }
+  .landscape .panel
+  {
+    float: left;
+    display: block;
+    width: 32%;
+    height: 300px;
+    margin: 0px;
+    margin-left: 6px;
+    background: #FAFAFA;
+  }
+    .landscape .panel .top
+    {
+       background: #6A6A7a;
+       height: 28px;
+       margin: 0 0;
+       padding: 0 0;
+       border-radius: 5px 5px 0 0;
+       border-bottom: 1px solid #555;
+    }
+      .panel .top h3
+      {
+        margin: 0 0;
+        padding: 0 0;
+        font-weight: normal;
+        float: left;
+        font-size: 13px;
+        margin-left: 10px;
+        margin-top: 5px;
+        color: #DDD;
+      }
+      .panel .top button
+      {
+        float:right;
+        border: 1px solid #EEE;
+        padding: 0 0;
+        margin: 5px 5px 0 0;
+        background: #EEE;
+        color: #777;
+        padding: 1px;
+        border-radius: 4px;
+      }
+      .panel .body dl
+      {
+       margin: 0 0;
+       padding: 0 0;
+
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        background: #CCC;
+      }
+      .panel .body dd
+      {
+        width: 100%;
+        margin: 0 0;
+        padding: 0 0;
+      }
+        .panel .body dl dt,
+        .panel .body ul li
+        {
+            padding: 3px 2px;
+            border-left: 1px dotted #FFF;
+            border-bottom: 1px solid #888;
+            margin-bottom: 1px;
+            margin-left: 1px;
+            background: #CFCFCF;
+
+        }
+        .panel .body dl dt.active,
+        .panel .body ul li.active
+        {
+            background: #FEB807;
+        }
+        .panel .body dl dt > a
+        {
+          color: #FFF;
+          text-decoration: none;
+          position: absolute;
+        }
+        .panel .body dl dt p.hover
+        {
+            display:none;
+        }
+        .panel .body dl dt h4
+        {
+          width: 100%;
+          font-size: 11px;
+          margin: 0 0;
+          padding: 0 0 0 15px;
+          color: #333;
+          font-weight: normal;
+          cursor: pointer;
+        }
+
+        .panel .body dl dt input
+        {
+          margin: 0 0;
+          width: 80%;
+          padding: 0 0;
+        }
+        .panel .body dl dd
+        {
+            background: #EDE3C1;
+        }
+        .panel .body dl dd label
+        {
+            font-size: 11px;
+            margin: 1px 0px 1px 5px;
+        }
+        .panel .body dl dd textarea
+        {
+            width: 90%;
+            margin-left: 5px;
+        }
+        .panel .body dl dd button
+        {
+            margin-right: 5px;
+            margin-bottom: 5px;
+            float: right;
+        }
