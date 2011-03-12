@@ -18,7 +18,10 @@ class Content < ActiveRecord::Base
   S3_PATH   = Rails.root.to_s + "/config/s3.yml"
   S3_BUCKET = "jettytstcontent"
   S3_WEB    = "https://s3.amazonaws.com/jettytstcontent/"
-  
+
+  def do_upload=(val)
+    @do_upload = val
+  end
 
   def self.attributes_protected_by_default
   end
@@ -57,6 +60,7 @@ class Content < ActiveRecord::Base
   
   after_initialize :default_values
   def default_values
+    @do_upload = false;
     self.status ||= STATUS_OFFLINE.to_s
     if self.status == STATUS_CONVERSION_IN_PROGRESS
       check_status
@@ -73,8 +77,10 @@ class Content < ActiveRecord::Base
   after_save :aftersave
   def aftersave
     before_s3
-    logger.info "queue delayed job?"
-    delay.upload_to_s3 if self.local_value_updated_at_changed?
+    if (@do_upload)
+      logger.info "queue delayed job?"
+      delay.upload_to_s3 
+    end
   end
   def after_s3
   end

@@ -95,6 +95,7 @@ class ContentsController < ApplicationController
         @content.value = nil
         @content.type = params[:content][:type]
       end
+      @content.do_upload = true
       @content.update_attributes(params[:content])
       @content.save!
       #@content = Content.find(params[:id])
