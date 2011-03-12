@@ -1,3 +1,4 @@
+<%= javascript_include_tag 'coursemanager', 'templates'%>
 <%= stylesheet_link_tag "coursemanager" %>
 <%= render 'users/usernav' %>
 <h2>Course Manager</h2>
@@ -6,57 +7,29 @@
   <div id="courses" class="panel">
     <div class="top">
       <h3>Courses</h3>
-      <button>New Course</button>
+      <button id="newcourse">New Course</button>
+      <div class="newcourse popup hide">
+        <label for="newcourse_title">Title</label>
+        <input id="newcourse_title" class="title" name="newcourse_title" type="text" ></input>
+        <button id="newcourse_create">Create</button>
+        <button id="newcourse_cancel" class="cancel">Cancel</button>
+      </div>
     </div>
     <div class="body">
       <dl>
-        <dt class="closed">
-          <a href="#">+</a>
-          <h4>Getting Started With Zend Framework</h4>
-        </dt>
-        <dd class="hide">
-        </dd>
-        <dt class="active">
-         <a href="#">—</a>
-        <h4><input value="Getting Started With Zend Framework" type="text"></input></h4>
-        </dt>
-        <dd>
-          <label>Description</label>
-          <textarea cols="20" rows="4">Learn about how to setup a Zend Framework project over the course of these videos</textarea>
-          <a href="">delete</a>
-          <button>Save</button>
-          <button>Cancel</button>
-          <div class="clear" />
-        </dd>
-        <dt class="closed">
-          <a href="#">+</a>
-          <h4>Introduction to Zend_Form
-          </h4>
-        </dt>
-        <dd class="hide">
-        </dd>
       </dl>
     </div>
   </div>
   <div id="contents" class="panel" >
     <div class="top">
-      <h3 class="small">Getting Started With Zend…</h3>
-      <button>Add Content</button>
+      <h3 class="small"></h3>
+      <button id="newcontent" class="hide">Add Content</button>
+      <div class="newcontent popup hide">
+        <ul></ul>
+      </div>
     </div>
     <div class="body">
       <ul>
-        <li>
-          Setting up the Zend Framework »
-        </li>
-        <li class="active">
-          Hello World! »
-        </li>
-        <li>
-          Share your view on the world »
-        </li>
-        <li>
-          Final Thoughts »
-        </li>
       </ul>
     </div>
   </div>
@@ -64,6 +37,18 @@
     <div class="top">
       <h3>Details</h3>
     </div>
+    <div class="body">
+
+    </div>
   </div>
   <div class="clear"></div>
 </div>
+<% content_for(:javascript) do %>
+  <script type="text/javascript">
+    sec =
+      {"<%= key = Rails.application.config.session_options[:key] %>" : "<%= cookies[key] %>",
+      "<%= request_forgery_protection_token %>" : "<%= form_authenticity_token %>"}
+
+    $(function() { initCoursemanager("<%= courses_path %>");});
+  </script>
+<% end %>

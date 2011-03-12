@@ -1,6 +1,7 @@
 require 'spec_helper'
 describe Content do
 
+  it { should have_many(:course_items) }
   it "can have a valid video" do
    v = Factory(:video)
    v.should be_present

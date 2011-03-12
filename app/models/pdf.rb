@@ -5,7 +5,7 @@ class Pdf < Content
   def before_s3
     directory = Rails.root.to_s
     original_path = File.join(directory, bucketpath, "original.pdf")
-    return unless ( File.exist?(original_path))
+    return unless(File.exist?(original_path))
 
     parameters = []
     parameters << ":source"

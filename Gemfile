@@ -7,14 +7,14 @@ gem 'mysql'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'aws-s3'
 gem 'zencoder'
-gem "rcov"
+#gem "rcov"
 gem 'simple-navigation' , '3.1.1'
 gem "paperclip", "~> 2.3"
 gem 'delayed_job'
 gem 'devise'
 
 gem 'mime-types'
-gem 'pdf_to_swf-paperclip-processor'
+#gem 'pdf_to_swf-paperclip-processor'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -40,8 +40,11 @@ gem 'pdf_to_swf-paperclip-processor'
 # end
 
 group :development, :test do
+end
+group :test do
   gem 'metric_fu'
   gem "rspec-rails", ">= 2.5.0"
-  gem "factory_girl"  
+  gem "factory_girl"
+  gem 'shoulda-matchers'
 end
 

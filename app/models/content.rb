@@ -4,6 +4,7 @@ class Content < ActiveRecord::Base
   belongs_to :creator , :class_name => "User" , :foreign_key => "creator_id"
   belongs_to :parent , :class_name => "Content", :foreign_key => "parent_id"
   has_many  :children, :class_name => "Content", :foreign_key => "parent_id",  :dependent => :delete_all
+  has_many  :course_items,  :foreign_key => "content_id",  :dependent => :delete_all
   validates :creator, :presence => true
 #  validates :publish, :date_or_blank => true
 #  validates :expire, :date_or_blank => true
@@ -14,9 +15,9 @@ class Content < ActiveRecord::Base
   STATUS_COMPLETE = "complete"
   STATUS_CONVERSION_IN_PROGRESS = "conversion in progress"
   STATUS_UPLOAD_IN_PROGRESS = "upload in progress"
-  S3_PATH =Rails.root.to_s + "/config/s3.yml"
+  S3_PATH   = Rails.root.to_s + "/config/s3.yml"
   S3_BUCKET = "jettytstcontent"
-  S3_WEB = "https://s3.amazonaws.com/jettytstcontent/"
+  S3_WEB    = "https://s3.amazonaws.com/jettytstcontent/"
   
 
   def self.attributes_protected_by_default

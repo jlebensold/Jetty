@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110212190749) do
+ActiveRecord::Schema.define(:version => 20110312075311) do
 
   create_table "contents", :force => true do |t|
     t.string   "type"
@@ -30,6 +30,16 @@ ActiveRecord::Schema.define(:version => 20110212190749) do
     t.integer  "creator_id"
     t.date     "publish"
     t.date     "expire"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "course_items", :force => true do |t|
+    t.boolean  "monetize",                                 :default => false, :null => false
+    t.decimal  "amount",     :precision => 8, :scale => 2
+    t.integer  "course_id"
+    t.integer  "content_id"
+    t.integer  "ordering",                                 :default => 0,     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

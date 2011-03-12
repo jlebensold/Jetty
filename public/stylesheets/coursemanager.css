@@ -1,6 +1,21 @@
+*
+{
+    margin: 0 0;
+    padding: 0 0;
+}
+.popup
+{
+    position: absolute;
+    background: #FFF;
+    border: 1px solid #A7A7A7;
+    z-index:10;
+}
+
 .landscape .panel .top h3.small
 {
     font-size: 12px;
+    width: 60%;
+    height: 20px;
     overflow:hidden;
 }
   .landscape
@@ -22,13 +37,14 @@
     float: left;
     display: block;
     width: 32%;
-    height: 300px;
+    height: 400px;
     margin: 0px;
     margin-left: 6px;
     background: #FAFAFA;
   }
     .landscape .panel .top
     {
+       position: relative;
        background: #6A6A7a;
        height: 28px;
        margin: 0 0;
@@ -36,6 +52,15 @@
        border-radius: 5px 5px 0 0;
        border-bottom: 1px solid #555;
     }
+      .landscape .panel .top .popup
+      {
+          right: 10px;
+          top: 25px;
+      }
+      .landscape .panel .top .popup ul
+      {
+        list-style: none;
+      }
       .panel .top h3
       {
         margin: 0 0;
@@ -83,7 +108,9 @@
             margin-bottom: 1px;
             margin-left: 1px;
             background: #CFCFCF;
-
+            position: relative;
+            list-style:none;
+            height: 20px;
         }
         .panel .body dl dt.active,
         .panel .body ul li.active
@@ -96,11 +123,11 @@
           text-decoration: none;
           position: absolute;
         }
-        .panel .body dl dt p.hover
+        .panel .body p.hover
         {
             display:none;
         }
-        .panel .body dl dt h4
+        .panel .body a.title
         {
           width: 100%;
           font-size: 11px;
@@ -109,19 +136,22 @@
           color: #333;
           font-weight: normal;
           cursor: pointer;
+          display: inline;
         }
 
-        .panel .body dl dt input
+        .panel .body input
         {
           margin: 0 0;
           width: 80%;
           padding: 0 0;
+          margin-left: 15px;
+          display: inline;
         }
         .panel .body dl dd
         {
             background: #EDE3C1;
         }
-        .panel .body dl dd label
+        .panel .body label
         {
             font-size: 11px;
             margin: 1px 0px 1px 5px;
@@ -137,3 +167,40 @@
             margin-bottom: 5px;
             float: right;
         }
+/* course details */
+
+    #content_details .body
+    {
+        background: #EDE3C1;
+        margin: 1px;
+    }
+    #content_details .body input[type=text],
+    #content_details .body label
+    {
+        width: 100px;
+        float: left;
+    }
+    #content_details .body label
+    {
+        clear: left;
+        text-align: right;
+        float: left;
+        margin: 4px 0px;
+    }
+    #content_details .body input[type=checkbox]
+    {
+        width: auto;
+        display: inline;
+    }
+    #content_details .body a
+    {
+        display: block;
+        float: left;
+        clear: left;
+        margin-left: 10px;
+    }
+    #content_details .body button
+    {
+        margin: 5px 5px;
+        float: right;
+    }

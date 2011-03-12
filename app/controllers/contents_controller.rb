@@ -8,7 +8,18 @@ class ContentsController < ApplicationController
   def show
     @content = Content.find(params[:id])
   end
-
+  def list
+    @course_items = []
+    if (params[:course])
+      @contents = Content.joins(:course_items).where("course_items.course_id = ?",params[:course][:id].to_i)
+      CourseItem.order("ordering").where(:course_id => params[:course][:id].to_i).each{|ci|
+        @course_items.push(ci.as_json)
+      }
+    else
+      @contents = Content.where('creator_id = ? and parent_id is null ', current_user.id)
+    end
+    render :json => {:success => true, :contents => @contents.as_json, :course_items => @course_items.as_json}
+  end
   def new
     @content = Content.new
     @content.creator = User.find(current_user.id)
