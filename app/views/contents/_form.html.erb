@@ -28,12 +28,14 @@
     </div>
     <div id="subcontent" href="#">Subcontent</div>
     <ul id="subcontentslist" class="subcontents">
-      <% @content.subcontents.each do |c| %>
-        <li cid="<%= c.id %>" type="<%= c.type %>">
-          <h4><%= c.type %>, <%= c.status %> <a href="#" class="delete">x</a></h4>
-          <p><%= render :partial => "shared/contentbox", :locals => {:content => c} %> <a href="#">more...</a></p>
-        </li>
-      <% end %>
+
+    <% @content.subcontents.each do |c| end%>
+      <!--
+      <li cid="<=   c.id %>" type="<= c.type %>">
+          <h4><= c.type %>, <= c.status %> <a href="#" class="delete">x</a></h4>
+          <p><= render :partial => "shared/contentbox", :locals => {:content => c} %> <a href="#">more...</a></p>
+      </li>
+      !-->
     </ul>
   </div>
   <div class="right">

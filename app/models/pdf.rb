@@ -4,7 +4,7 @@ class Pdf < Content
   end
   def before_s3
     directory = Rails.root.to_s
-    original_path = File.join(directory, bucketpath, "original.pdf")
+    original_path = File.join(directory, @content.bucketpath, "original.pdf")
     return unless(File.exist?(original_path))
 
     parameters = []
@@ -27,8 +27,8 @@ class Pdf < Content
       AWS::S3::Base.establish_connection!(s3_keys)
       logger.info "PDF: after s3 : " + swf_path
       AWS::S3::S3Object.store(swf_path,open(swf_path),S3_BUCKET)
-      self.status = Content::STATUS_COMPLETE;
-      self.save!
+      @content.status = Content::STATUS_COMPLETE;
+      @content.save!
   end
   
 end

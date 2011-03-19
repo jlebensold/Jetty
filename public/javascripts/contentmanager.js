@@ -1,54 +1,63 @@
 var basepath;
 function initContentmanager(bp)
 {
-    basepath = bp;
+  basepath = bp;
   loadListeners();
   VideoJS.setupAllWhenReady();
-
+  list_subcontent()
+}
+function list_subcontent()
+{
+    $.ajax({
+        url: basepath + "/subcontents",
+        type: 'POST',
+        data: {id : $("#content_id").val()},
+        dataType : 'json',
+        success : function(resp) {render_subcontents(resp.subcontents)}
+    });
 }
 function loadListeners()
 {
     createUploader($('#maincontent'));
     createUploader($('#subcontent'));
-    $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-    $("li a.delete").live('click',function(evt)
-    {
-        $(this).parents('li').remove();
-        save();
-        evt.preventDefault();
-    });
-    $("#bt_addurl").click(function(evt)
-    {
-        $("#referenceslist").append(getReferencesTemplate($("#tb_addurl").val(),""));
-        save();
-        evt.preventDefault();
-    });
-    $(".reprocess").click(function(evt)
-    {
-        $.ajax({
-            url: basepath + "/postprocess",
-            type: 'POST',
-            data: {id : $("#content_id").val()},
-            dataType : 'json',
-            success : function(resp) {}
-        });
-        evt.preventDefault();
-    });
-  $(".subcontent .type").live('change',function()
-  {
+    $(".datepicker").datepicker({dateFormat: 'yy-mm-dd'});
+    $("li a.delete").live('click',delete_subcontent);
+    $("#bt_addurl").click(add_subcontent);
+    $(".reprocess").click(reprocess_content);
+    $(".subcontent .type").live('change',function(){
         $(this).parents("li").find(".upload").toggle();
         $(this).parent("li").find(".url").toggle();
-  });
-  $("#type").change(function()
-  {
-    $(".filetypes > li").hide();
-    $(".filetypes ." + $($(this).find(':selected')).attr('panel')).show().addClass('active');
-  });
-  $("form").submit(function(evt){
+    });
+    $("#type").change(function() {
+        $(".filetypes > li").hide();
+        $(".filetypes ." + $($(this).find(':selected')).attr('panel')).show().addClass('active');
+    });
+    $("form").submit(save_form);
+}
+function reprocess_content(evt)
+{
+    $.ajax({
+        url: basepath + "/postprocess",
+        type: 'POST',
+        data: {id : $("#content_id").val()},
+        dataType : 'json',
+        success : function(resp) {}
+    });
+    evt.preventDefault();
+}
+function add_subcontent(evt)
+{
+    $("#referenceslist").append(tpl_reference($("#tb_addurl").val(),""));
     save();
     evt.preventDefault();
-  });
 }
+function delete_subcontent(evt)
+{
+    $(this).parents('li').remove();
+    save();
+    evt.preventDefault();
+}
+function save_form(evt) {save();evt.preventDefault();}
 function save()
 {
     var data = {
@@ -70,16 +79,26 @@ function save()
         dataType: 'json',
         success : function(resp)
         {
-            renderReferences(resp.references);
+            render_references(resp.references);
+            render_subcontents(resp.subcontents);
+            
         }
     });
 }
-function renderReferences(refs)
+function render_subcontents(subcontents)
+{
+    $("#subcontentslist").empty();
+    $.each(subcontents,function(i,v)
+    {
+        $("#subcontentslist").append(tpl_subcontent(v));
+    });
+}
+function render_references(refs)
 {
     $("#referenceslist").empty();
     $(refs).each(function(i)
     {
-        $("#referenceslist").append(getReferencesTemplate(this.meta,this.id));
+        $("#referenceslist").append(tpl_reference(this.meta,this.id));
     });
 }
 function getSubcontent()
@@ -106,11 +125,11 @@ function getSubcontent()
 
 function createUploader(emt)
 {
-    var uploader = new qq.FileUploader({
+    new qq.FileUploader({
         element: emt.get(0),
         action: basepath + "/upload",
         debug: false,
-        template: getUploaderTemplate(emt.text()),
+        template: tpl_uploader(emt.text()),
         params: uploadparams,
         onSubmit: function(id, filename)
         {
@@ -125,7 +144,7 @@ function createUploader(emt)
             else
             {
                 $("#content_type").val(getType(filename));                
-                this.params.content = {type: getType(filename) , title:$("#content_title").val() }
+                this.params.content = {type: getType(filename) , title:$("#content_title").val()}
             }
             $(".total").css('width',"0%");  
         },
@@ -133,6 +152,7 @@ function createUploader(emt)
         {
           $(".filestatus").text(getType(filename) + " Upload successful. processing...");
           $(".total").css('width',"100%");
+          render_subcontents(responseJSON.subcontents)
         },
         onProgress: function(id, filename, loaded, total)
         {
@@ -165,7 +185,15 @@ function getType(filename)
             return "BinaryFile";
     }
 }
-function getUploaderTemplate(txt)
+//templates:
+function tpl_subcontent(c)
+{
+    return '<li cid="'+c.id+'" type="'+c.type+'">'+
+          '<h4>'+c.type+', '+c.status+ ' <a href="#" class="delete">x</a></h4>'+
+          '<p>'+c.contentboxhtml+'<a href="#">more...</a></p>'+
+        '</li>';
+}
+function tpl_uploader(txt)
 {
     return '<div class="qq-uploader">' +
                 '<div class="qq-upload-drop-area"><span>Drop files here to upload</span></div>' +
@@ -173,7 +201,7 @@ function getUploaderTemplate(txt)
                 '<ul class="qq-upload-list"></ul>' +
              '</div>'
 }
-function getReferencesTemplate(url,id)
+function tpl_reference(url,id)
 {
     if (url.length == 0) return "";
     return '<li cid="'+id+'" ><span>'+url+'</span><a href="#" class="delete">x</a></li>';

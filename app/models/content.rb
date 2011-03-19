@@ -79,17 +79,18 @@ class Content < ActiveRecord::Base
     before_s3
     if (@do_upload)
       logger.info "queue delayed job?"
-      delay.upload_to_s3 
+      delay.upload_to_s3 self.id
     end
   end
   def after_s3
   end
   def before_s3
   end
-  def upload_to_s3
+  def upload_to_s3 id
+    @content = Content.find(id)
     logger.info "uploading to S3! " + self.type
-    self.remote_value = local_value.to_file
-    self.save!
+    @content.remote_value = @content.local_value.to_file
+    @content.save!
     after_s3
   end
 
@@ -102,14 +103,17 @@ class Content < ActiveRecord::Base
     local_value_file_name.split('.').last.to_s
   end
   def as_json(options = {})
-    {
+    if (options == nil)
+      options = {}
+    end
+    options.merge({
       :id => id,
       :title => title,
       :status => status,
       :type => type,
       :meta => meta,
       :src => src_url
-    }
+    })
   end
   def subcontents
     children.find_all{|item| !item.instance_of? Url }

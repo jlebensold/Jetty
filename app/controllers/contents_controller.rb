@@ -20,6 +20,20 @@ class ContentsController < ApplicationController
     end
     render :json => {:success => true, :contents => @contents.as_json, :course_items => @course_items.as_json}
   end
+  def subcontents
+    subcontents = []
+    if (params[:id])
+      @content = Content.find(params[:id])
+    end
+
+    render :json => {:success => true, :subcontents => get_subcontents(@content) }
+  end
+  def get_subcontents c
+    c.subcontents.map { |i|
+        i.as_json({:contentboxhtml => render_to_string(:partial=> "shared/contentbox",
+                                                       :locals => {:content => i} ) })
+      }
+  end
   def new
     @content = Content.new
     @content.creator = User.find(current_user.id)
@@ -56,9 +70,7 @@ class ContentsController < ApplicationController
 
           #filter out the missing references in the submission:
           ref_ids.keep_if {|rid| sub_ids.select{|sid| sid == rid}.count == 0 }
-          ref_ids.each { |filter_id|
-            @content.children.find(filter_id).delete
-          }
+          ref_ids.each { |filter_id| @content.children.find(filter_id).delete }
           params[:subcontent].each { |key,item|
             content = Content.find_or_initialize_by_id(item[:id])
             content.creator = @content.creator
@@ -67,14 +79,21 @@ class ContentsController < ApplicationController
             content.save
           }
         else
+          require 'pp'
+          logger.info "something is not cool and should be deleted"
+          logger.info(pp params[:subcontent])
           @content.children.each do |r|
-            r.delete
+            logger.info "deleting... #{r.id}"
+            logger.info(pp r)
+            #r.delete
           end
         end
           #refresh
           @content.children true
       end
-      render :json => {:success => true, :maincontent => maincontent.as_json, :references => maincontent.references.as_json, :subcontents => maincontent.subcontents.as_json }
+      render :json => {:success => true, :maincontent => maincontent.as_json,
+                                         :references => maincontent.references.as_json,
+                                         :subcontents => get_subcontents(maincontent)}
     else
       render :json => {:status => "FAIL"}
     end
@@ -105,7 +124,7 @@ class ContentsController < ApplicationController
 
       @content.save
 
-      render :json => {:success => true, :maincontent => maincontent.as_json}
+      render :json => {:success => true, :maincontent => maincontent.as_json, :subcontents => get_subcontents(maincontent)}
   end
   def file_delete(filename)
     Dir["#{File.dirname(filename)}/*"].each do |file|

@@ -11,6 +11,9 @@ gem 'zencoder'
 gem 'simple-navigation' , '3.1.1'
 gem "paperclip", "~> 2.3"
 gem 'delayed_job'
+gem 'delayed_job_admin'
+
+
 gem 'devise'
 
 gem 'mime-types'

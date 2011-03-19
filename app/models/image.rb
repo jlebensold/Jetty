@@ -48,7 +48,7 @@ class Image < Content
       AWS::S3::S3Object.store(small,open(small),S3_BUCKET)
       AWS::S3::S3Object.store(thumb,open(thumb),S3_BUCKET)
       
-      self.status = Content::STATUS_COMPLETE;
-      self.save!
+      @content.status = Content::STATUS_COMPLETE;
+      @content.save!
   end
 end
