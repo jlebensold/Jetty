@@ -4,7 +4,9 @@ class CoursesController < ApplicationController
   def list
       render :json => {:success => true, :courses => User.find(current_user.id).courses.as_json}
   end
-
+  def preview
+    @course = Course.find(params[:id])
+  end
   def saveorder
     params[:ordering].each { |k,v|
       CourseItem.find(v[:id].to_i).update_attributes({:ordering => v[:order]})

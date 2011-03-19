@@ -1,0 +1,78 @@
+.playlist, .mainsec
+{
+    float: left;
+}
+.playlist
+{
+    width: 169px;
+    overflow: scroll;
+    height: 430px;
+    padding-left: 10px;
+    border-left: 1px solid #333;
+}
+.mainsec
+{
+    width: 620px;
+    height: 430px;
+}
+.playlist ul
+{
+    clear: both;
+    list-style: none;
+}
+.tablist
+{
+    list-style:none;
+    height: 14px;
+}
+    .tablist li.active
+    {
+        background: #6AAAD3;
+    }
+        .tablist li.active a
+        {
+            color: #FFF;
+        }
+    .tablist li
+    {
+        float: left;
+        padding: 4px 2px;
+        border: 1px #000 solid;
+    }
+        .tablist li a
+        {
+            text-decoration: none;
+        }
+.options
+{
+    list-style:none;
+    width: 600px;
+    height: 20px;
+    background: #EFEFEF;
+}
+    .options > li
+    {
+        float: left;
+    }
+        .options > li > a
+        {
+            border-width: 0px 1px 0px 0px;
+            border-style: solid;
+            border-color: #AAA;
+            padding: 0px 10px;
+            display: block;
+        }
+    .options a
+    {
+        text-decoration: none;
+    }
+    .options > li:hover .child
+    {
+        display: block;
+    }
+    .options .child
+    {
+        background: #EEE;
+        list-style:none;
+        display: none;
+    }

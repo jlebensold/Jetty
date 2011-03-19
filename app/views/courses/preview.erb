@@ -1,0 +1,43 @@
+<%= javascript_include_tag 'preview', 'templates','swfobject/swfobject'%>
+<%= stylesheet_link_tag "preview" %>
+<%= render 'users/usernav' %>
+<div class="mainsec">
+  <div class="player">
+    <%= render :partial => "shared/contentbox", :locals => {:content => @course.course_items.first.content} %>
+  </div>
+  <ul class="options">
+    <li>
+      <a href="">Add Course</a>
+      <ul class="child">
+        <li><a href="">iPad</a></li>
+        <li><a href="">iPhone</a></li>
+      </ul>
+    </li>
+    <li><a href="">Download</a></li>
+    <li><a href="">More Content</a></li>
+  </ul>
+  <div class="subcontents">
+    
+  </div>
+</div>
+<div class="playlist">
+  <ul class="tablist">
+    <li class="active"><a href="#" class="courselist">Course</a></li>
+    <li><a href="#" class="referencelist">References</a></li>
+  </ul>
+  <ul class="courselist active">
+    <% @course.course_items.each do |ci| %>
+      <li><a class="play" cid="<%= ci.content.id %>" href="#"><%=  ci.content.title %></a></li>
+    <% end %>
+  </ul>
+  <ul class="referencelist hide">
+    <% @course.course_items.first.content.references.each do |r| %>
+    <li><%=  r.meta %></li>
+    <% end %>
+  </ul>
+</div>
+<% content_for(:javascript) do %>
+  <script type="text/javascript">
+    $(function() { init("<%= courses_path %>");});
+  </script>
+<% end %>

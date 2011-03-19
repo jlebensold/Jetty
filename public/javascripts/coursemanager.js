@@ -11,6 +11,10 @@ function initCoursemanager(bp)
 function loadListeners()
 {
     $("#newcourse,#newcontent").click(function(evt){ $("."+$(this).get(0).id).toggle(); evt.preventDefault(); });
+    $("#preview").click(function(evt) {
+        var id = $("#courses .active").next().find(".id").val();
+        location.href = basepath+"/preview/"+id;
+    });
     $(".top .cancel").click(function(evt){ $(this).parent().toggle();evt.preventDefault(); });
 
 // courses

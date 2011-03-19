@@ -4,9 +4,13 @@ class ContentsController < ApplicationController
     @contents = Content.all
 
   end
-
   def show
     @content = Content.find(params[:id])
+    render :json => {:success => true, :content => @content.as_json({:contentboxhtml => render_to_string(:partial=> "shared/contentbox",
+                                                       :locals => {:content => @content} ) }), 
+                                       :subcontents => get_subcontents(@content),
+                                       :references => @content.references.as_json
+                                       }
   end
   def list
     @course_items = []
@@ -29,10 +33,8 @@ class ContentsController < ApplicationController
     render :json => {:success => true, :subcontents => get_subcontents(@content) }
   end
   def get_subcontents c
-    c.subcontents.map { |i|
-        i.as_json({:contentboxhtml => render_to_string(:partial=> "shared/contentbox",
-                                                       :locals => {:content => i} ) })
-      }
+    c.subcontents.map { |i| i.as_json({:contentboxhtml => render_to_string(:partial=> "shared/contentbox",
+                                                       :locals => {:content => i} ) }) }
   end
   def new
     @content = Content.new
