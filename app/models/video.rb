@@ -29,7 +29,7 @@ class Video < Content
     end
   end
   def after_s3
-      @content.status = Content::STATUS_CONVERSION_IN_PROGRESS
+      self.status = Content::STATUS_CONVERSION_IN_PROGRESS
       #Video.update(self.id , {:status => STATUS_CONVERSION_IN_PROGRESS})
       @bucket = Content::S3_BUCKET.to_s + "/" + bucketpath
       Zencoder.api_key = ZC_KEY
