@@ -1,6 +1,6 @@
 # encoding: utf-8
+require 'spec_helper'
 describe Pdf do
-
   def stub
     AWS::S3::Base.stub!(:establish_connection!).and_return(true)
   end

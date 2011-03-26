@@ -12,7 +12,7 @@ gem 'simple-navigation' , '3.1.1'
 gem "paperclip", "~> 2.3"
 gem 'delayed_job'
 gem 'delayed_job_admin'
-
+gem 'activemerchant'
 
 gem 'devise'
 
@@ -49,5 +49,7 @@ group :test do
   gem "rspec-rails", ">= 2.5.0"
   gem "factory_girl"
   gem 'shoulda-matchers'
+  gem 'ZenTest'
+  gem 'test_notifier'
 end
 

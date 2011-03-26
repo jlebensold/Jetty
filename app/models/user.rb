@@ -15,6 +15,14 @@ class User < ActiveRecord::Base
 
   def self.attributes_protected_by_default
   end
+  def files_folder
+    "files/#{id}"
+  end
+  def checkfolder
+    unless File.exists? files_folder
+      FileUtils.mkdir files_folder
+    end
+  end
   def maincontents
     contents.find_all {|c| c.parent == nil}
   end
