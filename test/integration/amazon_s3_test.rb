@@ -4,9 +4,11 @@ require 'aws/s3'
 # require 'zenconder'
 
 class AmazonS3Test < ActionController::IntegrationTest
+
   bucket = "jettytstcontent"
   test "shouldWriteToS3" do
-  
+=begin
+    return 
 
     AWS::S3::Base.establish_connection!(
         :access_key_id     => 'AKIAILUQ4OZEBWEEK3OA',
@@ -18,7 +20,7 @@ class AmazonS3Test < ActionController::IntegrationTest
     #store file
 
     puts AWS::S3::S3Object.url_for(File.basename(file), bucket)
-=begin
+
 
 
     fileOnS3 = "http://s3.amazonaws.com/jettytstcontent/video-test.mov?AWSAccessKeyId=AKIAILUQ4OZEBWEEK3OA&Expires=1297019271&Signature=7siNGdb6TlMw3R1hQn7ur%2BXU8kg%3D"

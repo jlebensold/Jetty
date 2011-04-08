@@ -7,7 +7,7 @@ class CreateCourseItems < ActiveRecord::Migration
       t.integer :content_id
       t.integer :ordering, :default => 0, :null => false
       t.timestamps
-    end
+    endzø
   end
 
   def self.down

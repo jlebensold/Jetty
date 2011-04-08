@@ -1,4 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/Users/jon/Sites/rails/jetty/app/controllers/purchasing_controller.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/db/schema.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/controllers/users_controller.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/public/javascripts/contentmanager.js</file>
+        <file>file:/Users/jon/Sites/rails/jetty/config/routes.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/views/users/registrations/edit.html.erb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/models/payment.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/test/unit/payment_test.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/test/integration/amazon_s3_test.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/db/migrate/20110206205912_create_courses.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/models/course.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/models/course_item.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/db/migrate/20110312075311_create_course_items.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/models/user.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/spec/models/payment_spec.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/spec/models/user_spec.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/controllers/contents_controller.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/db/migrate/20110326111308_create_payments.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/spec/models/content_spec.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/spec/support/factories.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/views/purchasing/confirm.erb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/views/purchasing/index.erb</file>
+    </open-files>
 </project-private>

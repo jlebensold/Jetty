@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110312075311) do
+ActiveRecord::Schema.define(:version => 20110402145818) do
 
   create_table "contents", :force => true do |t|
     t.string   "type"
@@ -66,6 +66,26 @@ ActiveRecord::Schema.define(:version => 20110312075311) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "payments", :force => true do |t|
+    t.decimal  "amount",            :precision => 8, :scale => 2
+    t.integer  "product_id"
+    t.integer  "purchaseable_id"
+    t.string   "purchaseable_type"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "users", :force => true do |t|
     t.string   "email"

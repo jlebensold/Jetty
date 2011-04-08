@@ -110,6 +110,7 @@ GEM
     paperclip (2.3.8)
       activerecord
       activesupport
+    paypal_adaptive (0.1.0)
     polyglot (0.3.1)
     rack (1.2.1)
     rack-mount (0.6.13)
@@ -201,6 +202,7 @@ DEPENDENCIES
   mongrel (= 1.2.0.pre2)
   mysql
   paperclip (~> 2.3)
+  paypal_adaptive
   rails (= 3.0.3)
   rspec-rails (>= 2.5.0)
   shoulda-matchers

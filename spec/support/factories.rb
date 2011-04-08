@@ -17,7 +17,9 @@ end
 Factory.sequence :email do |n|
     "person#{n}@example.com"
 end
-
+Factory.define :payment do |p|
+  p.email "jon_1301144956_per@lebensold.ca"
+end
 Factory.define :pdf do |p|
   p.creator { single_instances[:publisher]}
 end

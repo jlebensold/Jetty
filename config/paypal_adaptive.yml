@@ -1,0 +1,20 @@
+development:
+  environment: "sandbox"
+  username: "jon_1301144760_biz_api1.lebensold.ca"
+  password: "1301144767"
+  signature: "	An5ns1Kso7MWUdW4ErQKJJJ4qi4-AbJ8SqB8YxFSVoqxx3tN3wVPn2Kl"
+  application_id: "APP-80W284485P519543T"
+
+test:
+  environment: "sandbox"
+  username: "jon_1301144760_biz_api1.lebensold.ca"
+  password: "1301144767"
+  signature: "	An5ns1Kso7MWUdW4ErQKJJJ4qi4-AbJ8SqB8YxFSVoqxx3tN3wVPn2Kl"
+  application_id: "APP-80W284485P519543T"
+
+production:
+  environment: "production"
+  username: "my_production_username"
+  password: "my_production_password"
+  signature: "my_production_signature"
+  application_id: "my_production_app_id"

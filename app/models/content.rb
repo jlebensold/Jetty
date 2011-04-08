@@ -6,6 +6,10 @@ class Content < ActiveRecord::Base
   has_many  :children, :class_name => "Content", :foreign_key => "parent_id",  :dependent => :delete_all
   has_many  :course_items,  :foreign_key => "content_id",  :dependent => :delete_all
   validates :creator, :presence => true
+
+  has_many :purchases, :as => :purchaseable
+
+
 #  validates :publish, :date_or_blank => true
 #  validates :expire, :date_or_blank => true
 

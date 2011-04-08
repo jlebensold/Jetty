@@ -39,7 +39,7 @@ class ContentsController < ApplicationController
   def new
     @content = Content.new
     @content.creator = User.find(current_user.id)
-    @content.save()
+    @content.save
     redirect_to "/contents/#{@content.id}/edit"
   end
   def postprocess
