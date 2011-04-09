@@ -1,27 +1,26 @@
-hello
-
-<%= session[:foo] %>
-
 <div class="popup">
   <div class="header">
     <a href="#">cancel</a>
   </div>
   <div class="payment">
-<% if session[:purchased].nil?  %>
+
+
+<% if current_user.nil? %>
+    purchase content
     <div class="step1">
 
       <div class="login hide" >
+        <h3>Login</h3>
         <form id="frmlogin" method="post" action="">
           <label for="email">Email:</label>
           <input type="text" name="email" id="email" />
           <label for="password">Password:</label>
           <input type="password" name="password" id="password" />
-          <label for="password_confirmation">Confirmation</label>
-          <input type="password" name="password_confirmation" id="password_confirmation" />
           <input type="submit" value="login" />
         </form>
       </div>
       <div class="register">
+        <h3>Register</h3>
         <form id="frmregister" method="post" action="">
           <label for="email">Email:</label>
           <input type="text" name="email" id="email" />
@@ -33,14 +32,18 @@ hello
         </form>
       </div>
     </div>
-    <div class="step2 hide">
+    <a href="<%= url_for :controller => 'purchasing', :action => 'checkout' %>">Buy Content</a>
+<% else %>
+    <div class="step2">
+<% if !current_user.purchased? Content.last  %>
       <a href="<%= url_for :controller => 'purchasing', :action => 'checkout' %>">Buy Content</a>
-    </div>
 <% else %>
      purchased!
 <% end %>
-    
-   
+    </div>
+
+<% end %>
+
   </div>
 </div>
 
@@ -62,6 +65,7 @@ $(function()
       $(".step1").fadeOut('fast',function()
       {
         $(".step2").fadeIn('fast');
+        //resp.user_id
       });
     }
   });

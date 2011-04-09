@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     @user = User.new
     if @user.update_attributes(params[:user])
       sign_in(:user , @user)
-      render :json => {:status => "SUCCESS" , :success => true}
+      render :json => {:status => "SUCCESS" , :success => true, :user_id => @user.id}
     else
       render :json => {:status => "FAIL"}
     end

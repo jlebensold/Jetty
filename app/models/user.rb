@@ -18,6 +18,11 @@ class User < ActiveRecord::Base
   def files_folder
     "files/#{id}"
   end
+  def purchased? content
+    found_payment = Payment.find_all_by_email(email).find_all { |p| p.purchaseable_type == "Content" && p.purchaseable_id == content.id  }
+    (found_payment.length > 0)
+  end
+
   def checkfolder
     unless File.exists? files_folder
       FileUtils.mkdir files_folder

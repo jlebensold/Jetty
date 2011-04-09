@@ -2,9 +2,12 @@ class PurchasingController < ApplicationController
   def index
     
   end
-
+  
   def checkout
-    session[:purchased] = nil
+    @myip = "93.172.40.45"
+    @content = Content.last
+
+#    session[:purchased] = nil
     pay_request = PaypalAdaptive::Request.new
     data = {
     "returnUrl" => url_for(:action => 'index', :only_path => false),
@@ -15,16 +18,11 @@ class PurchasingController < ApplicationController
         {"email"=>"jon_1301144760_biz@lebensold.ca", "amount"=>"2.50", "primary" => false}]
     },
     "cancelUrl"=>url_for(:action => 'index', :only_path => false),
-=begin
-PASS the customerId which is the Pkey of the current_user id
-on IPN, update the purchase table with the customer ID, unlocking the digital asset
-      =BEGIN asdasdasd!!! CURRENT USER!!!
-=end
-    "customerId" => current_user.id,
+    "trackingId" => current_user.id.to_s+"|c|"+@content.id.to_s,
     "actionType"=>"PAY",
-    "ipnNotificationUrl"=>"http://93.173.59.38:3000/purchasing/ipn"
+    "ipnNotificationUrl"=>"http://#{@myip}:3000/purchasing/ipn"
     }
-
+    logger.info "SENDING CUSTOMER ID: " + data["custom"].to_s
     pay_response = pay_request.pay(data)
     if pay_response.success?
        redirect_to pay_response.approve_paypal_payment_url
@@ -37,31 +35,52 @@ on IPN, update the purchase table with the customer ID, unlocking the digital as
   end
   skip_before_filter :verify_authenticity_token
   def ipn
-    #TODO: validate payment values
-    session[:purchased] = true;
-    require 'PP'
-    logger.info ">>>>>"
-    logger.info pp params
-    logger.info "<<<<<"
-  end
-=begin
-  include ActiveMerchant::Billing
 
-  def checkout
-    setup_response = gateway.setup_purchase(5000,
-      :ip                => request.remote_ip,
-      :return_url        => url_for(:action => 'confirm', :only_path => false),
-      :cancel_return_url => url_for(:action => 'index', :only_path => false)
-    )
-    redirect_to gateway.redirect_url_for(setup_response.token)
+    #validate:
+    paypal_response = IpnValidator.new(params, request.raw_post)
+    require 'PP'
+    logger.info "validation..."
+    logger.info pp(paypal_response.valid?)
+
+    logger.info "tracker: " + params["tracking_id"].to_s
+    p_split = params["tracking_id"].split('|')
+    @user = User.find(p_split.first.to_i)
+    @content = Content.find(p_split.last.to_i)
+    payment = Payment.new
+    payment.email = @user.email
+    payment.purchaseable = @content
+    payment.save!
   end
-private
-  def gateway
-    @gateway ||= PaypalExpressGateway.new(
-      :login => 'BBB_1218238161_biz_api1.lebensold.ca',
-      :password => '1218238166',
-      :signature => 'As4faK2yva3w7w7kh9gXwOx0CHCeAAec5zQWJP04DYX1lCgRY0nbzeCV '
-    )
+
+end
+class IpnValidator
+
+  def initialize(params, raw_post)
+    @params = params
+    @raw = raw_post
   end
-=end
+
+  def valid?
+    uri = URI.parse(PaypalAdaptive::Config.new.paypal_base_url + '/webscr?cmd=_notify-validate')
+
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.open_timeout = 60
+    http.read_timeout = 60
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    http.use_ssl = true
+    response = http.post(uri.request_uri, @raw,
+                         'Content-Length' => "#{@raw.size}",
+                         'User-Agent' => "My custom user agent"
+                       ).body
+
+    raise StandardError.new("Faulty paypal result: #{response}") unless ["VERIFIED", "INVALID"].include?(response)
+    raise StandardError.new("Invalid IPN: #{response}") unless response == "VERIFIED"
+
+    true
+  end
+
+  def completed?
+    status == "COMPLETED"
+  end
+
 end
