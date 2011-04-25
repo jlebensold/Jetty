@@ -3,6 +3,15 @@
     list-style: none;
     position: relative;
 }
+    .maincontent .title
+    {
+        font-size: 20px;
+        margin: 10px 0px;
+    }
+    .maincontent .title a
+    {
+        text-decoration: none;
+    }
     .maincontent .left,
     .maincontent .right
     {

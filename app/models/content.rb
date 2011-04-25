@@ -23,7 +23,7 @@ class Content < ActiveRecord::Base
   S3_BUCKET = "jettytstcontent"
   S3_WEB    = "https://s3.amazonaws.com/jettytstcontent/"
 
-  def do_upload=(val)
+  def do_upload val
     @do_upload = val
   end
 
@@ -74,16 +74,22 @@ class Content < ActiveRecord::Base
       self.status = STATUS_OFFLINE
       self.save!
   end
-  def s3_keys
-    creds = YAML::load(ERB.new(File.read(Content::S3_PATH)).result).stringify_keys
+  def load_keys path
+    creds = YAML::load(ERB.new(File.read(path)).result).stringify_keys
     (creds[Rails.env] || creds).symbolize_keys
+  end
+  def s3_keys
+    load_keys(Content::S3_PATH)
   end
   after_save :aftersave
   def aftersave
     before_s3
     if (@do_upload)
-      logger.info "queue delayed job?"
+      do_upload false
+      logger.info ">>>>queue delayed job?"
       delay.upload_to_s3 self.id
+    else
+      logger.info "<<<< skipping upload"
     end
   end
   def after_s3
@@ -92,7 +98,7 @@ class Content < ActiveRecord::Base
   end
   def upload_to_s3 id
     @content = Content.find(id)
-    logger.info "uploading to S3! " + self.type
+#    logger.info "uploading to S3! " + self.type
     @content.remote_value = @content.local_value.to_file
     @content.save!
     after_s3
@@ -106,6 +112,12 @@ class Content < ActiveRecord::Base
     return "" if (local_value_file_name == nil)
     local_value_file_name.split('.').last.to_s
   end
+  def subcontents
+    children.find_all{|item| !item.instance_of? Url }
+  end
+  def references
+    children.find_all{|item| item.instance_of? Url }
+  end
   def as_json(options = {})
     if (options == nil)
       options = {}
@@ -113,17 +125,12 @@ class Content < ActiveRecord::Base
     options.merge({
       :id => id,
       :title => title,
+      :tagline => tagline,
       :status => status,
       :type => type,
       :meta => meta,
       :src => src_url
     })
-  end
-  def subcontents
-    children.find_all{|item| !item.instance_of? Url }
-  end
-  def references
-    children.find_all{|item| item.instance_of? Url }
   end
 
 end

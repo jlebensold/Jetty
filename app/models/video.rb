@@ -1,6 +1,7 @@
 require 'aws/s3'
 class Video < Content
-  ZC_KEY = '89db78eb49aaeecb61f4f877ff983051'
+  ZC_PATH   = Rails.root.to_s + "/config/zencoder.yml"
+
   def poster
     Content::S3_WEB.to_s + bucketpath + "/t/frame_0000.png"
   end
@@ -29,10 +30,11 @@ class Video < Content
     end
   end
   def after_s3
+      logger.info ">>>>video: after s3"
       self.status = Content::STATUS_CONVERSION_IN_PROGRESS
       #Video.update(self.id , {:status => STATUS_CONVERSION_IN_PROGRESS})
       @bucket = Content::S3_BUCKET.to_s + "/" + bucketpath
-      Zencoder.api_key = ZC_KEY
+      Zencoder.api_key = load_keys(ZC_PATH)[:key]
       Zencoder::Job.create({
                       :input => "s3://"+@bucket +"/original."+extension,
                       :outputs => [
@@ -68,6 +70,16 @@ class Video < Content
                                        }
                                    }
                                  ]})
+  end
+
+  def as_json(options = {})
+    if (!options)
+      options = {}
+    end
+    options[:ipad] = ipad
+    options[:iphone] = iphone
+    options[:ogv] = ogv
+    super.as_json()
   end
 
 

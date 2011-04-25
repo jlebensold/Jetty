@@ -10,6 +10,7 @@ class CourseItem < ActiveRecord::Base
     {
       :id => id,
       :monetize => monetize,
+      :monetize_return_url => monetize_return_url,
       :amount => amount,
       :course_id => course_id,
       :content_id =>  content_id,

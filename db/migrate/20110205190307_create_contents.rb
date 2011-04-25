@@ -3,6 +3,8 @@ class CreateContents < ActiveRecord::Migration
     create_table :contents do |t|
       t.string "type"
       t.string "title"
+      t.string "tagline"
+      t.string "description"
       t.string "local_value"
       t.string "local_value_file_name"
       t.string "local_value_content_type"

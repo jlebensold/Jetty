@@ -51,4 +51,7 @@ class Image < Content
       @content.status = Content::STATUS_COMPLETE;
       @content.save!
   end
+  def html
+    
+  end
 end

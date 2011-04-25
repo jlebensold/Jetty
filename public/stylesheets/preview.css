@@ -1,54 +1,85 @@
+#header
+{
+    background: none;
+}
 .playlist, .mainsec
 {
     float: left;
 }
 .playlist
 {
-    width: 169px;
-    overflow: scroll;
-    height: 430px;
-    padding-left: 10px;
-    border-left: 1px solid #333;
+    width: 220px;
+    height: 230px;
+    padding-left: 5px;
+    margin-top:48px;
 }
 .mainsec
 {
-    width: 620px;
-    height: 430px;
+    width: 550px;
+}
+.tagline
+{
+    margin: 6px 0px;
 }
 .playlist ul
 {
     clear: both;
     list-style: none;
+    margin: 0 0;
+    padding: 0 0;
+
 }
-.tablist
-{
-    list-style:none;
-    height: 14px;
-}
-    .tablist li.active
+    .courselist li
     {
-        background: #6AAAD3;
+        padding: 4px 0px;
     }
-        .tablist li.active a
-        {
-            color: #FFF;
-        }
-    .tablist li
+    .courselist li .play
     {
-        float: left;
-        padding: 4px 2px;
-        border: 1px #000 solid;
+        font-weight: bold;
+        text-decoration: none;
+        padding: 2px 6px;
+        font-size: 12px;
     }
-        .tablist li a
+    .courselist li p
+    {
+        font-size: 10px;
+        padding: 0px 6px;
+    }
+    #morelist li:nth-child(odd),
+    .courselist li:nth-child(odd)
+    {
+        background: #FAFAFA;
+    }
+    #morelist a
+    {
+        text-decoration: none;
+    }
+        #morelist li
         {
-            text-decoration: none;
+            clear: left;
+            width: 100%;
+            height:80px;
         }
+        #morelist a span
+        {
+            text-decoration: underline;
+            display: block;
+        }
+        #morelist a *
+        {
+            float: left;
+
+        }
+
 .options
 {
     list-style:none;
-    width: 600px;
+    width: 500px;
     height: 20px;
+    padding-bottom: 3px;
     background: #EFEFEF;
+    margin-bottom: 30px;
+    clear: both;
 }
     .options > li
     {
@@ -68,7 +99,7 @@
     }
     .options > li:hover .child
     {
-        display: block;
+/*        display: block; */
     }
     .options .child
     {

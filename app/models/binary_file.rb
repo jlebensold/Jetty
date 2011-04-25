@@ -9,5 +9,13 @@ class BinaryFile < Content
       end
     end
   end
-
+  def icon
+    #return extension
+    case extension.downcase
+    when "zip","rar","tar.gz""tar","gz"
+      return "package.png"
+    else
+      return "page_white.png"
+    end
+  end
 end

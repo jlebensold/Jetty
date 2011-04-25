@@ -7,6 +7,7 @@ Jetty::Application.routes.draw do
   resources :users
   match "users/register",      :to => "users#register", :via =>"post"
 
+  match "p/:id",      :to => "p#preview", :via =>"get"
 
   root :to => 'home#index';
 

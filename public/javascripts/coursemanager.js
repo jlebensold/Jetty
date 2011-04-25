@@ -13,7 +13,7 @@ function loadListeners()
     $("#newcourse,#newcontent").click(function(evt){ $("."+$(this).get(0).id).toggle(); evt.preventDefault(); });
     $("#preview").click(function(evt) {
         var id = $("#courses .active").next().find(".id").val();
-        location.href = basepath+"/preview/"+id;
+        location.href = "/p/"+id;
     });
     $(".top .cancel").click(function(evt){ $(this).parent().toggle();evt.preventDefault(); });
 
@@ -36,17 +36,22 @@ function loadListeners()
 function toggle_monetize(evt)
 {
     if ($(this).attr('checked'))
-        $(this).parent().parent().find('.amount').removeAttr('disabled');
+        $(this).parent().parent().find('.monetizetoggle').removeAttr('disabled');
     else
-        $(this).parent().parent().find('.amount').val('').attr('disabled','disabled');
+        $(this).parent().parent().find('.monetizetoggle').val('').attr('disabled','disabled');
 }
 function save_course_item(evt)
 {
+
+//    console.log($(this).parent().html());
+//    console.log($(this).parent().find('.monetize_return_url').val());
+//    console.log($(this).parent().find('.monetize_return_url').attr('value'));
     doAjax('/saveitem', {
         courseitem : {
           id : $(this).parent().find('.id').val(),
           monetize : $(this).parent().find('.monetize').attr('checked'),
-          amount : $(this).parent().find('.amount').val()
+          amount : $(this).parent().find('.amount').val(),
+          monetize_return_url :$(this).parent().find('.monetize_return_url').val()
           }
     },function(resp)
     {

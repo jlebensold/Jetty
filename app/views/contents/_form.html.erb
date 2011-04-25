@@ -1,4 +1,5 @@
 <%= stylesheet_link_tag "contentmanager","video-js","jquery-ui" %>
+<%= javascript_include_tag 'backface'%>
 <%= form_for(@content.becomes(Content),:html => { :multipart => true }, :remote => true ) do |f| %>
 <noscript><p>File uploads require Javascript to be enabled.</p></noscript>
 <p>Status: <span class="filestatus"><%= @content.status %></span></p>
@@ -7,45 +8,37 @@
 </div>
 <br/>
 <div class="maincontent">
+
+  <div class="title"><%= f.text_field :title%></div>
+  <div class="tagline"><%= f.text_field :tagline%></div>
   <div class="left">
-    <%= f.hidden_field :id, :value => @content.id %>
-    <%= f.hidden_field :type, :value =>@content.type %>
-    <p>
-      <%= f.label :title, 'Title' %>
-      <%= f.text_field :title%>
-    </p>
-    <div id="maincontent">Upload</div>
+    <div id="maincontent">Add Content</div>
+
+    <%= render :partial => "shared/contentbox", :locals => {:content => @content} %>
+
     <div class="references">
       <h4>References</h4>
       <form id="referencesform" action="#" method="post">
         <input type="text" name="tb_addurl" id="tb_addurl" /><button name="bt_addurl" id="bt_addurl" >Add</button>
-        <ul class="clear" id="referenceslist">
-          <% @content.references.each do |url| %>
-            <li cid="<%=url.id%>"><span><%= url.meta%></span><a class="delete" href="#">x</a></li>
-          <% end %>
-        </ul>
+        <ul class="clear" id="referenceslist"></ul>
       </form>
     </div>
-    <div id="subcontent" href="#">Subcontent</div>
-    <ul id="subcontentslist" class="subcontents">
 
-    <% @content.subcontents.each do |c| end%>
-      <!--
-      <li cid="<=   c.id %>" type="<= c.type %>">
-          <h4><= c.type %>, <= c.status %> <a href="#" class="delete">x</a></h4>
-          <p><= render :partial => "shared/contentbox", :locals => {:content => c} %> <a href="#">more...</a></p>
-      </li>
-      !-->
-    </ul>
-  </div>
-  <div class="right">
-    <%= render :partial => "shared/contentbox", :locals => {:content => @content} %>
+    <div class="publishtime hide">
     <h3>Publishing</h3>
-    <%= f.label :publish, 'Publish on:' %>
+      <%= f.label :publish, 'Publish on:' %>
     <%= f.text_field :publish, :value => @content.publish , :class => 'datepicker'%>
     <%= f.label :expire, 'Expires on:' %>
     <%= f.text_field :expire, :value => @content.expire, :class => 'datepicker'%>
+    </div>
 
+  </div>
+  <div class="right">
+    <%= f.hidden_field :id, :value => @content.id %>
+    <%= f.hidden_field :type, :value =>@content.type %>
+    <div id="subcontent" href="#">Add Subcontent</div>
+    <ul id="subcontentslist" class="subcontents">
+    </ul>
   </div>
 </div>
 <div class="clear"></div>

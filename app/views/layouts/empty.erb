@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jetty</title>
+  <%= stylesheet_link_tag "scaffold","site", "jquery-ui-1.8.12.custom.css" %>
+  <%= yield :javascript %>
+  <%= yield :stylesheet %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+    <%= yield %>
+</body>
+</html>

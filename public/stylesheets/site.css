@@ -25,7 +25,7 @@ label,input,textarea
 
 .qq-upload-button {
     display:block; /* or inline-block */
-    width: 80px; padding: 3px 0; text-align:center;
+    width: 120px; padding: 3px 0; text-align:center;
     background:#B3400B; border-bottom:1px solid #ddd;color:#fff;
 }
 .qq-upload-button-hover {background:#cc0000;}
@@ -152,4 +152,15 @@ label,input,textarea
         border-left: 1px solid #444;
         float: left;
         padding: 0px 5px;
+    }
+/* purchasing */
+    .popup
+    {
+        position: absolute;
+        width: 300px;
+        height: 200px;
+        top: 20%;
+        margin: 0 auto;
+        border: 1px solid #CACACA;
+        background: #FFF;
     }

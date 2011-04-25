@@ -3,7 +3,7 @@
 <head>
   <title>Jetty</title>
   <%= stylesheet_link_tag "scaffold","site", "jquery-ui-1.8.12.custom.css" %>
-  
+
   <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js",
                              "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js",
                              "application" %>
@@ -16,7 +16,6 @@
    <p class="notice"><%= notice %></p>
    <p class="alert"><%= alert %></p>
   </div>
-  <h1 id="logo">Jetty</h1>
   <div id="header">
     <div class="loginstatus">
     <% unless user_signed_in? -%>
@@ -25,10 +24,6 @@
     <% end -%>
     <% if user_signed_in? -%>
       Welcome, <%=  current_user.email %>
-      <%= link_to "Dashboard", "/users" %>
-      |
-      <%= link_to "My Account", edit_user_registration_path %>
-      |
       <%= link_to "logout", destroy_user_session_path %>
     <% end -%>
 
@@ -38,6 +33,5 @@
     <%= yield %>
     <div class="clear"></div>
   </div>
-  <div id="footer"></div>
 </body>
 </html>

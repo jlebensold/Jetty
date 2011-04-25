@@ -39,7 +39,9 @@ function tpl_course_item(p)
             '<input class="content_id" type="hidden" value="'+p.content_id+'" />'+
             tpl_checkbox('monetize',p.monetize,'monetize') +
             '<label>Amount</label>'+
-            '<input class="amount" '+disabled+' type="text" value="'+p.amount+'" />'+
+            '<input class="amount monetizetoggle" '+disabled+' type="text" value="'+p.amount+'" />'+
+            '<label>Return URL</label>'+
+            '<input class="monetize_return_url monetizetoggle" '+disabled+' type="text" value="'+p.monetize_return_url+'" />'+
             '<button class="save">Save</button>'+
             '<a class="delete" href="#">delete</a><div class="clear" />'+
         '</div>'

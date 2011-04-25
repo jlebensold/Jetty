@@ -1,9 +1,6 @@
-require 'simple-navigation'
+
 class UsersController < ApplicationController
-  def index
-    @user = current_user
-    @user.checkfolder
-  end
+  before_filter :authenticate_user!, :except => [:register]
   def register
     @user = User.new
     if @user.update_attributes(params[:user])
@@ -12,6 +9,12 @@ class UsersController < ApplicationController
     else
       render :json => {:status => "FAIL"}
     end
-    
+
   end
+
+
+  def index
+    @user = current_user
+  end
+
 end

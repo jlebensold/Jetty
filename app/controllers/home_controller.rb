@@ -20,7 +20,6 @@ class HomeController  < ApplicationController
   end
   def almostdone
   end
-  
   def index
   end
 end

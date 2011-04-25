@@ -1,0 +1,7 @@
+development:
+  key: '89db78eb49aaeecb61f4f877ff983051'
+test:
+  key: '89db78eb49aaeecb61f4f877ff983051'
+production:
+  key: '89db78eb49aaeecb61f4f877ff983051'
+

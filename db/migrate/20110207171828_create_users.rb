@@ -2,7 +2,8 @@ class CreateUsers < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
       t.string  "email"
-      t.string  "paypal_username"
+      t.string  "paypal_email"
+      t.string  "paypal_return_address"
       t.string  "type"
       t.string   "encrypted_password",   :limit => 128, :default => "", :null => false
       t.string   "password_salt",                       :default => "", :null => false

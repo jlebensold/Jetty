@@ -4,25 +4,29 @@ class PurchasingController < ApplicationController
   end
   
   def checkout
-    @myip = "93.172.40.45"
-    @content = Content.last
+    @myip   = "46.116.102.123"
+    @ipn    = "http://#{@myip}:3000/purchasing/ipn"
+    @courseitem = CourseItem.find(params[:ci])
+    #TODO: check if already paid
 
-#    session[:purchased] = nil
+    
     pay_request = PaypalAdaptive::Request.new
     data = {
-    "returnUrl" => url_for(:action => 'index', :only_path => false),
+    "returnUrl" => @courseitem.monetize_return_url,
     "requestEnvelope" => {"errorLanguage" => "en_US"},
     "currencyCode"=>"USD",
     "receiverList"=>
-        {"receiver"=>[{"email"=>"Merch1_1301751699_biz@lebensold.ca", "amount"=>"10.00", "primary" => true},
-        {"email"=>"jon_1301144760_biz@lebensold.ca", "amount"=>"2.50", "primary" => false}]
+        {"receiver"=>[
+          {"email"=>"Merch1_1301751699_biz@lebensold.ca", "amount"=>@courseitem.amount }
+#"primary" => true}
+#chained:          ,{"email"=>"jon_1301144760_biz@lebensold.ca", "amount"=>"2.50", "primary" => false}
+          ]
     },
     "cancelUrl"=>url_for(:action => 'index', :only_path => false),
-    "trackingId" => current_user.id.to_s+"|c|"+@content.id.to_s,
+    "trackingId" => current_user.id.to_s+"|course|"+@courseitem.id.to_s,
     "actionType"=>"PAY",
-    "ipnNotificationUrl"=>"http://#{@myip}:3000/purchasing/ipn"
+    "ipnNotificationUrl"=>@ipn
     }
-    logger.info "SENDING CUSTOMER ID: " + data["custom"].to_s
     pay_response = pay_request.pay(data)
     if pay_response.success?
        redirect_to pay_response.approve_paypal_payment_url
@@ -45,10 +49,10 @@ class PurchasingController < ApplicationController
     logger.info "tracker: " + params["tracking_id"].to_s
     p_split = params["tracking_id"].split('|')
     @user = User.find(p_split.first.to_i)
-    @content = Content.find(p_split.last.to_i)
+    @courseitem = CourseItem.find(p_split.last.to_i)
     payment = Payment.new
     payment.email = @user.email
-    payment.purchaseable = @content
+    payment.purchaseable = @courseitem.content
     payment.save!
   end
 

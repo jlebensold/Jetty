@@ -1,5 +1,5 @@
 class ContentsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => ['show']
   def index
     @contents = Content.all
 
@@ -25,12 +25,8 @@ class ContentsController < ApplicationController
     render :json => {:success => true, :contents => @contents.as_json, :course_items => @course_items.as_json}
   end
   def subcontents
-    subcontents = []
-    if (params[:id])
-      @content = Content.find(params[:id])
-    end
-
-    render :json => {:success => true, :subcontents => get_subcontents(@content) }
+    @content = Content.find(params[:id]) if (params[:id])
+    render :json => {:success => true, :subcontents => get_subcontents(@content) , :references => @content.references.as_json}
   end
   def get_subcontents c
     c.subcontents.map { |i| i.as_json({:contentboxhtml => render_to_string(:partial=> "shared/contentbox",
@@ -76,18 +72,20 @@ class ContentsController < ApplicationController
           params[:subcontent].each { |key,item|
             content = Content.find_or_initialize_by_id(item[:id])
             content.creator = @content.creator
+            content.title = item[:title]
+            require 'pp'
+            logger.info 'saving...'
+            logger.info(pp(item))
             content.update_attributes(item)
             content.parent = @content
             content.save
           }
         else
-          require 'pp'
-          logger.info "something is not cool and should be deleted"
-          logger.info(pp params[:subcontent])
+          #require 'pp'
+          #logger.info "something is not cool and should be deleted"
+          #logger.info(pp params[:subcontent])
           @content.children.each do |r|
-            logger.info "deleting... #{r.id}"
-            logger.info(pp r)
-            #r.delete
+            r.delete
           end
         end
           #refresh
@@ -116,7 +114,7 @@ class ContentsController < ApplicationController
         @content.value = nil
         @content.type = params[:content][:type]
       end
-      @content.do_upload = true
+      @content.do_upload true
       @content.update_attributes(params[:content])
       @content.save!
       #@content = Content.find(params[:id])

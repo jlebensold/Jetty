@@ -13,13 +13,17 @@ function list_subcontent()
         type: 'POST',
         data: {id : $("#content_id").val()},
         dataType : 'json',
-        success : function(resp) {render_subcontents(resp.subcontents)}
+        success : function(resp)
+        {
+            render_subcontents(resp.subcontents)
+            render_references(resp.references)
+        }
     });
 }
 function loadListeners()
 {
-    createUploader($('#maincontent'));
-    createUploader($('#subcontent'));
+    createUploader($('#maincontent'),false);
+    createUploader($('#subcontent'),true);
     $(".datepicker").datepicker({dateFormat: 'yy-mm-dd'});
     $("li a.delete").live('click',delete_subcontent);
     $("#bt_addurl").click(add_subcontent);
@@ -33,7 +37,13 @@ function loadListeners()
         $(".filetypes ." + $($(this).find(':selected')).attr('panel')).show().addClass('active');
     });
     $("form").submit(save_form);
+
+    backface({target:"#content_title"});
+    
+
 }
+
+
 function reprocess_content(evt)
 {
     $.ajax({
@@ -47,7 +57,7 @@ function reprocess_content(evt)
 }
 function add_subcontent(evt)
 {
-    $("#referenceslist").append(tpl_reference($("#tb_addurl").val(),""));
+    $("#referenceslist").append(tpl_reference_title($("#tb_addurl").val(),"",""));
     save();
     evt.preventDefault();
 }
@@ -66,8 +76,9 @@ function save()
             content: {
                 'type'   : $("#content_type").val(),
                 'title'  : $("#content_title").val(),
+                'tagline': $("#content_tagline").val(),
                 'publish': $("#content_publish").val(),
-                'expire': $("#content_expire").val()
+                'expire' : $("#content_expire").val()
               },
             name : $('meta[name=csrf-param]').attr('content'),
             value : $('meta[name=csrf-token]').attr('content')
@@ -95,10 +106,25 @@ function render_subcontents(subcontents)
 }
 function render_references(refs)
 {
-    $("#referenceslist").empty();
+    var id = "#referenceslist";
+    $(id).empty();
     $(refs).each(function(i)
     {
-        $("#referenceslist").append(tpl_reference(this.meta,this.id));
+        var tpl = tpl_reference_title(this.meta,this.id,this.title);
+        $(id).append(tpl);
+        if (tpl.length > 0)
+        {
+            backface({
+                target:"li[cid="+this.id+"] input[type=text]",
+                change : function(e)
+                {
+                    $("#bt_addurl").val('');
+                    save();
+                    return false;
+                }
+            });
+        }
+
     });
 }
 function getSubcontent()
@@ -108,6 +134,7 @@ function getSubcontent()
     {
         subc.push({
              meta: $(this).find('span').text(),
+             title: $(this).find('input').val(),
              id: $(this).attr('cid'),
              type : "Url"
          });
@@ -115,6 +142,7 @@ function getSubcontent()
     $("#subcontentslist li").each(function(){
         subc.push({
              id: $(this).attr('cid'),
+             title: $(this).find('input').val(),
              type : $(this).attr('type')
          });
     });
@@ -123,12 +151,13 @@ function getSubcontent()
 }
 
 
-function createUploader(emt)
+function createUploader(emt,multiple)
 {
     new qq.FileUploader({
         element: emt.get(0),
         action: basepath + "/upload",
         debug: false,
+        multiple: multiple,
         template: tpl_uploader(emt.text()),
         params: uploadparams,
         onSubmit: function(id, filename)
@@ -188,9 +217,13 @@ function getType(filename)
 //templates:
 function tpl_subcontent(c)
 {
+    if (c.title == null || c.title.length == 0)
+        c.title = '';
+
     return '<li cid="'+c.id+'" type="'+c.type+'">'+
           '<h4>'+c.type+', '+c.status+ ' <a href="#" class="delete">x</a></h4>'+
-          '<p>'+c.contentboxhtml+'<a href="#">more...</a></p>'+
+          '<input class="title" value="'+c.title+'" type="text" />' +
+          '<p>'+c.contentboxhtml+'<a href="#" class="hide">more...</a></p>'+
         '</li>';
 }
 function tpl_uploader(txt)
@@ -201,8 +234,11 @@ function tpl_uploader(txt)
                 '<ul class="qq-upload-list"></ul>' +
              '</div>'
 }
-function tpl_reference(url,id)
+function tpl_reference_title(url,id,title)
 {
     if (url.length == 0) return "";
-    return '<li cid="'+id+'" ><span>'+url+'</span><a href="#" class="delete">x</a></li>';
+
+    if (title == null || title.length == 0)
+        title = '';
+    return '<li cid="'+id+'" ><input value="'+title+'" type="text" /><<span class="url">'+url+'</span>><a href="#" class="delete">x</a></li>';
 }

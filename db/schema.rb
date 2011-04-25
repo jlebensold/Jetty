@@ -15,6 +15,8 @@ ActiveRecord::Schema.define(:version => 20110402145818) do
   create_table "contents", :force => true do |t|
     t.string   "type"
     t.string   "title"
+    t.string   "tagline"
+    t.string   "description"
     t.string   "local_value"
     t.string   "local_value_file_name"
     t.string   "local_value_content_type"
@@ -35,16 +37,20 @@ ActiveRecord::Schema.define(:version => 20110402145818) do
   end
 
   create_table "course_items", :force => true do |t|
-    t.boolean  "monetize",                                 :default => false, :null => false
-    t.decimal  "amount",     :precision => 8, :scale => 2
+    t.boolean  "monetize",                                          :default => false, :null => false
+    t.decimal  "amount",              :precision => 8, :scale => 2
+    t.string   "monetize_return_url"
     t.integer  "course_id"
     t.integer  "content_id"
-    t.integer  "ordering",                                 :default => 0,     :null => false
+    t.integer  "ordering",                                          :default => 0,     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "courses", :force => true do |t|
+    t.boolean  "monetize",                                          :default => false, :null => false
+    t.decimal  "amount",              :precision => 8, :scale => 2
+    t.string   "monetize_return_url"
     t.string   "title"
     t.string   "description"
     t.integer  "creator_id"
@@ -89,22 +95,23 @@ ActiveRecord::Schema.define(:version => 20110402145818) do
 
   create_table "users", :force => true do |t|
     t.string   "email"
-    t.string   "paypal_username"
+    t.string   "paypal_email"
+    t.string   "paypal_return_address"
     t.string   "type"
-    t.string   "encrypted_password",   :limit => 128, :default => "", :null => false
-    t.string   "password_salt",                       :default => "", :null => false
+    t.string   "encrypted_password",    :limit => 128, :default => "", :null => false
+    t.string   "password_salt",                        :default => "", :null => false
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                       :default => 0
+    t.integer  "sign_in_count",                        :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.integer  "failed_attempts",                     :default => 0
+    t.integer  "failed_attempts",                      :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.datetime "created_at"
