@@ -1,4 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/Users/jon/Sites/rails/jetty/app/views/contents/_form.html.erb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/views/courses/_form.html.erb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/views/users/index.html.erb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/views/p/preview.erb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/controllers/contents_controller.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/controllers/purchasing_controller.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/views/shared/_purchasebox.erb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/public/stylesheets/preview.css</file>
+        <file>file:/Users/jon/Sites/rails/jetty/public/javascripts/preview.js</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/models/video.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/models/content.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/models/course.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/models/binary_file.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/models/image.rb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/app/views/shared/_contentbox.erb</file>
+        <file>file:/Users/jon/Sites/rails/jetty/public/javascripts/templates.js</file>
+        <file>file:/Users/jon/Sites/rails/jetty/public/javascripts/contentmanager.js</file>
+        <file>file:/Users/jon/Sites/rails/jetty/public/javascripts/coursemanager.js</file>
+        <file>file:/Users/jon/Sites/rails/jetty/public/javascripts/purchasebox.js</file>
+        <file>file:/Users/jon/Sites/rails/jetty/public/stylesheets/jquery-ui-1.8.12.custom.css</file>
+    </open-files>
 </project-private>

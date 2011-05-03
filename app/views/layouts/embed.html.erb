@@ -4,32 +4,29 @@
   <title>Jetty</title>
   <%= stylesheet_link_tag "scaffold","site", "jquery-ui-1.8.12.custom.css" %>
 
-  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js",
-                             "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js",
+  <%= javascript_include_tag "jquery-1.5.1.js",
+                             "jquery-ui-1.8.11.custom.min.js",
                              "application" %>
   <%= yield :javascript %>
   <%= yield :stylesheet %>
   <%= csrf_meta_tag %>
 </head>
-<body>
+<body class="embed">
   <div id="flash">
    <p class="notice"><%= notice %></p>
    <p class="alert"><%= alert %></p>
   </div>
-  <div id="header">
+  <div class="container">
     <div class="loginstatus">
     <% unless user_signed_in? -%>
     <p><%= link_to 'Join Jetty!', new_user_registration_path %></p>
     <p><%= link_to 'Login', new_user_session_path %></p>
     <% end -%>
     <% if user_signed_in? -%>
-      Welcome, <%=  current_user.email %>
+      Welcome, <%=  current_user.email %> | 
       <%= link_to "logout", destroy_user_session_path %>
     <% end -%>
-
     </div>
-  </div>
-  <div class="container">
     <%= yield %>
     <div class="clear"></div>
   </div>

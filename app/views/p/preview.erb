@@ -15,36 +15,53 @@
     </li>
   </ul>
 </div>
-<div class="playlist">
-  <ul class="tablist">
-    <li class="active"><a href="#courselist" class="courselist">Course</a></li>
-    <li><a href="#referencelist" class="referencelist">References</a></li>
-    <li><a href="#morelist" class="morelist">More...</a></li>
-  </ul>
-  <ul id="courselist" class="courselist active">
+<div class="sidesec">
+  <div class="box">
+    <h3>
+      <%= @course.title %>
+    </h3>
+    <p class="description">
+      <%= @course.description %>
+    </p>
+    <ul id="courselist" class="courselist active listbox">
     <% @course.course_items.each do |ci| %>
       <li>
         <% if (current_user != nil && current_user.purchased?(ci.content) || ci.monetize == false) %>
         <a class="play" cid="<%= ci.content.id %>" href="#"><%=  ci.content.title %></a>
         <% else %>
-        <span class="play"><%=  ci.content.title %></span> <a href="#" rel="<%= ci.id %>" class="buy <%= (current_user == nil) ? 'popup_login' : '' %>">buy</a>
+        <span class="play">
+          <a href="#" rel="<%= ci.id %>" class="buy <%= (current_user == nil) ? 'popup_login' : '' %>">
+            <%=  ci.content.title %>
+            <span class="amount">$<%= ci.amount %></span>
+          </a>
+        </span>
         <% end %>
         <p><%= ci.content.tagline%></p>
       </li>
     <% end %>
-      <form id="buy" action="<%= url_for :action => 'checkout' , :controller => 'purchasing' %>" method="post">
-        <input type="hidden" name="ci" value="" />
-        <input type="hidden" name="ret" value="<%= request.url %>" />
-      </form>
-  </ul>
-  <ul id="referencelist" class="referencelist">
-    <% @course.course_items.first.content.references.each do |r| %>
-    <li><%=  r.html.html_safe %></li>
-    <% end %>
-  </ul>
-  <ul id="morelist">
-    
-  </ul>
+    </ul>
+    <a href="#" class="upnext"></a>
+    <form id="buy" action="<%= url_for :action => 'checkout' , :controller => 'purchasing' %>" method="post">
+      <input type="hidden" name="ci" value="" />
+      <input type="hidden" name="ret" value="<%= request.url %>" />
+    </form>
+  </div>
+  <div class="playlist">
+    <ul class="tablist">
+      <li><a href="#referencelist" class="referencelist">References</a></li>
+      <li><a href="#morelist" class="morelist">More...</a></li>
+    </ul>
+    <ul id="referencelist" class="referencelist listbox active">
+      <% @course.course_items.first.content.references.each do |r| %>
+      <li><%=  r.html.html_safe %></li>
+      <% end %>
+    </ul>
+    <ul id="morelist" class="morelist listbox">
+
+    </ul>
+  </div>
+
+
 </div>
 <%= render :partial => "shared/purchasebox", :locals => {:content => {}} %>
 
