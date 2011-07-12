@@ -22,7 +22,8 @@ function init(bp)
 function buy_click(e)
 {
     $("#buy input[name=ci]").val($(this).attr('rel'));
-
+//    console.log($("#buy input[name=ci]").val());
+//    return false;
     if ($(this).hasClass('popup_login'))
     {
         $(".popup").dialog();

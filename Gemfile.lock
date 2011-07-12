@@ -51,6 +51,12 @@ GEM
     braintree (2.8.0)
       builder
     builder (2.1.2)
+    capistrano (2.6.0)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
     chronic (0.2.3)
       hoe (>= 1.2.1)
     churn (0.0.13)
@@ -84,6 +90,7 @@ GEM
       sexp_processor (~> 3.0)
     gem_plugin (0.2.3)
     haml (3.0.25)
+    highline (1.6.2)
     hirb (0.3.6)
     hoe (2.8.0)
       rake (>= 0.8.7)
@@ -113,6 +120,13 @@ GEM
       daemons (~> 1.0.10)
       gem_plugin (~> 0.2.3)
     mysql (2.8.1)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
+    net-sftp (2.0.5)
+      net-ssh (>= 2.0.9)
+    net-ssh (2.1.4)
+    net-ssh-gateway (1.1.0)
+      net-ssh (>= 1.99.1)
     notifier (0.1.2)
     paperclip (2.3.8)
       activerecord
@@ -198,6 +212,7 @@ DEPENDENCIES
   ZenTest
   activemerchant
   aws-s3
+  capistrano
   daemons (= 1.0.10)
   delayed_job
   delayed_job_admin
