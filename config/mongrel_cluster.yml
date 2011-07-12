@@ -5,4 +5,4 @@ pid_file: tmp/pids/mongrel.pid
 log_file: log/mongrel.log
 address: 127.0.0.1
 environment: staging 
-cwd: .
+cwd: /u/apps/Jetty/current/
