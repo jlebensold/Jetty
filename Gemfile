@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
-
-gem 'mongrel'
+gem "dispatcher"
+gem 'mongrel', '>= 1.2.0.pre2'
 gem 'mongrel_cluster'
 gem 'daemons' , '1.0.10'
 gem 'rails', '3.0.3'
