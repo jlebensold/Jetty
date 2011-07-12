@@ -10,16 +10,14 @@ set :stages, %w[testing staging production]
 set :default_stage, 'staging'
 require 'capistrano/ext/multistage'
 
-default_run_options[:pty] = true
+#default_run_options[:pty] = false
 ssh_options[:forward_agent] = true
 
 set :application, "Jetty"
 set :repository,  "git@github.com:jlebensold/Jetty.git"
-set :scm, :git
+set :scm, "git"
 
-set :scm_command, "/usr/bin/git"
-set :scm_verbose, true
-set :git_shallow_clone, 1
+#set :scm_verbose, true
 
 set :user, "ec2-user"
 set :branch, "master"
@@ -60,5 +58,6 @@ end
 
 desc "Search Remote Application Server Libraries"
 task :search_libs, :roles => :app do
+  run "git ls-remote git@github.com:jlebensold/Jetty.git"
   run "ls -x1 /usr/lib | grep -i ssl"
 end

@@ -119,6 +119,9 @@ GEM
     mongrel (1.2.0.pre2)
       daemons (~> 1.0.10)
       gem_plugin (~> 0.2.3)
+    mongrel_cluster (1.0.5)
+      gem_plugin (>= 0.2.3)
+      mongrel (>= 1.0.2)
     mysql (2.8.1)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -220,7 +223,8 @@ DEPENDENCIES
   factory_girl
   metric_fu
   mime-types
-  mongrel (= 1.2.0.pre2)
+  mongrel
+  mongrel_cluster
   mysql
   paperclip (~> 2.3)
   paypal_adaptive!
