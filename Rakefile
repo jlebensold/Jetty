@@ -3,10 +3,10 @@
 
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
-require 'rcov/rcovtask'
-require 'simple-navigation'
-require 'metric_fu'
-
+#require 'rcov/rcovtask'
+#require 'simple-navigation'
+#require 'metric_fu'
+=begin
 class Rcov::CodeCoverageAnalyzer
   def update_script_lines__
     if '1.9'.respond_to?(:force_encoding)
@@ -37,7 +37,7 @@ Rcov::RcovTask.new do |t|
   t.test_files = FileList['test/**/*_test.rb']
   t.rcov_opts << "--exclude \"test/*,gems/*,/Library/Ruby/*,config/*\" --rails"
 end
-
+=end
 
 
 
