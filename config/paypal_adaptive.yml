@@ -5,6 +5,14 @@ development:
   signature: "	An5ns1Kso7MWUdW4ErQKJJJ4qi4-AbJ8SqB8YxFSVoqxx3tN3wVPn2Kl"
   application_id: "APP-80W284485P519543T"
 
+staging:
+  environment: "sandbox"
+  username: "jon_1301144760_biz_api1.lebensold.ca"
+  password: "1301144767"
+  signature: "	An5ns1Kso7MWUdW4ErQKJJJ4qi4-AbJ8SqB8YxFSVoqxx3tN3wVPn2Kl"
+  application_id: "APP-80W284485P519543T"
+
+
 test:
   environment: "sandbox"
   username: "jon_1301144760_biz_api1.lebensold.ca"

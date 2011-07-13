@@ -1,6 +1,9 @@
 development:
   access_key_id: 'AKIAILUQ4OZEBWEEK3OA'
   secret_access_key: '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'
+staging:
+  access_key_id: 'AKIAILUQ4OZEBWEEK3OA'
+  secret_access_key: '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'
 test:
   access_key_id: 'XXX'
   secret_access_key: 'ASD'
