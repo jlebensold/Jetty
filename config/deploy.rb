@@ -56,21 +56,21 @@ namespace :deploy do
   desc "Start the Thin processes"
   task :start do
     run  <<-CMD
-      cd /u/apps/Jetty/current; thin start -s3 -e staging start -p 5000
+      cd /u/apps/Jetty/current; thin -s3 -e staging start -p 5000
     CMD
   end
 
   desc "Stop the Thin processes"
   task :stop do
     run <<-CMD
-      cd /u/apps/Jetty/current; thin stop 
+      cd /u/apps/Jetty/current; thin -s3 -e staging stop -p 5000
     CMD
   end
 
   desc "Restart the Thin processes"
   task :restart do
     run <<-CMD
-      cd /u/apps/Jetty/current; thin restart -s3 -e staging start -p 5000
+      cd /u/apps/Jetty/current; thin -s3 -e staging restart -p 5000
     CMD
   end
 
