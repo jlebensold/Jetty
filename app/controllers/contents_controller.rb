@@ -144,7 +144,7 @@ class ContentsController < ApplicationController
         file_delete local_dir
       end
 
-      FileUtils.mkdir local_dir unless (File.directory? local_dir)
+      FileUtils.mkdir_p local_dir unless (File.directory? local_dir)
 
       File.open(local_file, 'wb') do |f|
         if ajax_upload

@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
 
   def checkfolder
     unless File.exists? files_folder
-      FileUtils.mkdir files_folder
+      FileUtils.mkdir_p files_folder
     end
   end
   def maincontents
