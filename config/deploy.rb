@@ -53,31 +53,31 @@ namespace :deploy do
     run "ln -nfs /www/assets #{release_path}/public/assets"
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
   end
-end
-desc "Start the Thin processes"
-task :start do
-  run  <<-CMD
-    cd /u/apps/Jetty/current; thin start -s3 -e staging start -p 5000
-  CMD
-end
+  desc "Start the Thin processes"
+  task :start do
+    run  <<-CMD
+      cd /u/apps/Jetty/current; thin start -s3 -e staging start -p 5000
+    CMD
+  end
 
-desc "Stop the Thin processes"
-task :stop do
-  run <<-CMD
-    cd /u/apps/Jetty/current; thin stop 
-  CMD
-end
+  desc "Stop the Thin processes"
+  task :stop do
+    run <<-CMD
+      cd /u/apps/Jetty/current; thin stop 
+    CMD
+  end
 
-desc "Restart the Thin processes"
-task :restart do
-  run <<-CMD
-    cd /u/apps/Jetty/current; thin restart -s3 -e staging start -p 5000
-  CMD
-end
+  desc "Restart the Thin processes"
+  task :restart do
+    run <<-CMD
+      cd /u/apps/Jetty/current; thin restart -s3 -e staging start -p 5000
+    CMD
+  end
 
 
-desc "Search Remote Application Server Libraries"
-task :search_libs, :roles => :app do
-  run "git ls-remote git@github.com:jlebensold/Jetty.git"
-  run "ls -x1 /usr/lib | grep -i ssl"
+  desc "Search Remote Application Server Libraries"
+  task :search_libs, :roles => :app do
+    run "git ls-remote git@github.com:jlebensold/Jetty.git"
+    run "ls -x1 /usr/lib | grep -i ssl"
+  end
 end
