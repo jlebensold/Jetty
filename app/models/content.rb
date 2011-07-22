@@ -36,7 +36,7 @@ class Content < ActiveRecord::Base
     original_file
   end
   has_attached_file :local_value,
-    :path => "files/:creatorid/:id/original.:extension"
+    :path => "files/:env/:creatorid/:id/original.:extension"
 
 
 
@@ -44,11 +44,10 @@ class Content < ActiveRecord::Base
     :storage => :s3,
     :s3_credentials => S3_PATH ,
     :bucket => S3_BUCKET,
-    :path => "files/:creatorid/:id/original.:extension"
+    :path => "files/:env/:creatorid/:id/original.:extension"
 
-  Paperclip.interpolates :creatorid do |attachment, style|
-    attachment.instance.creator_id.to_s
-  end
+  Paperclip.interpolates :creatorid do |attachment, style| attachment.instance.creator_id.to_s  end
+  Paperclip.interpolates :env do |attachment, style| Rails.env.to_s  end
 
   before_post_process :preprocess
   def preprocess

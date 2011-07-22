@@ -84,7 +84,11 @@
     {
         background-color:#F0F5FE; 
     }
-    
+    .container .left li:last-child,
+    .container .right li:last-child
+    {
+        border-radius: 0 0 5px 5px;
+    }
     .container h5
     {
         padding: 0 0;
