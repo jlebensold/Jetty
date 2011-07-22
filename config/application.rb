@@ -43,5 +43,9 @@ module Jetty
 #    %w(observers mailers middleware).each do |dir|
 #      config.autoload_paths << "#{config.root}/app/#{dir}"
 #    end
+
+  config.to_prepare do
+    Devise::RegistrationsController.layout proc{ |controller| user_signed_in? ? "publishers" : "devise" }
+  end
   end
 end
