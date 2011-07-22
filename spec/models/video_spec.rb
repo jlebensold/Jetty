@@ -17,7 +17,7 @@ describe Video do
      v = Factory(:video)
      v.update_attributes(:value => test_video );
      v.save!
-     v.value.to_file.path.should eq("files/#{v.creator.id}/#{v.id}/original.mov")
+     v.value.to_file.path.should eq("files/test/#{v.creator.id}/#{v.id}/original.mov")
   end
 
   it "save a video in a proper temp folder" do
@@ -28,7 +28,7 @@ describe Video do
 
   it "has a bucket path for each video type" do
     v = Factory(:video)
-    v.bucketpath.should eq "files/#{v.creator.id}/#{v.id}"
+    v.bucketpath.should eq "files/test/#{v.creator.id}/#{v.id}"
   end
 
   it "has a poster path" do

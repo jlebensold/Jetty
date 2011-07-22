@@ -99,6 +99,9 @@ class ContentsController < BasePublisherController
 
 
   end
+  def status
+    
+  end
   def maincontent
     (@content.parent == nil) ? @content : @content.parent
   end
@@ -137,7 +140,7 @@ class ContentsController < BasePublisherController
       filename = ajax_upload  ? params[:qqfile] : params[:qqfile].original_filename
       extension = filename.split('.').last
 
-      local_dir = "#{Rails.root}/files/#{@content.creator.id}/#{@content.id}/"
+      local_dir = "#{Rails.root}/files/#{Rails.env}/#{@content.creator.id}/#{@content.id}/"
       local_file = local_dir+ "original.#{extension}"
       if File.exists? local_file
         file_delete local_dir

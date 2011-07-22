@@ -44,8 +44,17 @@ module Jetty
 #      config.autoload_paths << "#{config.root}/app/#{dir}"
 #    end
 
+  case Rails.env
+    when "production"
+      DOC_ROOT = "http://www.getjetty.com/"
+    when "staging"
+      DOC_ROOT = "http://staging.getjetty.com/"
+    when "development"
+      DOC_ROOT = "http://localhost:3000/"
+  end
+    
   config.to_prepare do
-    Devise::RegistrationsController.layout proc{ |controller| user_signed_in? ? "publishers" : "devise" }
+    Devise::RegistrationsController.layout proc{ |controller| user_signed_in? ? "publishers" : "application" }
   end
   end
 end

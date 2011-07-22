@@ -103,6 +103,10 @@ class Content < ActiveRecord::Base
     after_s3
   end
 
+  def get_status
+    
+  end
+  
 
   def bucketpath
     "files/#{Rails.env}/#{creator.id}/#{id}"

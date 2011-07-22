@@ -9,6 +9,8 @@ describe Content do
    v.creator.should be_present
   end
 
+  
+  
   it "can have children content" do
    v = Factory(:video)
    v.children = [Factory(:image),Factory(:image)]
@@ -33,6 +35,13 @@ describe Content do
     v.status.should eql(Content::STATUS_OFFLINE)
   end
 
+  it "can poll content status" do
+    v = Factory(:video)
+    v.get_status.should eql({:id => 1 , :status => Content::STATUS_OFFLINE})
+    
+  end
+  
+  
   it "has s3 keys" do
     v = Factory(:video)
     v.s3_keys.should have_key(:access_key_id)

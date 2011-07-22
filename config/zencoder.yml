@@ -1,9 +1,12 @@
 development:
   key: '89db78eb49aaeecb61f4f877ff983051'
-staging:
-  key: '89db78eb49aaeecb61f4f877ff983051'
+  notification_url: 'http://www.getjetty.com/404/'
 test:
   key: '89db78eb49aaeecb61f4f877ff983051'
+  notification_url: 'http://www.getjetty.com/404/'
+staging:
+  key: '89db78eb49aaeecb61f4f877ff983051'
+  notification_url: 'http://staging.getjetty.com/'
 production:
   key: '89db78eb49aaeecb61f4f877ff983051'
-
+  notification_url: 'http://www.getjetty.com/'

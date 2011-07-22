@@ -39,7 +39,8 @@ end
 group :test do
   gem 'metric_fu'
   gem 'sqlite3-ruby', :require => 'sqlite3'
-  gem "rspec-rails", ">= 2.5.0"
+  gem "rspec-rails", ">= 2.6.0"
+  gem 'rspec-core' , '>= 2.6'
   gem "factory_girl"
   gem 'shoulda-matchers'
   gem 'ZenTest'

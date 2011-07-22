@@ -1,6 +1,9 @@
 require 'aws/s3'
 class Video < Content
   ZC_PATH   = Rails.root.to_s + "/config/zencoder.yml"
+  def initialize
+    
+  end
 
   def poster
     Content::S3_WEB.to_s + bucketpath + "/t/frame_0000.png"
@@ -28,50 +31,54 @@ class Video < Content
         self.save!
       end
     end
-  end
+  end  
   def after_s3
-      logger.info ">>>>video: after s3"
+      logger.info "~>>>>video: after s3"
+      #really? self?
       self.status = Content::STATUS_CONVERSION_IN_PROGRESS
       #Video.update(self.id , {:status => STATUS_CONVERSION_IN_PROGRESS})
       @bucket = Content::S3_BUCKET.to_s + "/" + bucketpath
-      Zencoder.api_key = load_keys(ZC_PATH)[:key]
       Zencoder::Job.create({
                       :input => "s3://"+@bucket +"/original."+extension,
+                      :api_key => load_keys(ZC_PATH)[:key],
                       :outputs => [
                                    {
                                     :label => 'iphone',
                                     :url => 's3://'+@bucket + "/iphone.mp4",
                                     :width => 480,
                                     :height => 320,
-                                    :public => 1
+                                    :public => 1,
+                                    :thumbnails =>
+                                       { :number => 1,
+                                         :base_url =>'s3://'+@bucket+'/t',
+                                          :public => 1
+                                       },
+                                    :notifications => [
+                                      load_keys(ZC_PATH)[:notification_url] + "zencoder?l=iphone&id=#{id}"
+                                    ]
+
                                    },
                                    {
                                     :label => 'ipad',
                                     :url => 's3://'+@bucket + "/ipad.mp4",
                                     :width => 960,
                                     :height => 640,
-                                    :public => 1
-                                   },
-                                   {
-                                    :label => 'vp8',
-                                    :url => 's3://'+@bucket + "/desktop.webm",
-                                    :public => 1
+                                    :public => 1,
+                                    :notifications => [
+                                      load_keys(ZC_PATH)[:notification_url] + "zencoder?l=ipad&id=#{id}"
+                                    ]
                                    },
                                    {
                                     :label => 'ogv',
                                     :url => 's3://'+@bucket + "/desktop.ogv",
-                                    :public => 1
-                                   },
-                                   {
-                                     :thumbnails =>
-                                       { :number => 1,
-                                         :base_url =>'s3://'+@bucket+'/t',
-                                          :public => 1
-                                       }
+                                    :public => 1,
+                                    :notifications => [
+                                      load_keys(ZC_PATH)[:notification_url] + "zencoder?l=ogv&id=#{id}"
+                                    ]
                                    }
+
                                  ]})
   end
-
   def as_json(options = {})
     if (!options)
       options = {}
