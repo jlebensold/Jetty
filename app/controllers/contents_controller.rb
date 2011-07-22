@@ -1,5 +1,4 @@
-class ContentsController < ApplicationController
-  before_filter :authenticate_user!, :except => ['show']
+class ContentsController < BasePublisherController
   def index
     @contents = Content.all
 

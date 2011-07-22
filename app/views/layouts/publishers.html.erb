@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jetty</title>
+  <%= stylesheet_link_tag "scaffold","site", "jquery-ui-1.8.12.custom.css", "publishers" %>
+  
+  <%= javascript_include_tag "jquery-1.5.1.js",
+                             "jquery-ui-1.8.11.custom.min.js",
+                             "application" %>
+  <%= yield :javascript %>
+  <%= yield :stylesheet %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+  <div id="flash">
+   <p class="notice"><%= notice %></p>
+   <p class="alert"><%= alert %></p>
+  </div>
+  <h1 id="logo">Jetty</h1>
+  <div id="header">
+    <div class="loginstatus">
+    <% unless user_signed_in? -%>
+    <p><%= link_to 'Join Jetty!', new_user_registration_path %></p>
+    <p><%= link_to 'Login', new_user_session_path %></p>
+    <% end -%>
+    <% if user_signed_in? -%>
+      Welcome, <%=  current_user.email %>
+      <%= link_to "Dashboard", "/users" %>
+      |
+      <%= link_to "My Account", edit_user_registration_path %>
+      |
+      <%= link_to "logout", destroy_user_session_path %>
+    <% end -%>
+
+    </div>
+  </div>
+  <div class="container">
+    <div class="leftbox">
+    <%= render 'shared/usernav' %>
+    </div>
+    <div id="wrapper">
+      
+      <div class="mainbox">
+
+        <%= yield %>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div id="footer"></div>
+</body>
+</html>

@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/Users/jon/Sites/jetty/app/models/payment.rb</file>
-        <file>file:/Users/jon/Sites/jetty/app/models/video.rb</file>
-        <file>file:/Users/jon/Sites/jetty/app/models/binary_file.rb</file>
-        <file>file:/Users/jon/Sites/jetty/app/controllers/purchasing_controller.rb</file>
-        <file>file:/Users/jon/Sites/jetty/config/paypal_adaptive.yml</file>
-    </open-files>
 </project-private>

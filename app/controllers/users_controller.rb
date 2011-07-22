@@ -1,5 +1,4 @@
-
-class UsersController < ApplicationController
+class UsersController < BasePublisherController
   before_filter :authenticate_user!, :except => [:register]
   def register
     @user = User.new

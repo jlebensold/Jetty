@@ -70,6 +70,7 @@ function delete_subcontent(evt)
 function save_form(evt) {save();evt.preventDefault();}
 function save()
 {
+    showFlash("Saving...","notice");
     var data = {
             id : $("#content_id").val(),
             subcontent: getSubcontent(),
@@ -90,6 +91,7 @@ function save()
         dataType: 'json',
         success : function(resp)
         {
+            showFlash("Saved!","notice");
             render_references(resp.references);
             render_subcontents(resp.subcontents);
             

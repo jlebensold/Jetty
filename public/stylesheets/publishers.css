@@ -1,0 +1,117 @@
+.left, .right
+{
+    float: left;
+    width: 47.5%;
+    
+}
+.right
+{
+    margin-left: 30px;
+}
+.clear
+{
+    clear: both;
+}
+/* dashboard */
+.container,#header,#footer,#logo
+{
+    width: 95%;
+    position: relative;
+}
+    .container .leftbox
+    {
+        width: 200px;
+        float: left;
+        margin: 0 0;
+     
+    }
+    .container #wrapper
+    {
+        width: 100%;
+    }
+    .container .mainbox
+    {
+        margin-left: 200px;
+        padding-left: 20px;
+        border-left: 1px solid #3a3a3a;
+    }
+.container h2
+{
+    margin: 10px 0px 14px 0px;
+    color: #090;
+    font-size: 15px;
+}
+.container > p
+{
+    margin: 10px 0px;
+}
+.container .left,
+.container .right
+{
+    border: 1px solid #333;
+    border-radius: 5px;
+    position: relative;
+}
+.container .newcontent
+{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 11px;
+}
+
+.container .left h3,
+.container .right h3
+{
+    margin: 0 0;
+    border-radius: 5px 5px 0 0;
+    padding: 5px 0 10px 10px;
+    background: #C6D880;
+    color: #1F3744;
+    
+}
+.container .left ul,
+.container .right ul
+{
+    list-style: none;
+}
+    .container li
+    {
+        padding: 5px 10px;
+    }
+    .container .left li:nth-child(odd) ,
+    .container .right li:nth-child(odd) 
+    {
+        background-color:#F0F5FE; 
+    }
+    
+    .container h5
+    {
+        padding: 0 0;
+        margin: 5px 0px 0px 0px;
+        line-height: 10px;
+    }
+    .container small
+    {
+        padding: 0 0;
+        margin: 0 0;
+    }
+    .container .links
+    {
+        float: right;
+    }
+.usernav ul
+{
+    list-style: none;
+    height: 20px;
+    font-size: 14px;
+    margin: 15px 0px;
+}
+    .usernav li:first-child
+    {
+        border-left: none;
+    }
+    .usernav li
+    {
+    }
+    
