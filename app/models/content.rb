@@ -106,7 +106,7 @@ class Content < ActiveRecord::Base
 
 
   def bucketpath
-    "files/#{creator.id}/#{id}"
+    "files/#{Rails.env}/#{creator.id}/#{id}"
   end
   def extension
     return "" if (local_value_file_name == nil)
