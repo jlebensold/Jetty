@@ -100,7 +100,12 @@ class ContentsController < BasePublisherController
 
   end
   def status
-    
+    @content = Content.find(params[:id])
+    statuses = [{:id => @content.id, :status => @content.status}]
+    @content.children.each { |i|
+      statuses.push({:id => i.id, :status => i.status})
+    }    
+    render :json => {:status => "OK", :result => statuses}
   end
   def maincontent
     (@content.parent == nil) ? @content : @content.parent

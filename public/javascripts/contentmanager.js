@@ -37,7 +37,17 @@ function loadListeners()
         $(".filetypes ." + $($(this).find(':selected')).attr('panel')).show().addClass('active');
     });
     $("form").submit(save_form);
-
+    $(".checkstatus").click(function(e)
+    {
+        $.ajax({
+            url: basepath + "/status",
+            type: 'POST',
+            data: {id : $("#content_id").val()},
+            dataType : 'json',
+            success : function(resp) {}
+        });        
+        e.preventDefault();
+    });
     backface({target:"#content_title"});
     
 

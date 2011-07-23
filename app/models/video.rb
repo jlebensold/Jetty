@@ -54,7 +54,7 @@ class Video < Content
                                           :public => 1
                                        },
                                     :notifications => [
-                                      load_keys(ZC_PATH)[:notification_url] + "zencoder?l=iphone&id=#{id}"
+                                      load_keys(ZC_PATH)[:notification_url] + "zencoder/#{id}/iphone"
                                     ]
 
                                    },
@@ -65,7 +65,7 @@ class Video < Content
                                     :height => 640,
                                     :public => 1,
                                     :notifications => [
-                                      load_keys(ZC_PATH)[:notification_url] + "zencoder?l=ipad&id=#{id}"
+                                      load_keys(ZC_PATH)[:notification_url] + "zencoder/#{id}/ipad"
                                     ]
                                    },
                                    {
@@ -73,7 +73,7 @@ class Video < Content
                                     :url => 's3://'+@bucket + "/desktop.ogv",
                                     :public => 1,
                                     :notifications => [
-                                      load_keys(ZC_PATH)[:notification_url] + "zencoder?l=ogv&id=#{id}"
+                                      load_keys(ZC_PATH)[:notification_url] + "zencoder/#{id}/ogv"
                                     ]
                                    }
 
