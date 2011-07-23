@@ -7,16 +7,18 @@
   <div class="total">&nbsp;</div>
 </div>
 <br/>
-<a class="checkstatus" href="#">check status</a>
 <div class="maincontent">
 
   <div class="title"><%= f.text_field :title%></div>
   <div class="tagline"><%= f.text_field :tagline%></div>
   <div class="left">
     <div id="maincontent">Set Content</div>
-
-    <%= render :partial => "shared/contentbox", :locals => {:content => @content} %>
-
+    <ul>
+      <li>
+        <span class="status"><%= @content.status %></span>
+        <%= render :partial => "shared/contentbox", :locals => {:content => @content} %>
+      </li>
+    </ul>
     <div class="references">
       <h4>References</h4>
       <form id="referencesform" action="#" method="post">

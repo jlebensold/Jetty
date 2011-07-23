@@ -90,7 +90,7 @@ class ContentsController < BasePublisherController
           #refresh
           @content.children true
       end
-      render :json => {:success => true, :maincontent => maincontent.as_json,
+      render :json => {:success => "OK", :maincontent => maincontent.as_json,
                                          :references => maincontent.references.as_json,
                                          :subcontents => get_subcontents(maincontent)}
     else
@@ -99,7 +99,13 @@ class ContentsController < BasePublisherController
 
 
   end
-  def status
+  def getcontents 
+    
+    @contents = Content.where(:id => params[:content_ids], :creator_id => current_user.id)
+    render :json => {:success => "OK", :contents => @contents.map { |i| i.as_json({:contentboxhtml => render_to_string(:partial=> "shared/contentbox",
+                                                       :locals => {:content => i} ), :content_id => i.id }) } }
+  end
+  def getstatus
     @content = Content.find(params[:id])
     statuses = [{:id => @content.id, :status => @content.status}]
     @content.children.each { |i|

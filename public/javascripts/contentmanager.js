@@ -1,4 +1,5 @@
 var basepath;
+var checkstatus_interval;
 function initContentmanager(bp)
 {
   basepath = bp;
@@ -37,23 +38,59 @@ function loadListeners()
         $(".filetypes ." + $($(this).find(':selected')).attr('panel')).show().addClass('active');
     });
     $("form").submit(save_form);
-    $(".checkstatus").click(function(e)
-    {
-        $.ajax({
-            url: basepath + "/status",
-            type: 'POST',
-            data: {id : $("#content_id").val()},
-            dataType : 'json',
-            success : function(resp) {}
-        });        
-        e.preventDefault();
-    });
+    checkstatus_interval = setInterval(checkstatus, 13000);
     backface({target:"#content_title"});
-    
 
 }
-
-
+function checkstatus()
+{
+    if ($(".contentboxwrapper[data-status!=complete]").length == 0) return;
+    
+    $(".filestatus").html(tpl_loadinghtml("Checking conversion status..."));
+    $.ajax({
+        url: basepath + "/getstatus",
+        type: 'POST',
+        data: {id : $("#content_id").val()},
+        dataType : 'json',
+        success : function(resp) 
+        {
+            var reloadlist = []
+            $.each(resp.result,function(i,content)
+            {
+                if (content.status == "complete")
+                {
+                    $(".filestatus").html(tpl_loadinghtml("Getting content..."));    
+                    if ($(".status[data-contentid="+content.id+"]").data('status') != content.status)
+                    {
+                        reloadlist.push(content.id);
+                    }
+                }
+            });
+            if (reloadlist.length > 0) loadcontents(reloadlist);
+            else
+                $(".filestatus").html("Conversion in progress");
+        }
+    });        
+}
+function loadcontents(contentids)
+{
+    $.ajax({
+        url: basepath + "/getcontents",
+        type: 'POST',
+        data: {content_ids: contentids},
+        dataType : 'json',
+        success : function(resp) 
+        {
+            $.each(resp.contents,function(i,content)
+            {
+                var el = $(".contentboxwrapper[data-contentid="+content.content_id+"]");
+                $(el.parents('li')).find("span.status").text(content.status);
+                el.replaceWith(content.contentboxhtml);
+            });
+            $(".filestatus").html("");
+        }
+    });        
+}
 function reprocess_content(evt)
 {
     $.ajax({
@@ -233,10 +270,14 @@ function tpl_subcontent(c)
         c.title = '';
 
     return '<li cid="'+c.id+'" type="'+c.type+'">'+
-          '<h4>'+c.type+', '+c.status+ ' <a href="#" class="delete">x</a></h4>'+
+          '<h4><span class="status">'+c.status+ '</span><a href="#" class="delete">x</a></h4>'+
           '<input class="title" value="'+c.title+'" type="text" />' +
-          '<p>'+c.contentboxhtml+'<a href="#" class="hide">more...</a></p>'+
+          '<p>'+c.contentboxhtml+'</p>'+
         '</li>';
+}
+function tpl_loadinghtml(txt)
+{
+    return '<span class="loading">'+txt+'</span>';
 }
 function tpl_uploader(txt)
 {

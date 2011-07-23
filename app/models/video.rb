@@ -24,13 +24,13 @@ class Video < Content
     S3_WEB + poster
   end
   def check_status
-    if (self.status == Content::STATUS_CONVERSION_IN_PROGRESS.to_s)
-      AWS::S3::Base.establish_connection!(s3_keys)
-      if(AWS::S3::S3Object.exists? bucketpath + "/iphone.mp4", Content::S3_BUCKET.to_s)
-        self.status = STATUS_COMPLETE
-        self.save!
-      end
-    end
+#    if (self.status == Content::STATUS_CONVERSION_IN_PROGRESS.to_s)
+#      AWS::S3::Base.establish_connection!(s3_keys)
+#      if(AWS::S3::S3Object.exists? bucketpath + "/iphone.mp4", Content::S3_BUCKET.to_s)
+#        self.status = STATUS_COMPLETE
+#        self.save!
+#      end
+#    end
   end  
   def after_s3
       logger.info "~>>>>video: after s3"

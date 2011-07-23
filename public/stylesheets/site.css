@@ -20,6 +20,12 @@ label,input,textarea
 {
     display: none;
 }
+.loading 
+{
+    display:inline-block; 
+    background: url("../images/loading.gif") no-repeat; 
+    padding-left: 20px; height:15px; vertical-align:text-bottom;
+}
 /** upload **/
 .qq-uploader { position:relative; width: 100%;}
 
