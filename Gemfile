@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 gem "dispatcher"
 gem "thin"
-#gem "rest-client"
+gem "rest-client"
 #gem 'mongrel', '>= 1.2.0.pre2'
 #gem 'daemons' , '1.0.10'
 gem 'rails', '3.0.3'
