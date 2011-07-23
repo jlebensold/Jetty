@@ -1,3 +1,25 @@
+.contentstatus
+{
+    color: #AFAFAF;
+}
+.settitle
+{
+    font-size: 12px;
+    font-style: italic;
+    font-weight: normal;
+    width: 80%;
+    display: block;
+}
+.settitle:hover
+{
+    background: #E6EFC2;    
+}
+    .container .tagline h2 a
+    {
+        font-weight: normal;
+        text-decoration: none;
+    }
+
 .maincontent
 {
     list-style: none;
@@ -17,17 +39,94 @@
     {
         border: 1px solid #AFAFAF;
         padding: 10px;
-        width: 340px;
+        width: 45%;
         float: left;
     }
     .maincontent .right
     {
         margin-left: 20px;
     }
+    .references .heading
+    {
+        padding-top: 20px;
+        height: 20px;
+        clear: left;
+        width: 100%;
+    }
+    .references .heading span
+    {
+        border: none;
+        padding: 0 0;
+        margin: 0 0;
+        font-weight: bold;
+    }
+    .references .heading span.right
+    {
+        float: right;
+        text-align: right;
+    }
+    
+
+
+    #bt_addurl
+    {
+        padding: 1px 20px;
+        display: block;
+        height: 20px;
+        background: #A44512;
+        float: right;
+        text-align: center;
+        text-decoration: none;
+        color: #FFF;
+        
+    }
+    #bt_addurl:hover
+    {
+        color: #FAFAFA;
+        background: #B91D09;
+    }
+    #tb_addurl
+    {
+        width: 200px;
+        padding: 2px 0px;
+        margin: 1px 0 0 0;
+    }
     #referenceslist
     {
         list-style: none;
     }
+        #referenceslist li 
+        {
+            clear: both;
+            margin: 0 0;
+            padding: 0 0;
+            width: 100%;
+        }
+        #referenceslist li ul,
+        #referenceslist li ul li
+        {
+            display: inline;
+        }
+        #referenceslist li .title,
+        #referenceslist li h2,
+        #referenceslist li .refmeta
+        {
+            float: left;
+            font-size: 13px;
+            margin: 0 0;
+            padding: 0 0;
+        }
+        #referenceslist li .refmeta
+        {
+            float: right;
+            margin-right: 0px;
+        }
+        #referenceslist li:nth-child(odd)
+        {
+            background-color:#F0F5FE; 
+            height: 20px;
+        }
+
     .subcontents
     {
         list-style: none;

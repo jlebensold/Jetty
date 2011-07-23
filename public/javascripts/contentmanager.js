@@ -17,7 +17,8 @@ function list_subcontent()
         success : function(resp)
         {
             render_subcontents(resp.subcontents)
-            render_references(resp.references)
+            render_references(resp.references);
+            $("form").trigger("rendered");
         }
     });
 }
@@ -37,10 +38,28 @@ function loadListeners()
         $(".filetypes > li").hide();
         $(".filetypes ." + $($(this).find(':selected')).attr('panel')).show().addClass('active');
     });
-    $("form").submit(save_form);
+    $("form.edit_content").submit(save_form);
+    
     checkstatus_interval = setInterval(checkstatus, 13000);
+    
+    $(".backface_input").live('loaded bfblur',function(e){
+        if ($(this).hasClass('title') && $(this).val().length == 0)
+            $(this).next(".backface").find("a").html(tpl_clickhere('click here to set a title'));
+        if ($(this).hasClass('tagline') && $(this).val().length == 0)
+            $(this).next(".backface").find("a").html(tpl_clickhere('click here to set a tagline'));
+    });
     backface({target:"#content_title"});
-
+    backface({target:"#content_tagline"});
+    $("form.edit_content").bind("rendered",function()
+    {
+        $("input.title").each(function()
+        {
+            if (!$(this).hasClass("backface_input"))
+            {
+                backface({target:$(this)});
+            }
+        });
+    });
 }
 function checkstatus()
 {
@@ -66,8 +85,9 @@ function checkstatus()
                     }
                 }
             });
-            if (reloadlist.length > 0) loadcontents(reloadlist);
-            else
+            if (reloadlist.length > 0) 
+                loadcontents(reloadlist);
+            else 
                 $(".filestatus").html("Conversion in progress");
         }
     });        
@@ -88,6 +108,7 @@ function loadcontents(contentids)
                 el.replaceWith(content.contentboxhtml);
             });
             $(".filestatus").html("");
+            $("form.edit_content").trigger("rendered");
         }
     });        
 }
@@ -110,7 +131,7 @@ function add_subcontent(evt)
 }
 function delete_subcontent(evt)
 {
-    $(this).parents('li').remove();
+    $(this).parents('li.reference').remove();
     save();
     evt.preventDefault();
 }
@@ -118,6 +139,7 @@ function save_form(evt) {save();evt.preventDefault();}
 function save()
 {
     showFlash("Saving...","notice");
+    $("form").attr("disabled","disabled");
     var data = {
             id : $("#content_id").val(),
             subcontent: getSubcontent(),
@@ -141,7 +163,8 @@ function save()
             showFlash("Saved!","notice");
             render_references(resp.references);
             render_subcontents(resp.subcontents);
-            
+            $("form").attr("disabled","");
+            $("form.edit_content").trigger('rendered');
         }
     });
 }
@@ -230,7 +253,8 @@ function createUploader(emt,multiple)
         {
           $(".filestatus").text(getType(filename) + " Upload successful. processing...");
           $(".total").css('width',"100%");
-          render_subcontents(responseJSON.subcontents)
+          render_subcontents(responseJSON.subcontents);
+          $("form.edit_content").trigger("rendered");
         },
         onProgress: function(id, filename, loaded, total)
         {
@@ -264,6 +288,10 @@ function getType(filename)
     }
 }
 //templates:
+function tpl_clickhere(txt)
+{
+    return '<span class="settitle">'+txt+'</span>';
+}
 function tpl_subcontent(c)
 {
     if (c.title == null || c.title.length == 0)
@@ -293,5 +321,6 @@ function tpl_reference_title(url,id,title)
 
     if (title == null || title.length == 0)
         title = '';
-    return '<li cid="'+id+'" ><input value="'+title+'" type="text" /><<span class="url">'+url+'</span>><a href="#" class="delete">x</a></li>';
+    return '<li class="reference" cid="'+id+'" ><ul class="reffrm"><li><input class="title" value="'+title+'" type="text" /><li></ul>'+
+            '<div class="refmeta"><<span class="url">'+url+'</span>><a href="#" class="delete">x</a></div></li>';
 }

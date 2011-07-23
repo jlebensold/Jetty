@@ -2,15 +2,13 @@
 <%= javascript_include_tag 'backface'%>
 <%= form_for(@content.becomes(Content),:html => { :multipart => true }, :remote => true ) do |f| %>
 <noscript><p>File uploads require Javascript to be enabled.</p></noscript>
-<p>Status: <span class="filestatus"><%= @content.status %></span></p>
+<p class="contentstatus" >Status: <span class="filestatus"><%= @content.status %></span></p>
 <div class="progressbar">
   <div class="total">&nbsp;</div>
 </div>
-<br/>
 <div class="maincontent">
-
-  <div class="title"><%= f.text_field :title%></div>
-  <div class="tagline"><%= f.text_field :tagline%></div>
+  <div class="title"><%= f.text_field :title , :class => "title" %></div>
+  <div class="tagline"><%= f.text_field :tagline, :class =>"tagline" %></div>
   <div class="left">
     <div id="maincontent">Set Content</div>
     <ul>
@@ -21,10 +19,17 @@
     </ul>
     <div class="references">
       <h4>References</h4>
-      <form id="referencesform" action="#" method="post">
-        <input type="text" name="tb_addurl" id="tb_addurl" /><button name="bt_addurl" id="bt_addurl" >Add</button>
+        <input type="text" name="tb_addurl" value="http://" id="tb_addurl" /><a href="#" id="bt_addurl" >Add Reference (URL)</a>
+        <div class="heading">
+          <span class="left">
+            Description
+          </span>
+
+          <span class="right">
+            URL
+          </span>
+        </div>
         <ul class="clear" id="referenceslist"></ul>
-      </form>
     </div>
 
     <div class="publishtime hide">

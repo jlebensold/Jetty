@@ -6,8 +6,8 @@ function backface(options)
     }
     var guid = uid();
     var tgt = options.target
-    var default_text = "Untitled";
-
+    var default_text = "";
+    $(tgt).addClass("backface_input");
 
     if ($(tgt).val().length == 0)
        $(tgt).val(default_text);
@@ -29,6 +29,7 @@ function backface(options)
         $(frontface).find('a').text($(tgt).val());
         if(options.change)
            options.change(evt)
+        $(tgt).trigger('bfblur');
         evt.preventDefault();
     });
     $(frontface).click(function(evt)
@@ -47,7 +48,8 @@ function backface(options)
                
         });
         $(frontface).hide();
+        $(tgt).trigger('bfclick');
         evt.preventDefault();
     });
-
+    $(tgt).trigger('loaded');
 }

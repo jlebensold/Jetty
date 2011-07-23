@@ -23,6 +23,7 @@ label,input,textarea
 .loading 
 {
     display:inline-block; 
+    color: #4A4A4A;
     background: url("../images/loading.gif") no-repeat; 
     padding-left: 20px; height:15px; vertical-align:text-bottom;
 }
@@ -60,8 +61,8 @@ label,input,textarea
 .qq-upload-fail .qq-upload-failed-text {display:inline;}
 .progressbar
 {
-    width: 800px;
-    height:20px;
+    width: 100%;
+    height:7px;
     background:#CFCFCF;
 }
 .total
