@@ -1,4 +1,5 @@
 class ZencoderController < ApplicationController
+  protect_from_forgery :except => :index
   def index
     logger.info "encoding complete:" + params[:id].to_s
     if params[:job][:state] == "finished"
