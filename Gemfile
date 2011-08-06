@@ -18,7 +18,7 @@ gem 'delayed_job'
 gem 'delayed_job_admin'
 gem 'activemerchant'
 
-gem 'devise'
+gem 'devise' , ">= 1.2"
 
 gem 'mime-types'
 

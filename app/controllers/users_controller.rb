@@ -8,8 +8,9 @@ class UsersController < BasePublisherController
     else
       render :json => {:status => "FAIL"}
     end
-
   end
+  
+  
 
 
   def index

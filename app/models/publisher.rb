@@ -1,2 +1,3 @@
 class Publisher < User
+
 end
