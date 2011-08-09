@@ -13,12 +13,13 @@ gem 'zencoder'
 gem 'paypal_adaptive', :git => 'https://github.com/jhonyf/paypal_adaptive.git',
                        :ref => '47ac0f73359f3bb1b7fa'
 
+
 gem "paperclip", "~> 2.3"
 gem 'delayed_job'
 gem 'delayed_job_admin'
 gem 'activemerchant'
 
-gem 'devise' , ">= 1.2"
+gem 'devise' , '1.3.4'
 
 gem 'mime-types'
 

@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  respond_to :json
+  respond_to :json, :html
   protect_from_forgery
   # Override the default devise signin/signout process
   def sign_in_and_redirect(resource_or_scope, resource=nil)
@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     # redirect_to stored_location_for(scope) || after_sign_in_path_for(resource)
 
     respond_to do |format|
-      format.html  { redirect_to('/users') }
+      format.html  { redirect_to('/') }
       format.json  { render :json => {:status => :signed_in} }
     end
 

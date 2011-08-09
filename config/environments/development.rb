@@ -1,5 +1,16 @@
 Jetty::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
+  
+  ActionMailer::Base.smtp_settings  =  {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :domain               => "lebensold.ca",
+    :user_name            => "robot@lebensold.ca",
+    :password             => "16G0lom4",
+    :authentication       => "plain",
+    :enable_starttls_auto => true
+
+  }
 
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development
@@ -15,7 +26,7 @@ Jetty::Application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true 
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
@@ -24,7 +35,5 @@ Jetty::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-  ActiveMerchant::Billing::Base.mode = :test
-
 end
 

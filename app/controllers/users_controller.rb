@@ -9,10 +9,13 @@ class UsersController < BasePublisherController
       render :json => {:status => "FAIL"}
     end
   end
-  
-  
-
-
+  def show
+    redirect_to :action => "index", :controller => "home"
+  end
+  def logout
+    sign_out(current_user) if not current_user.nil? 
+    redirect_to :action => "index", :controller => "home"
+  end
   def index
     @user = current_user
   end
