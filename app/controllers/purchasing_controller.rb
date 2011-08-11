@@ -4,12 +4,10 @@ class PurchasingController < ApplicationController
   end
   
   def checkout
-    @myip   = "46.116.102.123"
-    @ipn    = "http://#{@myip}:3000/purchasing/ipn"
-    @courseitem = CourseItem.find(params[:ci])
-    #TODO: check if already paid
 
-    
+    @courseitem = CourseItem.find(params[:ci])
+    @tracking_id = request.session_options[:id].reverse + "|" + current_user.id.to_s+"|course|"+@courseitem.id.to_s
+    logger.info "[]: "+ @tracking_id
     pay_request = PaypalAdaptive::Request.new
     data = {
     "returnUrl" => @courseitem.monetize_return_url,
@@ -17,17 +15,19 @@ class PurchasingController < ApplicationController
     "currencyCode"=>"USD",
     "receiverList"=>
         {"receiver"=>[
-          {"email"=>"Merch1_1301751699_biz@lebensold.ca", "amount"=>@courseitem.amount }
+          {"email"=>@courseitem.content.creator.paypal_email, "amount"=>@courseitem.amount  }
 #"primary" => true}
 #chained:          ,{"email"=>"jon_1301144760_biz@lebensold.ca", "amount"=>"2.50", "primary" => false}
           ]
     },
     "cancelUrl"=>url_for(:action => 'index', :only_path => false),
-    "trackingId" => current_user.id.to_s+"|course|"+@courseitem.id.to_s,
+    "trackingId" => @tracking_id,
     "actionType"=>"PAY",
-    "ipnNotificationUrl"=>@ipn
+    "ipnNotificationUrl"=>YAML.load_file(Payment::PAYPAL_PATH)[Rails.env]["ipn"]
     }
+    
     pay_response = pay_request.pay(data)
+    logger.info pay_response
     if pay_response.success?
        redirect_to pay_response.approve_paypal_payment_url
     else
@@ -39,16 +39,15 @@ class PurchasingController < ApplicationController
   end
   skip_before_filter :verify_authenticity_token
   def ipn
-
+    logger.inf "IPN REQUEST!"
     #validate:
     paypal_response = IpnValidator.new(params, request.raw_post)
     require 'PP'
-    logger.info "validation..."
+    logger.info ">>>validation..."
     logger.info pp(paypal_response.valid?)
-
     logger.info "tracker: " + params["tracking_id"].to_s
     p_split = params["tracking_id"].split('|')
-    @user = User.find(p_split.first.to_i)
+    @user = User.find(p_split[1].to_i)
     @courseitem = CourseItem.find(p_split.last.to_i)
     payment = Payment.new
     payment.email = @user.email

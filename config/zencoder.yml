@@ -1,6 +1,6 @@
 development:
   key: '89db78eb49aaeecb61f4f877ff983051'
-  notification_url: 'http://www.getjetty.com/404/'
+  notification_url: 'http://panda.getjetty.com:8080/'
 test:
   key: '89db78eb49aaeecb61f4f877ff983051'
   notification_url: 'http://www.getjetty.com/404/'

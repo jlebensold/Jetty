@@ -73,10 +73,12 @@ class Content < ActiveRecord::Base
       self.status = STATUS_OFFLINE
       self.save!
   end
+  
   def load_keys path
     creds = YAML::load(ERB.new(File.read(path)).result).stringify_keys
     (creds[Rails.env] || creds).symbolize_keys
   end
+    
   def s3_keys
     load_keys(Content::S3_PATH)
   end

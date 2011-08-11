@@ -27,7 +27,7 @@
       Welcome, <%=  current_user.email %>
       <%= link_to "Dashboard", "/users" %>
       |
-      <%= link_to "My Account", edit_user_registration_path %>
+      <%= link_to "My Account", "/users/my_account" %>
       |
       <%= link_to "logout", destroy_user_session_path %>
     <% end -%>

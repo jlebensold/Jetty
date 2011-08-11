@@ -12,6 +12,17 @@ class UsersController < BasePublisherController
   def show
     redirect_to :action => "index", :controller => "home"
   end
+  def my_account
+    @user = current_user
+    
+  end
+  def save
+    @user = current_user
+    @user.paypal_email = params[:publisher][:paypal_email]
+    @user.save(:validate => false)
+    redirect_to :action => "index"
+  end
+  
   def logout
     sign_out(current_user) if not current_user.nil? 
     redirect_to :action => "index", :controller => "home"
