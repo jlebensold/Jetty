@@ -1,0 +1,11 @@
+<h2>Edit My Account <small>(<%= @user.email.to_s.humanize %>)</small></h2>
+
+<%= form_for(@user, :url => "save", :html => { :method => :put }) do |f| %>
+  <p><%= f.label :paypal_email %>
+  <%= f.text_field :paypal_email %></p>
+  <br/>
+   
+  <p><%= f.submit "Save" %></p>
+<% end %>
+
+<%= link_to "change password", "edit" %>
