@@ -39,7 +39,7 @@ class PurchasingController < ApplicationController
   end
   skip_before_filter :verify_authenticity_token
   def ipn
-    logger.inf "IPN REQUEST!"
+    logger.info "IPN REQUEST!"
     #validate:
     paypal_response = IpnValidator.new(params, request.raw_post)
     require 'PP'

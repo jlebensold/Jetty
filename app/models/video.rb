@@ -51,15 +51,14 @@ class Video < Content
                                     :thumbnails =>
                                        { :number => 1,
                                          :base_url =>'s3://'+@bucket+'/t',
-                                          :public => 1
+                                         :public => 1
                                        },
                                     :notifications => [
-                                      load_keys(ZC_PATH)[:notification_url] + "zencoder/#{id}/iphone",
                                       {
+                                        :url => load_keys(ZC_PATH)[:notification_url] + "zencoder/#{id}/iphone",
                                         :format => "json"
                                       }
                                     ]
-
                                    },
                                    {
                                     :label => 'ipad',
@@ -68,8 +67,8 @@ class Video < Content
                                     :height => 640,
                                     :public => 1,
                                     :notifications => [
-                                      load_keys(ZC_PATH)[:notification_url] + "zencoder/#{id}/ipad",
                                       {
+                                        :url => load_keys(ZC_PATH)[:notification_url] + "zencoder/#{id}/ipad",
                                         :format => "json"
                                       }
                                     ]
@@ -79,8 +78,8 @@ class Video < Content
                                     :url => 's3://'+@bucket + "/desktop.ogv",
                                     :public => 1,
                                     :notifications => [
-                                      load_keys(ZC_PATH)[:notification_url] + "zencoder/#{id}/ogv",
                                       {
+                                        :url =>  load_keys(ZC_PATH)[:notification_url] + "zencoder/#{id}/ogv",
                                         :format => "json"
                                       }
                                       
