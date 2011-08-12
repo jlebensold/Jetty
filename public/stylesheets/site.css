@@ -137,7 +137,11 @@ label,input,textarea
     background: #4A4A4A;
     height: 50px;
 }
-
+    #footer small
+    {
+        color: #DDD;
+        font-size: 9px;
+    }
 
 /* purchasing */
     .popup
