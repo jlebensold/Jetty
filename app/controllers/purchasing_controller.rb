@@ -42,9 +42,8 @@ class PurchasingController < ApplicationController
     logger.info "IPN REQUEST!"
     #validate:
     paypal_response = IpnValidator.new(params, request.raw_post)
-    require 'PP'
     logger.info ">>>validation..."
-    logger.info pp(paypal_response.valid?)
+    logger.info paypal_response.valid?
     logger.info "tracker: " + params["tracking_id"].to_s
     p_split = params["tracking_id"].split('|')
     @user = User.find(p_split[1].to_i)
