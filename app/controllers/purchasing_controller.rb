@@ -49,7 +49,7 @@ class PurchasingController < ApplicationController
     @user = User.find(p_split[1].to_i)
     @courseitem = CourseItem.find(p_split.last.to_i)
     payment = Payment.new
-    payment.email = @user.email
+    payment.user = @user
     payment.purchaseable = @courseitem.content
     payment.save!
   end

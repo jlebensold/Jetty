@@ -1,0 +1,51 @@
+Welcome Administrator 
+
+
+<H3>Payments</H3>
+
+<table>
+  <thead>
+    <th>
+      <td>
+        Id
+      </td>
+      <td>
+        Date
+      </td>
+      <td>
+        Amount
+      </td>
+      <td>
+        Item
+      </td>
+      <td>
+        Publisher
+      </td>
+      <td>
+        Purchaser
+      </td>
+    </th>
+  </thead>
+  <% Payment.find(:all).each do |p| %>
+  <tr>
+    <td>
+      <%= p.id %>
+    </td>
+    <td>
+      <%= p.created_at %>
+    </td>
+    <td>
+      <%= p.amount %>
+    </td>
+    <td>
+      <%= p.purchaseable %>
+    </td>
+    <td>
+      <%= p.purchaseable.content.creator  %>
+    </td>
+    <td>
+      <%= p.user  %>
+    </td>
+  </tr>    
+  <% end %>
+</table>

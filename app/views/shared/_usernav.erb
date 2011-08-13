@@ -1,7 +1,7 @@
 <h2>Navigation</h2>
 <div class="usernav">
 
-<% if (current_user) %>
+<% if (current_user && current_user.type == "Publisher") %>
   <ul>
     <li>» <a href="/users">Dashboard</a></li>
   </ul>

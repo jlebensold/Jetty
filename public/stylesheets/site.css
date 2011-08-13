@@ -117,6 +117,8 @@ label,input,textarea
     {
         margin-top: 3px;
         float: right;
+        color: #CACACA;
+        font-size: 10px;
     }
         #header .loginstatus p
         {

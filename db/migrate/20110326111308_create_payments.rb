@@ -5,7 +5,7 @@ class CreatePayments < ActiveRecord::Migration
       t.integer :product_id
       t.integer :purchaseable_id
       t.string  :purchaseable_type
-      t.string  :email
+      t.string  :user_id
       t.timestamps
     end
   end

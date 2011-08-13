@@ -1,0 +1,30 @@
+<dl>
+  <dt>PayPal ID:</dt>
+  <dd><%= @user.paypal_email %> </dd>
+</dl>
+<p>Add content to your Jetty profile and then organize the fruits of your labour into a series for easy viewing.</p>
+<div class="left">
+  <h3>Content</h3>
+  <%= link_to 'New Content', new_content_path , {:class => "newcontent"} %>
+  <ul>
+  <% @user.maincontents.each do |content| %>
+    <li>
+      <h5><%= content.title %></h5>
+      <small><%= content.type %>,  <%= content.status %></small> <span class="links"><%= link_to 'edit', edit_content_path(content) %> | <%= link_to 'delete', "contents/destroy/" + content.id.to_s  %></span>
+    </li>
+  <% end %>
+  </ul>
+</div>
+
+<div class="right">
+  <h3>Jetty Packs</h3>
+  <ul>
+  <% @user.courses.each do |course| %>
+    <li>
+      <h5><%= link_to course.title, "courses#?id=#{course.id}" %></h5>
+      <small><%= course.description %></small><span class="links"><%= link_to 'delete', "courses/destroy/" + course.id.to_s  %></span>
+    </li>
+  <% end %>
+  </ul>
+
+</div>

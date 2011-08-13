@@ -8,6 +8,16 @@ describe User do
     @user.checkfolder
     assert File.exist?(@user.files_folder)
   end
-  
+  it "should create users that are User by default" do
+    @user = User.new
+    @user.password = "foo@asd.com"
+    @user.email = "foo@asd.com"
+    @user.save!
+
+    assert @user.type.should eq("User")
+
+
+  end
+
 
 end

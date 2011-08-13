@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(:version => 20110402145818) do
     t.integer  "product_id"
     t.integer  "purchaseable_id"
     t.string   "purchaseable_type"
-    t.string   "email"
+    t.string   "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

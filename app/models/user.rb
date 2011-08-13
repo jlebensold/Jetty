@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
   end
   after_initialize :default_values
   def default_values
-    self.type = "Publisher"
+    self.type = "User"
   end
 
 end
