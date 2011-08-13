@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   include ActiveModel::Validations
   has_many :contents, :class_name => "Content", :foreign_key => "creator_id"
   has_many :courses, :class_name => "Course", :foreign_key => "creator_id"
+  has_many :purchases, :class_name => "Payment", :foreign_key => "user_id"
   validates :email, :presence => true , :uniqueness => true, :email => true
   validates :password, :presence => true
   validates :type, :presence => true
@@ -21,8 +22,8 @@ class User < ActiveRecord::Base
     "files/#{id}"
   end
   def purchased? content
-    found_payment = Payment.find_all_by_email(email).find_all { |p| p.purchaseable_type == "Content" && p.purchaseable_id == content.id  }
-    (found_payment.length > 0)
+    purchases.each { |p| return true if (p.purchaseable_id == content.id) }
+    false
   end
 
   def checkfolder
@@ -35,7 +36,7 @@ class User < ActiveRecord::Base
   end
   after_initialize :default_values
   def default_values
-    self.type = "User"
+    self.type = "Publisher"
   end
 
 end

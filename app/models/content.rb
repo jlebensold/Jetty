@@ -22,7 +22,7 @@ class Content < ActiveRecord::Base
   S3_PATH   = Rails.root.to_s + "/config/s3.yml"
   S3_BUCKET = "jettytstcontent"
   S3_WEB    = "https://s3.amazonaws.com/jettytstcontent/"
-
+  
   def do_upload val
     @do_upload = val
   end

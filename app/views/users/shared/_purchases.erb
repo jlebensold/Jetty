@@ -1,0 +1,53 @@
+<table>
+  <thead>
+    <tr>
+      <th>
+        Id
+      </th>
+      <th>
+        Date
+      </th>
+      <th>
+        Amount
+      </th>
+      <th>
+        Item
+      </th>
+      <th>
+        Publisher
+      </th>
+      <th>
+        Purchaser
+      </th>
+      <th>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+  <% list.each do |p| %>
+  <tr>
+    <td>
+      <%= p.id %>
+    </td>
+    <td>
+      <%= p.created_at %>
+    </td>
+    <td>
+      <%= p.amount %>
+    </td>
+    <td>
+      <%= p.purchaseable.title %>
+    </td>
+    <td>
+      <%= p.purchaseable.creator.email  %>
+    </td>
+    <td>
+      <%= p.user.email  %>
+    </td>
+    <td>
+      <a href="<%= url_for :controller=> "payments", :action => "delete", :id => p.id %>">delete</a>
+    </td>
+  </tr>    
+  <% end %>
+  </tbody>
+</table>

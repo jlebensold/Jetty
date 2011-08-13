@@ -1,4 +1,5 @@
 class CoursesController < BasePublisherController
+  before_filter :authenticate_user!
   def list
       render :json => {:success => true, :courses => User.find(current_user.id).courses.as_json}
   end

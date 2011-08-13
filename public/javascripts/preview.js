@@ -2,7 +2,7 @@ var basepath;
 function init(bp)
 {
     basepath = bp;
-    $(".play").live('click',play_content);
+    $("a.play").live('click',play_content);
     $(".courselist .play").live('click',set_upnext);
 
     $(".playlist").tabs();    
@@ -21,6 +21,7 @@ function init(bp)
 }
 function buy_click(e)
 {
+    e.preventDefault();
     $("#buy input[name=ci]").val($(this).attr('rel'));
 //    console.log($("#buy input[name=ci]").val());
 //    return false;
@@ -39,7 +40,7 @@ function buy_click(e)
         return;
     }
     $("#buy").submit();
-    e.preventDefault();
+
 }
 function set_upnext(evt)
 {
@@ -54,6 +55,8 @@ function set_upnext(evt)
 }
 function play_content(evt)
 {
+    evt.preventDefault();
+
     $('#courselist').find('.nowplaying').removeClass('nowplaying');
     $(this).parent().addClass('nowplaying');
     $.ajax({
@@ -78,5 +81,4 @@ function play_content(evt)
             });
         }
     });
-    evt.preventDefault();
 }

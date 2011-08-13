@@ -1,21 +1,19 @@
-<h1>Calling all Publishers!</h1>
-<h2>Sign up to Jetty</h2>
+<div class="sign_up">  
+  <h2>Join Jetty!</h2>
+  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+    <%= devise_error_messages! %>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-  <%= f.hidden_field :type, :value => "Publisher" %></p>
+    <%= f.hidden_field :type, :value => "Publisher" %></p>
 
-  <p><%= f.label :email %><br />
-  <%= f.email_field :email %></p>
+    <p><%= f.label :email %>
+    <%= f.email_field :email %></p>
+<br />
+    <p><%= f.label :password %>
+    <%= f.password_field :password %></p>
 
-  <p><%= f.label :password %><br />
-  <%= f.password_field :password %></p>
+    <p><%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %></p>
 
-  <p><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></p>
-
-  <p><%= f.submit "Sign up" %></p>
-<% end %>
-
-<%= render :partial => "devise/shared/links" %>
-
+    <p><%= f.submit "Sign up" %></p>
+  <% end %>
+</div>

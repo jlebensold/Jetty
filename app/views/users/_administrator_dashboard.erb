@@ -1,51 +1,17 @@
 Welcome Administrator 
 
 
-<H3>Payments</H3>
+<h3>Payments</h3>
+<%= render :partial => "users/shared/purchases", :locals => {:list => Payment.find(:all) }%>
 
-<table>
-  <thead>
-    <th>
-      <td>
-        Id
-      </td>
-      <td>
-        Date
-      </td>
-      <td>
-        Amount
-      </td>
-      <td>
-        Item
-      </td>
-      <td>
-        Publisher
-      </td>
-      <td>
-        Purchaser
-      </td>
-    </th>
-  </thead>
-  <% Payment.find(:all).each do |p| %>
-  <tr>
-    <td>
-      <%= p.id %>
-    </td>
-    <td>
-      <%= p.created_at %>
-    </td>
-    <td>
-      <%= p.amount %>
-    </td>
-    <td>
-      <%= p.purchaseable %>
-    </td>
-    <td>
-      <%= p.purchaseable.content.creator  %>
-    </td>
-    <td>
-      <%= p.user  %>
-    </td>
-  </tr>    
-  <% end %>
-</table>
+<%= form_for(Payment.new) do |f| %>
+  <fieldset>
+  <legend>New Purchase</legend>
+    <%= f.select :user_id, Customer.find(:all).map { |c| [c.email,c.id]}, %>
+    <%= f.select :purchaseable_id, Content.find(:all).map { |c| [c.title,c.id]}, %>
+    <%= f.label :amount %>
+    <%= f.text_field :amount %>
+    <%= f.hidden_field :purchaseable_type, :value => "Content" %>
+    <%= f.submit  %>
+  </fieldset>
+<% end  %>

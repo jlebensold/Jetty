@@ -6,6 +6,9 @@ Jetty::Application.routes.draw do
 
   resources :contents
   resources :courses
+  
+  resources :payments
+
   match "users",               :to => "user", :via =>"post"
   match "users/register",      :to => "users#register", :via =>"post"
 

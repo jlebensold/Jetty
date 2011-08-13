@@ -17,21 +17,6 @@
         <%= render :partial => "shared/contentbox", :locals => {:content => @content} %>
       </li>
     </ul>
-    <div class="references">
-      <h4>References</h4>
-        <input type="text" name="tb_addurl" value="http://" id="tb_addurl" /><a href="#" id="bt_addurl" >Add Reference (URL)</a>
-        <div class="heading">
-          <span class="left">
-            Description
-          </span>
-
-          <span class="right">
-            URL
-          </span>
-        </div>
-        <ul class="clear" id="referenceslist"></ul>
-    </div>
-
     <div class="publishtime hide">
     <h3>Publishing</h3>
       <%= f.label :publish, 'Publish on:' %>
@@ -47,6 +32,21 @@
     <div id="subcontent" href="#">Add Subcontent</div>
     <ul id="subcontentslist" class="subcontents">
     </ul>
+    <div class="references">
+      <h4>References</h4>
+        <input type="text" name="tb_addurl" value="http://" id="tb_addurl" /><a href="#" id="bt_addurl" >Add Reference (URL)</a>
+        <div class="heading">
+          <span class="left">
+            Description
+          </span>
+
+          <span class="right">
+            URL
+          </span>
+        </div>
+        <ul class="clear" id="referenceslist"></ul>
+    </div>
+
   </div>
 </div>
 <div class="clear"></div>
