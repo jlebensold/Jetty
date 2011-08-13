@@ -26,7 +26,7 @@
     <ul id="courselist" class="courselist active listbox">
     <% @course.course_items.each do |ci| %>
       <li>
-        <% if (current_user != nil && current_user.purchased?(ci.content) || ci.monetize == false) %>
+        <% if (current_user != nil && current_user.purchased?(ci.content) || ci.monetize == false || ci.ordering == 0) %>
         <a class="play" cid="<%= ci.content.id %>" href="#"><%=  ci.content.title %></a>
         <% else %>
         <span class="play">

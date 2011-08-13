@@ -42,10 +42,6 @@ function toggle_monetize(evt)
 }
 function save_course_item(evt)
 {
-
-//    console.log($(this).parent().html());
-//    console.log($(this).parent().find('.monetize_return_url').val());
-//    console.log($(this).parent().find('.monetize_return_url').attr('value'));
     doAjax('/saveitem', {
         courseitem : {
           id : $(this).parent().find('.id').val(),
@@ -106,7 +102,9 @@ function save_order(evt)
     orders.push({id : $(this).find('.course_item .id').val(),
                  order : i++})
    });
-   doAjax('/saveorder', {ordering: orders},function(resp){});
+   doAjax('/saveorder', {ordering: orders},function(resp){set_course_item_orders();render_post_content_details();});
+   
+   
 }
 function add_content_item(evt)
 {
@@ -157,15 +155,39 @@ function load_top_bar(emt)
         $.each(resp.course_items, function(i,v)
         {
             $("#contents .body ul").append(tpl_course_item(v));
+            
         });
+        set_course_item_orders();
+
+    });
+}
+function set_course_item_orders()
+{
+    $("#contents .body ul > li a[content_id]").each(function(k,i)
+    {
+        $(this).attr('data-ordering',k);
     });
 }
 function show_content_details(evt)
 {
     $(this).parent().parent().find('.active').removeClass('active');
     $(this).parent().addClass('active');
+    $("#content_details .body .note").remove();
+    
     $("#content_details .body").html($(this).parent().find('.course_item').html());
+    render_post_content_details();
+
+
     evt.preventDefault();
+}
+function render_post_content_details()
+{
+    $("#content_details .body input,#content_details .body button").removeAttr('disabled');
+    if ($("a[content_id="+$("#content_details .body input.content_id").val()+"]").attr('data-ordering') == "0")
+    {
+        $("#content_details .body").prepend('<p class="note">Your first piece of content is always free. This will entice buyers.</p>')
+        $("#content_details .body input,#content_details .body button").attr('disabled','disabled');
+    }
 }
 function show_course_details(emt)
 {

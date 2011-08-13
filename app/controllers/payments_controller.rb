@@ -11,7 +11,6 @@ class PaymentsController < BasePublisherController
     redirect_to :controller => "users", :action => "index"
   end
   def create
-    logger.info ">>>>>"
     @payment = Payment.new(params[:payment])
     @payment.save
     redirect_to :controller => "users", :action => "index"

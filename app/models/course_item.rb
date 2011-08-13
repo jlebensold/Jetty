@@ -12,6 +12,7 @@ class CourseItem < ActiveRecord::Base
       :monetize => monetize,
       :monetize_return_url => monetize_return_url,
       :amount => amount,
+      :ordering => ordering,
       :course_id => course_id,
       :content_id =>  content_id,
       :course => course.as_json,

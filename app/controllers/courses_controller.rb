@@ -42,7 +42,7 @@ class CoursesController < BasePublisherController
   def saveitem
     if (params[:courseitem][:id])
       @courseitem = CourseItem.find(params[:courseitem][:id])
-
+ 
       if @courseitem.update_attributes(params[:courseitem])
         @courseitem.save!
         return render :json => {:success => true, :courseitem => @courseitem.as_json}
