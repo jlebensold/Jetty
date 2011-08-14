@@ -69,6 +69,7 @@ function delete_course(evt)
 {
     var self = this;
     $("#content_details .body,#contents .body ul").empty();
+    $(".course_title").text("");
     doAjax('/delete', {
         course : {id : $(this).parent().find('.id').val()}
     },function(resp) {
@@ -102,7 +103,11 @@ function save_order(evt)
     orders.push({id : $(this).find('.course_item .id').val(),
                  order : i++})
    });
-   doAjax('/saveorder', {ordering: orders},function(resp){set_course_item_orders();render_post_content_details();});
+   doAjax('/saveorder', {ordering: orders},function(resp)
+   {
+            set_course_item_orders();
+            render_post_content_details();
+   });
    
    
 }
@@ -193,10 +198,13 @@ function show_course_details(emt)
 {
     $("#content_details .body").empty();
     $("#courses .body dl dt.active").each(function(){hide_course_details(this);});
+    
+    
     load_top_bar(emt);
     
     $(emt).parent().removeClass('closed').addClass('active');
     var title = $(emt).parent().find('.title').text();
+    $(".course_title").text(title);
     $(emt).parent().next().toggle();
     $(emt).parent().find('.title').replaceWith('<input class="title" old_val="'+title+'" type="text" value="'+title+'"></input>');
 }

@@ -21,10 +21,6 @@
   }
   .landscape > div
   {
-  }
-  .landscape > div
-  {
-      
       border-radius: 5px;
   }
   .landscape .panel
@@ -41,18 +37,41 @@
     {
        position: relative;
        background: #C6D880;
-
        height: 28px;
        margin: 0 0;
        padding: 0 0;
        border-radius: 5px 5px 0 0;
        border-bottom: 1px solid #555;
     }
+        .landscape .panel .top label
+        {
+            padding-right: 20px;
+        }
+        .landscape .panel .top input
+        {
+            width: 188px;
+        }
+
       .landscape .panel .top .popup
       {
-          right: 10px;
-          top: 25px;
+          right: 5px;
+          top: 38px;
+          border-radius: 5px;
+          height: auto;
+          width: 200px;
+          padding: 5px;
+          overflow: scroll-y;
       }
+        .landscape .panel .top .popup .topnotch
+        {
+            background: transparent url('../images/topnotch.png') top left no-repeat;
+            z-index: 10;
+            width: 22px;
+            height: 22px;
+            position: absolute;
+            top: -20px;
+            right: 5px;
+        }
       .landscape .panel .top .popup ul
       {
         list-style: none;

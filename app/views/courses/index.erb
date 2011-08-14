@@ -7,8 +7,9 @@
     <div class="top">
       <h3>Packages</h3>
       <button id="newcourse">New Course</button>
-      <div class="newcourse popup hide">
-        <label for="newcourse_title">Title</label>
+      <div class="newcourse popup">
+        <div class="topnotch">&nbsp;</div>
+        <label for="newcourse_title">Package Title:</label>
         <input id="newcourse_title" class="title" name="newcourse_title" type="text" ></input>
         <button id="newcourse_create">Create</button>
         <button id="newcourse_cancel" class="cancel">Cancel</button>
@@ -21,6 +22,7 @@
   </div>
   <div id="contents" class="panel" >
     <div class="top">
+      <h3 class="course_title"></h3>
       <button id="preview" class="hide">Preview</button>
       <button id="newcontent" class="hide">Add Content</button>
       <div class="newcontent popup hide">
