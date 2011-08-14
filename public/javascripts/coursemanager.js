@@ -4,9 +4,18 @@ function initCoursemanager(bp)
 {
     basepath = bp;
     loadListeners();
-    list_courses();
+    list_courses(function()
+    {
+        var params = parse_url_params();
+        if (params.id != undefined)
+            $("#courses input.id[value='"+params.id+"']").first().parent().prev().find('a').click();
+    });
+    $.when(list_contents({})).then(function(resp){
+        allcontents = resp.contents    
+    });
 
-    $.when(list_contents({})).then(function(resp){allcontents = resp.contents});
+    
+
 }
 function loadListeners()
 {
@@ -212,12 +221,15 @@ function list_contents(p)
 {
     return doAjax('/../contents/list', p);
 }
-function list_courses()
+function list_courses(callback)
 {
     doAjax('/list', {},function(resp) {
         $.each(resp.courses,function(i,v){
             $("#courses .body dl").append(tpl_course(v));
         });
+        
+        if (callback != undefined)
+            callback();
     });
 }
 function doAjax(method,req_data,callback)

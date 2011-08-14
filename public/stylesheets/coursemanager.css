@@ -60,7 +60,6 @@
           height: auto;
           width: 200px;
           padding: 5px;
-          overflow: scroll-y;
       }
         .landscape .panel .top .popup .topnotch
         {
@@ -74,7 +73,20 @@
         }
       .landscape .panel .top .popup ul
       {
+        height: 100px;
+        overflow-y: scroll;
         list-style: none;
+        padding: 0 0;
+        margin: 0 0;
+      }
+      .landscape .panel .top .popup ul li
+      {
+          padding: 5px 0;
+          margin: 0 0;
+      }
+      .landscape .panel .top .popup ul li:nth-child(even)
+      {
+          background: #F0F5FE;
       }
       .panel .top h3
       {

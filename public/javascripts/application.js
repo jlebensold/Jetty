@@ -21,3 +21,15 @@ function showFlash(msg, type)
     $("#flash").show();
     hideFlash();
 }
+
+function parse_url_params()
+{
+    var params = window.location.hash.slice(window.location.hash.indexOf('?') + 1).split('&')
+    var get_parameters = {};
+    $.each(params,function(k,i)
+    {
+        var p_split = i.split('=');
+        get_parameters[p_split[0]] = p_split[1];
+    });    
+    return get_parameters;
+}

@@ -77,9 +77,11 @@
 {
     list-style: none;
 }
-    .container li
+    .container .left li,
+    .container .right li
     {
         padding: 5px 10px;
+        min-height: 35px;
     }
     .container .left li:nth-child(odd) ,
     .container .right li:nth-child(odd) 

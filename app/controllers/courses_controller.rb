@@ -31,6 +31,12 @@ class CoursesController < BasePublisherController
       render :json => {:success => false}
     end
   end
+  def destroy
+    if (params[:id])
+      Course.find(params[:id]).delete
+    end
+    redirect_to :action => "index", :controller => "users"
+  end
   def delete
     if (params[:course][:id])
       Course.find(params[:course][:id]).delete
