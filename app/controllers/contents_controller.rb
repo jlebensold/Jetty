@@ -13,7 +13,11 @@ class ContentsController < BasePublisherController
   end
   def list
     @course_items = []
+    @course = nil
     if (params[:course])
+      
+      @course = Course.find(params[:course][:id]).as_json
+
       @contents = Content.joins(:course_items).where("course_items.course_id = ?",params[:course][:id].to_i)
       CourseItem.order("ordering").where(:course_id => params[:course][:id].to_i).each{|ci|
         @course_items.push(ci.as_json)
@@ -21,7 +25,11 @@ class ContentsController < BasePublisherController
     else
       @contents = Content.where('creator_id = ? and parent_id is null ', current_user.id)
     end
-    render :json => {:success => true, :contents => @contents.as_json, :course_items => @course_items.as_json}
+    render :json => {:success => true, 
+                     :contents => @contents.as_json, 
+                     :course_items => @course_items.as_json,
+                     :course => @course
+                     }
   end
   def subcontents
     @content = Content.find(params[:id]) if (params[:id])

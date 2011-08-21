@@ -195,8 +195,49 @@
             margin-bottom: 5px;
             float: right;
         }
-/* course details */
 
+/* course details */
+    #courses.panel .defaults
+    {
+        position: relative;
+        height: 80px;
+        border: 1px solid #888;
+        margin: 5px;
+        width: 463px;
+    }
+        #courses.panel .amount
+        {
+            width: 40px;
+            margin: 5px;
+        }
+        #courses.panel .defaults h3
+        {
+            padding: 5px 5px;
+            margin: 0 0;
+            font-size: 13px;
+        }
+        #courses.panel .defaults label
+        {
+           width: 80px;
+           text-align: left;
+           float: left;
+        }
+        #courses.panel .defaults input
+        {
+            margin: 0 5px;
+        }
+        #courses.panel .defaults .default_amount
+        {
+            width: 50px;
+            float: left;
+            clear: left;
+        }
+        #courses.panel .defaults .default_return_url
+        {
+            margin-left: 27px;
+            width: 200px;
+            float: left;
+        }
     #content_details .body
     {
         background: #EDE3C1;

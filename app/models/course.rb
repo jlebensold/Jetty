@@ -8,7 +8,12 @@ class Course < ActiveRecord::Base
     {
       :id => id,
       :title => title,
-      :description => description
+      :description => description,
+      :amount => amount,
+      :monetize => monetize,
+      :monetize_return_url => monetize_return_url,      
+      :default_return_url => default_return_url,
+      :default_amount => default_amount,
     }
   end
 

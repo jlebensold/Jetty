@@ -2,21 +2,40 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/Users/jon/Sites/jetty/app/models/content.rb</file>
-        <file>file:/Users/jon/Sites/jetty/app/models/video.rb</file>
-        <file>file:/Users/jon/Sites/jetty/app/views/home/index.html.erb</file>
-        <file>file:/Users/jon/Sites/jetty/public/javascripts/contentmanager.js</file>
-        <file>file:/Users/jon/Sites/jetty/app/controllers/contents_controller.rb</file>
-        <file>file:/Users/jon/Sites/jetty/config/deploy/staging.rb</file>
-        <file>file:/Users/jon/Sites/jetty/config/environments/staging.rb</file>
-        <file>file:/Users/jon/Sites/jetty/config/deploy.rb</file>
-        <file>file:/Users/jon/Sites/jetty/public/stylesheets/contentmanager.css</file>
-        <file>file:/Users/jon/Sites/jetty/app/views/contents/_form.html.erb</file>
-        <file>file:/Users/jon/Sites/jetty/public/javascripts/backface.js</file>
+        <file>file:/Users/jon/Sites/jetty/app/views/devise/registrations/new.erb</file>
         <file>file:/Users/jon/Sites/jetty/public/stylesheets/site.css</file>
-        <file>file:/Users/jon/Sites/jetty/public/stylesheets/coursemanager.css</file>
+        <file>file:/Users/jon/Sites/jetty/app/controllers/users_controller.rb</file>
         <file>file:/Users/jon/Sites/jetty/app/models/publisher.rb</file>
-        <file>file:/Users/jon/Sites/jetty/app/views/devise/registrations/edit.html.erb</file>
-        <file>file:/Users/jon/Sites/jetty/app/controllers/zencoder_controller.rb</file>
+        <file>file:/Users/jon/Sites/jetty/app/models/user.rb</file>
+        <file>file:/Users/jon/Sites/jetty/app/models/administrator.rb</file>
+        <file>file:/Users/jon/Sites/jetty/app/views/users/my_account.erb</file>
+        <file>file:/Users/jon/Sites/jetty/app/views/devise/sessions/new.html.erb</file>
+        <file>file:/Users/jon/Sites/jetty/app/views/contents/_form.html.erb</file>
+        <file>file:/Users/jon/Sites/jetty/app/views/layouts/application.html.erb</file>
+        <file>file:/Users/jon/Sites/jetty/app/views/layouts/publishers.html.erb</file>
+        <file>file:/Users/jon/Sites/jetty/app/views/layouts/embed.html.erb</file>
+        <file>file:/Users/jon/Sites/jetty/app/views/layouts/empty.erb</file>
+        <file>file:/Users/jon/Sites/jetty/app/controllers/purchasing_controller.rb</file>
+        <file>file:/Users/jon/Sites/jetty/app/controllers/contents_controller.rb</file>
+        <file>file:/Users/jon/Sites/jetty/public/javascripts/preview.js</file>
+        <file>file:/Users/jon/Sites/jetty/app/models/customer.rb</file>
+        <file>file:/Users/jon/Sites/jetty/app/views/users/_customer_dashboard.erb</file>
+        <file>file:/Users/jon/Sites/jetty/app/views/users/shared/_purchases.erb</file>
+        <file>file:/Users/jon/Sites/jetty/db/seeds.rb</file>
+        <file>file:/Users/jon/Sites/jetty/app/controllers/payments_controller.rb</file>
+        <file>file:/Users/jon/Sites/jetty/app/views/users/_administrator_dashboard.erb</file>
+        <file>file:/Users/jon/Sites/jetty/app/models/payment.rb</file>
+        <file>file:/Users/jon/Sites/jetty/app/models/course.rb</file>
+        <file>file:/Users/jon/Sites/jetty/app/models/course_item.rb</file>
+        <file>file:/Users/jon/Sites/jetty/app/models/content.rb</file>
+        <file>file:/Users/jon/Sites/jetty/public/stylesheets/contentmanager.css</file>
+        <file>file:/Users/jon/Sites/jetty/public/javascripts/coursemanager.js</file>
+        <file>file:/Users/jon/Sites/jetty/public/javascripts/templates.js</file>
+        <file>file:/Users/jon/Sites/jetty/app/views/courses/index.erb</file>
+        <file>file:/Users/jon/Sites/jetty/public/stylesheets/coursemanager.css</file>
+        <file>file:/Users/jon/Sites/jetty/app/views/users/_publisher_dashboard.erb</file>
+        <file>file:/Users/jon/Sites/jetty/public/stylesheets/publishers.css</file>
+        <file>file:/Users/jon/Sites/jetty/app/controllers/courses_controller.rb</file>
+        <file>file:/Users/jon/Sites/jetty/public/javascripts/application.js</file>
     </open-files>
 </project-private>

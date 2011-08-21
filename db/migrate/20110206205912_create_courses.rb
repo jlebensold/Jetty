@@ -7,6 +7,8 @@ class CreateCourses < ActiveRecord::Migration
       t.string :title
       t.string :description
       t.string :monetize_return_url
+      t.string :default_return_url
+      t.decimal :default_amount, :precision => 8, :scale => 2
       t.integer "creator_id"
       t.timestamps
     end

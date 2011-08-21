@@ -53,6 +53,8 @@ ActiveRecord::Schema.define(:version => 20110402145818) do
     t.string   "monetize_return_url"
     t.string   "title"
     t.string   "description"
+    t.string   "default_return_url"
+    t.decimal  "default_amount",      :precision => 8, :scale => 2
     t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"

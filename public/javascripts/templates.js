@@ -63,17 +63,26 @@ function tpl_content(p,suffix)
 function tpl_course(p)
 {
     p = sanitize(p);
- return '<dt class="closed">'+
+ return '<dt class="closed" data-courseid="'+p.id+'">'+
           '<a>+</a>'+
           '<a class="title">'+p.title+'</a>'+
         '</dt>'+
-        '<dd class="hide">'+
+        '<dd class="hide" data-courseid="'+p.id+'">'+
           '<label>Description</label>'+
           '<input type="hidden" class="id" value="'+p.id+'" />'+
           '<textarea class="description" cols="20" rows="4">'+p.description+'</textarea>'+
-          '<a class="delete" href="#">delete</a>'+
+          '<label>Course Price</label>'+
+          '<input type="text" class="amount" value="'+p.amount+'" />'+
+          '<div class="defaults">'+
+              '<h3>Content Defaults</h3>'+
+              '<label>Item Price</label>'+
+              '<label>Return URL</label>'+
+              '<input type="text" class="default_amount" value="'+p.default_amount+'" />'+
+              '<input type="text" class="default_return_url" value="'+p.default_return_url+'" />'+
+          '</div>'+
           '<button class="save">Save</button>'+
           '<button class="cancel">Cancel</button>'+
+          '<a class="delete" href="#">delete</a>'+
           '<div class="clear" />'+
         '</dd>';
 }

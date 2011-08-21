@@ -4,27 +4,22 @@ function initCoursemanager(bp)
 {
     basepath = bp;
     loadListeners();
-    list_courses(function()
-    {
+    list_courses(function(){
         var params = parse_url_params();
         if (params.id != undefined)
             $("#courses input.id[value='"+params.id+"']").first().parent().prev().find('a').click();
     });
-    $.when(list_contents({})).then(function(resp){
-        allcontents = resp.contents    
-    });
-
     
-
+    $.when(list_contents({})).then(function(resp){allcontents = resp.contents});
 }
 function loadListeners()
 {
-    $("#newcourse,#newcontent").click(function(evt){ $("."+$(this).get(0).id).toggle(); evt.preventDefault(); });
+    $("#newcourse,#newcontent").click(function(evt){$("."+$(this).get(0).id).toggle();evt.preventDefault();});
     $("#preview").click(function(evt) {
         var id = $("#courses .active").next().find(".id").val();
         location.href = "/p/"+id;
     });
-    $(".top .cancel").click(function(evt){ $(this).parent().toggle();evt.preventDefault(); });
+    $(".top .cancel").click(function(evt){$(this).parent().toggle();evt.preventDefault();});
 
 // courses
     $("#newcourse_create").click(create_course);
@@ -45,12 +40,19 @@ function loadListeners()
 function toggle_monetize(evt)
 {
     if ($(this).attr('checked'))
+    {
         $(this).parent().parent().find('.monetizetoggle').removeAttr('disabled');
+        var course_em = $("dd[data-courseid="+$("dt[data-courseid].active").data("courseid")+"]");
+        
+        $(this).parent().parent().find(".amount").val(course_em.find(".default_amount").val());
+        $(this).parent().parent().find(".monetize_return_url").val(course_em.find(".default_return_url").val());
+    }
     else
         $(this).parent().parent().find('.monetizetoggle').val('').attr('disabled','disabled');
 }
 function save_course_item(evt)
 {
+    showFlash("one moment...","notice");
     doAjax('/saveitem', {
         courseitem : {
           id : $(this).parent().find('.id').val(),
@@ -60,6 +62,8 @@ function save_course_item(evt)
           }
     },function(resp)
     {
+        showFlash("Item saved","notice");
+
         var target = $("#contents .body ul li a[content_id="+resp.courseitem.content_id+"]");
         target.parent().replaceWith(tpl_course_item(resp.courseitem)).addClass('active');
         $("#contents .body ul li a[content_id="+resp.courseitem.content_id+"]").parent().addClass('active');
@@ -71,7 +75,7 @@ function delete_course_item(evt)
     var content_id = $(this).parent().find('.content_id').val();
     $("#content_details .body").empty();
     $('#contents .body ul li a[content_id='+content_id+']').parent().remove();
-    doAjax('/deleteitem', {courseitem : {id : id} });
+    doAjax('/deleteitem', {courseitem : {id : id}});
     evt.preventDefault();
 }
 function delete_course(evt)
@@ -87,16 +91,7 @@ function delete_course(evt)
     });
     evt.preventDefault();
 }
-function save_course_changes(evt)
-{
-    doAjax('/save', {
-        course : {
-          id : $(this).parent().find('.id').val(),
-          description : $(this).parent().find('.description').val(),
-          title : $(this).parent().prev().find('.title').val()
-          }
-    });
-}
+
 function create_course(evt)
 {
     $("#content_details .body,#contents .body ul").empty();
@@ -109,13 +104,13 @@ function save_order(evt)
    var orders = [];
    i = 0;
    $("#contents .body ul li").each(function(){
-    orders.push({id : $(this).find('.course_item .id').val(),
-                 order : i++})
+        orders.push({id : $(this).find('.course_item .id').val(),
+                     order : i++});
    });
    doAjax('/saveorder', {ordering: orders},function(resp)
    {
-            set_course_item_orders();
-            render_post_content_details();
+        set_course_item_orders();
+        render_post_content_details();
    });
    
    
@@ -124,17 +119,18 @@ function add_content_item(evt)
 {
    $(this).parent().remove();
    doAjax('/addcontent', {
-            course : {
-              id : $("#courses dl dt.active").next().find('.id').val()
-              },
-            content : {
-              id : $(this).attr('content_id')
-            },
-            order : $("#contents .body ul li").length
-        },function(resp) 
-        {   
-            $("#contents .body ul").append(tpl_course_item(resp.course_item));
-        });
+        course : {
+          id : $("#courses dl dt.active").next().find('.id').val()
+          },
+        content : {
+          id : $(this).attr('content_id')
+        },
+        order : $("#contents .body ul li").length
+    },function(resp) 
+    {   
+        $("#contents .body ul").append(tpl_course_item(resp.course_item));
+        set_course_item_orders();
+    });
     evt.preventDefault();
 }
 function hide_course_details(emt)
@@ -190,17 +186,17 @@ function show_content_details(evt)
     
     $("#content_details .body").html($(this).parent().find('.course_item').html());
     render_post_content_details();
-
-
     evt.preventDefault();
 }
 function render_post_content_details()
 {
+    console.log($("#content_details .body input.content_id"));
     $("#content_details .body input,#content_details .body button").removeAttr('disabled');
     if ($("a[content_id="+$("#content_details .body input.content_id").val()+"]").attr('data-ordering') == "0")
     {
         $("#content_details .body").prepend('<p class="note">Your first piece of content is always free. This will entice buyers.</p>')
         $("#content_details .body input,#content_details .body button").attr('disabled','disabled');
+        $("#content_details .body input,#content_details .body button, #content_details .body label").hide();
     }
 }
 function show_course_details(emt)
@@ -223,13 +219,10 @@ function list_contents(p)
 }
 function list_courses(callback)
 {
-    doAjax('/list', {},function(resp) {
-        $.each(resp.courses,function(i,v){
-            $("#courses .body dl").append(tpl_course(v));
-        });
-        
-        if (callback != undefined)
-            callback();
+    doAjax('/list', {},function(resp) 
+    {
+        $.each(resp.courses,function(i,v){$("#courses .body dl").append(tpl_course(v));});
+        if (callback != undefined) callback();
     });
 }
 function doAjax(method,req_data,callback)
@@ -238,7 +231,6 @@ function doAjax(method,req_data,callback)
             name : $('meta[name=csrf-param]').attr('content'),
             value : $('meta[name=csrf-token]').attr('content')
         }
-
     $.each(req_data, function(i , n) {data[i] = n;});
     return $.ajax({
         url: basepath + method,
@@ -250,11 +242,16 @@ function doAjax(method,req_data,callback)
 }
 function save_course(emt)
 {
-    doAjax('/save', {
-            course : {
-              id : $(emt).find('.id').val(),
-              description : $(emt).find('.description').val(),
-              title : $(emt).find('.title').val()
-              }
-        },function(resp) {$("#courses .body dl").append(tpl_course(resp.course));});
+    data = {};
+    $.each($(emt).find("input,textarea"),function(k,v){data[$(v).attr('class')] = $(v).val();});
+    showFlash("one moment...","notice");
+    doAjax('/save', {course : data},function(resp) {
+        showFlash("course saved","notice");
+        if($("[data-courseid="+resp.course.id+"]").length == 0)
+            $("#courses .body dl").append(tpl_course(resp.course));
+    });
+}
+function save_course_changes(evt)
+{
+    return save_course($(this).parent());
 }
