@@ -125,9 +125,9 @@ function reprocess_content(evt)
 }
 function add_subcontent(evt)
 {
+    evt.preventDefault();
     $("#referenceslist").append(tpl_reference_title($("#tb_addurl").val(),"",""));
     save();
-    evt.preventDefault();
 }
 function delete_subcontent(evt)
 {
@@ -202,7 +202,7 @@ function render_references(refs)
 function getSubcontent()
 {
     var subc = [];
-    $("#referenceslist li").each(function()
+    $("#referenceslist > li").each(function()
     {
         subc.push({
              meta: $(this).find('span').text(),
@@ -317,7 +317,7 @@ function tpl_uploader(txt)
 }
 function tpl_reference_title(url,id,title)
 {
-    if (url.length == 0) return "";
+ //   if (url.length == 0) return "";
 
     if (title == null || title.length == 0)
         title = '';

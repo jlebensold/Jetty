@@ -12,7 +12,7 @@ Jetty::Application.routes.draw do
   match "users",               :to => "user", :via =>"post"
   match "users/register",      :to => "users#register", :via =>"post"
 
-  match "zencoder/:id/:label", :to => "zencoder#index", :via =>"post"
+  match "zencoder/:id/:label", :to => "zencoder#index"
   
   match "p/:id",      :to => "p#preview", :via =>"get"
 

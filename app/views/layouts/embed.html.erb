@@ -19,8 +19,8 @@
   <div class="container">
     <div class="loginstatus">
     <% unless user_signed_in? -%>
-    <p><%= link_to 'Join Jetty!', new_user_registration_path %></p>
-    <p><%= link_to 'Login', new_user_session_path %></p>
+    <p><%= link_to 'welcome, guest', new_user_registration_path %> | <%= link_to 'Login', new_user_session_path %>
+    </p>
     <% end -%>
     <% if user_signed_in? -%>
       Welcome, <%=  current_user.email %> | 

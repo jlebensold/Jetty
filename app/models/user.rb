@@ -21,8 +21,18 @@ class User < ActiveRecord::Base
   def files_folder
     "files/#{id}"
   end
+  def playable? course_item
+    if current_user.purchased?(course_item.content) 
+      return true 
+    end
+
+    if (self.id == course_item.content.creator_id)
+      return true
+    end
+    false
+  end
   def purchased? content
-    purchases.each { |p| return true if (p.purchaseable_id == content.id) }
+    purchases.each { |p| return true if (p.purchaseable_id == content.id  || content.creator_id.eql?(self.id)) }
     false
   end
 

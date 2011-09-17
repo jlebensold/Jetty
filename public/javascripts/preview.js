@@ -3,8 +3,6 @@ function init(bp)
 {
     basepath = bp;
     $("a.play").live('click',play_content);
-    $(".courselist .play").live('click',set_upnext);
-
     $(".playlist").tabs();    
     $(".buy").click(buy_click);
     $(".courselist .play").first().click();
@@ -42,23 +40,15 @@ function buy_click(e)
     $("#buy").submit();
 
 }
-function set_upnext(evt)
-{
-    var next = $(this).parents('li').next();
-    if (next.length == 0) 
-        $(".upnext").text('');
-    else
-        $(".upnext").text('Next: ' + next.find('.play').text().split('$')[0]);
-    
-
-    //evt.preventDefault();
-}
 function play_content(evt)
 {
     evt.preventDefault();
-
     $('#courselist').find('.nowplaying').removeClass('nowplaying');
+    $('#courselist').find('.medium_gradient').removeClass('medium_gradient');
+    $('#courselist').find('.hard_gradient').removeClass('hard_gradient');
     $(this).parent().addClass('nowplaying');
+    $(this).parent().addClass('medium_gradient');
+    $(this).parent().find('.soft_gradient').addClass('hard_gradient');
     $.ajax({
         url: basepath + '/../contents/show/'+$(this).attr('cid'),
         type: 'GET',
@@ -69,15 +59,18 @@ function play_content(evt)
             $(".player").html(resp.content.contentboxhtml);
             $(".title").text(resp.content.title);
             $(".tagline").text(resp.content.tagline);
-            $(".player *").css({"width": "500px","height":"400px"});
+            $(".player *").css({"width": "675px","height":"380px"});
             $(".ipad").attr('href',resp.content.ipad);
             $(".iphone").attr('href',resp.content.iphone);
-            $("ul.referencelist").empty();
+            $("ul#referencelist,ul#morelist").empty();
             $.each(resp.references,function(i,v){
-                $("ul#referencelist").append('<li>'+v.html+'</li>');
+                $("ul#referencelist").append('<li class="link">'+v.html+'</li>');
             });
             $.each(resp.subcontents,function(i,v){
-                $("ul#morelist").append('<li>'+v.contentboxhtml+'</li>');
+                var src = v.src;
+                if (v.type == "Image")
+                    src = v.large;                
+                $("ul#morelist").append('<li class="'+v.type+'"><a href="'+src+'">'+v.title+'</a></li>');
             });
         }
     });

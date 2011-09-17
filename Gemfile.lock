@@ -67,7 +67,7 @@ GEM
       ruby_parser (~> 2.0.4)
       sexp_processor (~> 3.0.3)
     colored (1.2)
-    daemons (1.0.10)
+    daemons (1.1.4)
     delayed_job (2.1.4)
       activesupport (~> 3.0)
       daemons
@@ -161,7 +161,7 @@ GEM
       activesupport (= 3.0.3)
       rake (>= 0.8.7)
       thor (~> 0.14.4)
-    rake (0.8.7)
+    rake (0.9.2)
     rcov (0.9.9)
     reek (1.2.8)
       ruby2ruby (~> 1.2)
@@ -232,6 +232,7 @@ DEPENDENCIES
   paperclip (~> 2.3)
   paypal_adaptive!
   rails (= 3.0.3)
+  rake (= 0.9.2)
   rspec-core (>= 2.6)
   rspec-rails (>= 2.6.0)
   shoulda-matchers

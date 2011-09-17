@@ -1,38 +1,53 @@
 <%= javascript_include_tag 'preview', 'templates','swfobject/swfobject'%>
-<%= stylesheet_link_tag "preview" %>
+<%= stylesheet_link_tag "preview","video-js" %>
 <div class="mainsec">
   <h1 class="title"></h1>
-  <p class="tagline"></p>
   <div class="player">
   </div>
-  <ul class="options">
-    <li>
-      <a rel="#downloadchild" class="ddl" href="">Download <span style="margin: 0 0; padding: 0 0; font-size: 19px;">▾</span> </a>
+  <div class="left">
+      <p class="tagline"></p>
+
+  </div>
+  <div class="right">
+    <h3>Download</h3>
       <ul id="downloadchild" class="child">
         <li><a class="ipad"   href="">iPad</a></li>
         <li><a class="iphone" href="">iPhone</a></li>
       </ul>
-    </li>
-  </ul>
+    
+    <h3>Resources</h3>
+    <ul id="morelist" class="morelist listbox">
+
+    </ul>
+    <ul id="referencelist" class="referencelist listbox active">
+    </ul>
+  </div>
 </div>
 <div class="sidesec">
   <div class="box">
     <h3>
       <%= @course.title %>
     </h3>
+    <p class="buycourse">
+      <%= @course.course_items.count %> Videos <button id="bt_buycourse" class="light_gradient buycourse">Buy series: $<%= @course.amount %> </button>
+    </p>
     <p class="description">
       <%= @course.description %>
     </p>
+
     <ul id="courselist" class="courselist active listbox">
     <% @course.course_items.each do |ci| %>
       <li>
-        <% if (current_user != nil && current_user.purchased?(ci.content) || ci.monetize == false || ci.ordering == 0) %>
-        <a class="play" cid="<%= ci.content.id %>" href="#"><%=  ci.content.title %></a>
+        <% if (ci.monetize == false || ci.ordering == 0 || (current_user != nil && current_user.playable?(ci))) %>
+        <a class="play" cid="<%= ci.content.id %>" href="#">
+          <p><%=  ci.content.title %></p>
+          <span class="soft_gradient playbutton"><span class="icon">›</span></span>
+        </a>
         <% else %>
         <span class="play">
           <a href="#" rel="<%= ci.id %>" class="buy <%= (current_user == nil) ? 'popup_login' : '' %>">
-            <%=  ci.content.title %>
-            <span class="amount">$<%= ci.amount %></span>
+            <p><%=  ci.content.title %></p>
+            <button class="light_gradient amount">Buy: $<%= ci.amount %></button>
           </a>
         </span>
         <% end %>
@@ -40,27 +55,11 @@
       </li>
     <% end %>
     </ul>
-    <a href="#" class="upnext"></a>
     <form id="buy" action="<%= url_for :action => 'checkout' , :controller => 'purchasing' %>" method="post">
       <input type="hidden" name="ci" value="" />
       <input type="hidden" name="ret" value="<%= request.url %>" />
     </form>
   </div>
-  <div class="playlist">
-    <ul class="tablist">
-      <li><a href="#referencelist" class="referencelist">References</a></li>
-      <li><a href="#morelist" class="morelist">More...</a></li>
-    </ul>
-    <ul id="referencelist" class="referencelist listbox active">
-      <% @course.course_items.first.content.references.each do |r| %>
-      <li><%=  r.html.html_safe %></li>
-      <% end %>
-    </ul>
-    <ul id="morelist" class="morelist listbox">
-
-    </ul>
-  </div>
-
 
 </div>
 <%= render :partial => "shared/purchasebox", :locals => {:content => {}} %>

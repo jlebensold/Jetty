@@ -72,7 +72,7 @@ class ContentsController < BasePublisherController
         unless (params[:subcontent].is_a? String)
           sub_ids = params[:subcontent].collect {|k,item| item[:id].to_i}
           ref_ids = @content.children.collect { |i| i.id.to_i }
-
+          logger.info(ref_ids)
           #filter out the missing references in the submission:
           ref_ids.keep_if {|rid| sub_ids.select{|sid| sid == rid}.count == 0 }
           ref_ids.each { |filter_id| @content.children.find(filter_id).delete }

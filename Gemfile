@@ -6,7 +6,7 @@ gem "thin"
 #gem 'daemons' , '1.0.10'
 gem 'rails', '3.0.3'
 gem 'mysql'
-
+gem 'rake', '0.9.2'
 # Integrations:
 gem 'aws-s3'
 gem 'zencoder'

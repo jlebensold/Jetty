@@ -54,4 +54,14 @@ class Image < Content
   def html
     
   end
+  def as_json(options = {})
+    if (!options)
+      options = {}
+    end
+    options[:small] = S3_WEB + small
+    options[:large] = S3_WEB + large
+    options[:thumb] = S3_WEB + thumb
+    super.as_json()
+  end
+
 end
