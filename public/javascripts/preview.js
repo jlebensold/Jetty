@@ -16,16 +16,22 @@ function init(bp)
         e.preventDefault();
         $("#buy").submit();
     });
+    $(".close").click(function(ev)
+    {
+        $(this).parents('.popup').hide();
+        ev.preventDefault();
+    });
 }
 function buy_click(e)
 {
     e.preventDefault();
-    $("#buy input[name=ci]").val($(this).attr('rel'));
-//    console.log($("#buy input[name=ci]").val());
-//    return false;
+    var cid = $(this).attr('rel');
+    $("#buy input[name=ci]").val(cid);
+    //console.log($(this).attr('rel'));
     if ($(this).hasClass('popup_login'))
     {
-        $(".popup").dialog();
+        $("#purchase_title").text($("#courselist li[data-cid="+cid+"] .title").text());
+     
         var self = $(this);
         $(".popup").show();
         $(".done").click(function(e)

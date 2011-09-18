@@ -5,7 +5,10 @@ class CourseItem < ActiveRecord::Base
   validates :course, :presence => true
   validates :amount, :if => lambda { monetize }, :presence => true
   validates_inclusion_of :amount, :in => [0,nil], :if => lambda { !monetize }
-
+  def is_free?
+    return true if ordering == 0
+    return monetize == false
+  end
   def as_json
     {
       :id => id,

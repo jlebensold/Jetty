@@ -228,16 +228,3 @@ div.field, div.actions {
     margin: 10px;
     padding: 10px;
 }
-
-/* purchasing */
-    .popup
-    {
-        position: absolute;
-        width: 300px;
-        height: 200px;
-        top: 20%;
-        margin: 0 auto;
-        border: 1px solid #CACACA;
-        background: #FFF;
-    }
-    

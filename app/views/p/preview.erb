@@ -37,16 +37,16 @@
 
     <ul id="courselist" class="courselist active listbox">
     <% @course.course_items.each do |ci| %>
-      <li>
-        <% if (ci.monetize == false || ci.ordering == 0 || (current_user != nil && current_user.playable?(ci))) %>
+      <li data-cid="<%=ci.id%>">
+        <% if (ci.is_free? || (current_user != nil && current_user.playable?(ci))) %>
         <a class="play" cid="<%= ci.content.id %>" href="#">
-          <p><%=  ci.content.title %></p>
+          <p class="title"><%=  ci.content.title %></p>
           <span class="soft_gradient playbutton"><span class="icon">›</span></span>
         </a>
         <% else %>
         <span class="play">
           <a href="#" rel="<%= ci.id %>" class="buy <%= (current_user == nil) ? 'popup_login' : '' %>">
-            <p><%=  ci.content.title %></p>
+            <p class="title"><%=  ci.content.title %></p>
             <button class="light_gradient amount">Buy: $<%= ci.amount %></button>
           </a>
         </span>

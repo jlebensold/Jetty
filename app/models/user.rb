@@ -22,13 +22,8 @@ class User < ActiveRecord::Base
     "files/#{id}"
   end
   def playable? course_item
-    if current_user.purchased?(course_item.content) 
-      return true 
-    end
-
-    if (self.id == course_item.content.creator_id)
-      return true
-    end
+    return true if self.purchased?(course_item.content)
+    return true if self.id == course_item.content.creator_id
     false
   end
   def purchased? content

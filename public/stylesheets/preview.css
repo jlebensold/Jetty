@@ -236,6 +236,104 @@
     width: 675px;
     background: #000;
 }
+/* popup */
+.popup
+{
+    position: absolute;
+    top: 20%;
+    margin: 0 auto;
+    background: #FFF;
+    width: 600px;
+    top: 100px;
+    padding-bottom: 20px;
+    left: 200px;
+    border-radius: 5px;
+    border: 5px solid #9F9F9F;
+}
+    .step1
+    {
+        position: relative;
+    }
+        .popup .close
+        {
+            position: absolute;
+            display: block;
+            background: #CACACA;
+            color: #FFF;
+            width: 18px;
+            padding:2px;
+            text-align: center;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 15px;
+        }
+        .popup .close:hover
+        {
+            background: #999;
+        }
+        .popup h2
+        {
+            position: absolute;
+            top: 16px;
+            left: 50px;
+            margin: 0 0;
+        }
+        .step1 > p
+        {
+            position: absolute;
+
+            margin-top: 40px;
+            margin-left: 52px;
+        }
+        .step1 .register,
+        .step1 .login
+        {
+            position: relative;
+            margin-top:60px;
+            width: 40%;
+            float: left;
+        }
+        .step1 .login
+        {
+            margin-left: 20px;
+        }
+        .step1 .register
+        {
+            width: 40%;
+            margin-left: 50px;            
+        }
+        #frmlogin
+        {
+            border-right: 3px solid #CCC;
+        }
+        .step1 .register p
+        {
+            padding-bottom: 10px;
+        }
+        .step1 form label
+        {
+            font-weight: bold;
+            font-size: 12px;
+            padding-left: 2px;
+        }
+        .step1 form input[type=text],
+        .step1 form input[type=password]
+        {
+            margin-bottom:15px;
+            font-size: 15px;
+        }
+        .step1 form button
+        {
+            width: 150px;
+            padding: 10px 0px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 13px;
+            color: #333;
+            border: 1px solid #CACACA;
+            margin-left: 2px;
+        }
 /* gradients */
 .light_gradient
 {

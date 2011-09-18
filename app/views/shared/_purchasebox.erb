@@ -1,24 +1,23 @@
 <%= javascript_include_tag 'purchasebox'%>
 <div class="popup hide">
   <div class="payment">
+  <h2>Purchase “<span id="purchase_title"></span>”</h2>
 <% if current_user.nil? %>
     <div class="step1">
-      <ul id="step1_opts">
-        <li><a href="#login">Login</a></li>
-        <li><a href="#register">Register</a></li>
-      </ul>
-      <div id="login" class="login hide" >
-        <h3>Login</h3>
+      <p>Grab the next episode from your favourite publisher!</p>
+      <div id="login" class="login" >
+        <h3>Log In</h3>
         <form id="frmlogin" method="post" action="">
           <label for="email">Email:</label>
           <input type="text" name="email" id="email" />
           <label for="password">Password:</label>
           <input type="password" name="password" id="password" />
-          <input type="submit" value="login" />
+          <button type="submit" class="light_gradient">Log in</button>
         </form>
       </div>
       <div id="register" class="register">
-        <h3>Register</h3>
+        <h3>New user? Sign up here</h3>
+        <p>Keep track of your purchases by providing us with something to remember you by.</p>
         <form id="frmregister" method="post" action="">
           <label for="email">Email:</label>
           <input type="text" name="email" id="email" />
@@ -26,7 +25,7 @@
           <input type="password" name="password" id="password" />
           <label for="password_confirmation">Confirmation</label>
           <input type="password" name="password_confirmation" id="password_confirmation" />
-          <input type="submit" value="register" />
+          <button type="submit" class="light_gradient"  >Register</button>
         </form>
       </div>
     </div>
@@ -34,7 +33,8 @@
 <% else %>
     <div class="step2">
 <% if !current_user.purchased? Content.last  %>
-      <a href="<%= url_for :controller => 'purchasing', :action => 'checkout' %>">Buy Content</a>
+      Hi, <%= current_user.email %>! Ready to purchase this?
+      <a href="<%= url_for :controller => 'purchasing', :action => 'checkout' %>">Buy Now</a>
 <% else %>
      purchased!
 <% end %>
@@ -42,6 +42,7 @@
 <% end %>
   </div>
   <div class="buybutton hide"><a href="<%= url_for :controller => 'purchasing', :action => 'checkout' %>"><img src="/images/pp-buynow.jpg" /></a></div>
+  <a class="close" href="#">X</a>
 
 </div>
 
