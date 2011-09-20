@@ -1,4 +1,7 @@
 var basepath;
+
+
+
 function init(bp)
 {
     basepath = bp;
@@ -28,10 +31,9 @@ function buy_click(e)
     var cid = $(this).attr('rel');
     $("#buy input[name=ci]").val(cid);
     //console.log($(this).attr('rel'));
+    $("#purchase_title").text($("#courselist li[data-cid="+cid+"] .title").text());
     if ($(this).hasClass('popup_login'))
     {
-        $("#purchase_title").text($("#courselist li[data-cid="+cid+"] .title").text());
-     
         var self = $(this);
         $(".popup").show();
         $(".done").click(function(e)
@@ -43,7 +45,11 @@ function buy_click(e)
         e.preventDefault();
         return;
     }
-    $("#buy").submit();
+    else
+    {
+        $(".popup").show();
+    }
+//    $("#buy").submit();
 
 }
 function play_content(evt)

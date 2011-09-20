@@ -39,6 +39,14 @@ Rcov::RcovTask.new do |t|
 end
 =end
 
-
+module ::Jetty
+  class Application
+    include Rake::DSL
+  end
+end
+ 
+module ::RakeFileUtils
+  extend Rake::FileUtilsExt
+end
 
 Jetty::Application.load_tasks

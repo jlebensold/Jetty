@@ -32,12 +32,13 @@
 
 <% else %>
     <div class="step2">
-<% if !current_user.purchased? Content.last  %>
-      Hi, <%= current_user.email %>! Ready to purchase this?
-      <a href="<%= url_for :controller => 'purchasing', :action => 'checkout' %>">Buy Now</a>
-<% else %>
-     purchased!
-<% end %>
+    <% if !current_user.purchased? Content.last  %>
+        <p>Hi, <%= current_user.email %>! Ready to purchase this?</p>
+          <!-- <a href="<%= url_for :controller => 'purchasing', :action => 'checkout' %>">Buy Now</a> -->
+          <div class="buybutton"><a href="<%= url_for :controller => 'purchasing', :action => 'checkout' %>"><img src="/images/pp-buynow.jpg" /></a></div>
+    <% else %>
+          <h2>purchased!</h2>
+    <% end %>
     </div>
 <% end %>
   </div>
@@ -49,5 +50,5 @@
 
 <script type="text/javascript">
 var regurl = '<%= url_for :controller => 'users', :action => 'register' %>';
-var loginurl = '<%= url_for :controller => 'users', :action => 'sign_in' %>';
+var loginurl = '<%= url_for :controller => 'users', :action => 'login' %>';
 </script>

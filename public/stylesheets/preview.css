@@ -245,6 +245,7 @@
     background: #FFF;
     width: 600px;
     top: 100px;
+    min-height: 200px;
     padding-bottom: 20px;
     left: 200px;
     border-radius: 5px;
@@ -279,7 +280,8 @@
             left: 50px;
             margin: 0 0;
         }
-        .step1 > p
+        .step1 > p,
+        .step2 > p
         {
             position: absolute;
 
@@ -333,6 +335,11 @@
             color: #333;
             border: 1px solid #CACACA;
             margin-left: 2px;
+        }
+        .buybutton
+        {
+            position: absolute;
+            margin: 80px 40px 40px 40px;
         }
 /* gradients */
 .light_gradient
