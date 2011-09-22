@@ -1,12 +1,47 @@
 var basepath;
+// models
+window.CourseItem = Backbone.Model.extend({
+    
+});
+window.Content = Backbone.Model.extend({
+    defaults: function() {
+      return {
+        isActive:  false,
+        isPlayable: false,
+        order: 0
+      };
+    },
+    initialize: function() {
+    }
+
+});
+// collections
+window.Playlist = Backbone.Collection.extend({
+    
+});
+
+// views
+window.ContentView = Backbone.View.extend({
+    
+});
+// router
+
+$(function()
+{
+    window.playlist = new Playlist;
+    
+});
+
+
 
 
 
 function init(bp)
 {
     basepath = bp;
+    
     $("a.play").live('click',play_content);
-    $(".playlist").tabs();    
+//    $(".playlist").tabs();    
     $(".buy").click(buy_click);
     $(".courselist .play").first().click();
     $(".ddl").click(function(e)

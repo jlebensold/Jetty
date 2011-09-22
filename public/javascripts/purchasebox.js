@@ -1,6 +1,5 @@
 $(function()
 {
-  $(".step1").tabs();
   $("#frmlogin").submit(function(evt)
   {
     $.ajax(ajax_params(loginurl,this));
