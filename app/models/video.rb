@@ -21,7 +21,7 @@ class Video < Content
     Content::S3_WEB.to_s + bucketpath + "/ipad.mp4"
   end
   def src_url
-    S3_WEB + poster
+    poster
   end
   def check_status
 #    if (self.status == Content::STATUS_CONVERSION_IN_PROGRESS.to_s)
@@ -92,10 +92,20 @@ class Video < Content
     if (!options)
       options = {}
     end
+    options[:visible] = true
     options[:ipad] = ipad
     options[:iphone] = iphone
     options[:ogv] = ogv
     super.as_json()
+  end
+  def as_jsonpreview(purchased_or_free)
+    if (purchased_or_free)
+      opts = self.as_json()
+    else
+      opts = super.as_json()
+    end
+    opts[:visible] = purchased_or_free
+    opts
   end
 
 

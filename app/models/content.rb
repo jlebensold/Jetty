@@ -137,5 +137,8 @@ class Content < ActiveRecord::Base
       :src => src_url
     })
   end
+  def as_jsonpreview(user)
+    as_json()
+  end
 
 end

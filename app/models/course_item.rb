@@ -9,6 +9,20 @@ class CourseItem < ActiveRecord::Base
     return true if ordering == 0
     return monetize == false
   end
+  def as_jsonpreview(user)   
+    {
+      :id => id,
+      :monetize => monetize,
+      :monetize_return_url => monetize_return_url,
+      :amount => amount,
+      :ordering => ordering,
+      :course_id => course_id,
+      :content_id =>  content_id,
+      :course => course.as_json,
+      :content => content.as_jsonpreview(purchased_or_free(user))
+    }
+
+  end
   def as_json
     {
       :id => id,
@@ -21,5 +35,8 @@ class CourseItem < ActiveRecord::Base
       :course => course.as_json,
       :content => content.as_json
     }
+  end
+  def purchased_or_free(user)
+      (self.is_free? || (user != nil && user.playable?(self)))
   end
 end
