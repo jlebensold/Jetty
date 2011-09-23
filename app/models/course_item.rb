@@ -19,7 +19,8 @@ class CourseItem < ActiveRecord::Base
       :course_id => course_id,
       :content_id =>  content_id,
       :course => course.as_json,
-      :content => content.as_jsonpreview(purchased_or_free(user))
+      :content => content.as_jsonpreview(purchased_or_free(user)),
+      :available => purchased_or_free(user)
     }
 
   end

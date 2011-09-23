@@ -1,6 +1,5 @@
-<%= javascript_include_tag 'preview', 'templates','swfobject/swfobject'%>
+<%= javascript_include_tag 'preview',"preview-models","preview-views", 'templates','swfobject/swfobject'%>
 <%= stylesheet_link_tag "preview","video-js" %>
-
 <div class="mainsec" id="contentview">
 </div>
 <div class="sidesec">
@@ -14,67 +13,21 @@
     <p class="description">
       <%= @course.description %>
     </p>
-
-    <ul id="courselist" class="courselist active listbox">
-
-    </ul>
-    <form id="buy" action="<%= url_for :action => 'checkout' , :controller => 'purchasing' %>" method="post">
-      <input type="hidden" name="ci" value="" />
-      <input type="hidden" name="ret" value="<%= request.url %>" />
-    </form>
+    <ul id="courselist" class="courselist active listbox"></ul>
   </div>
 </div>
-
-<%= render :partial => "shared/purchasebox", :locals => {:content => {}} %>
-
+<div class="popup hide" id="purchasebox"></div>
 <% content_for(:javascript) do %>
-<script type="text/template" id="courseitem-template">
-    <%% if (content.visible) {%>
-      <a class="play" cid="<%%= content.id %>" href="#">
-        <p class="title"><%%= content.title %></p>
-        <span class="soft_gradient playbutton"><span class="icon">›</span></span>
-      </a>
-    <%% } else { %>
-      <span class="play">
-        <a href="#" rel="<%%= id %>" class="buy popup_login">
-          <p class="title"><%%=  content.title %></p>
-          <button class="light_gradient amount">Buy: $<%%= amount %></button>
-        </a>
-      </span>
-    <%% } %>
-    <p><%%= content.tagline%></p>
-</script>
-<script type="text/template" id="contentview-template">
-<h1 class="title"><%%= content.title%></h1>
-<div class="player">
-  <%%= contentboxhtml%>
-</div>
-<div class="left">
-    <p class="tagline"><%%= content.tagline%></p>
-</div>
-<div class="right">
-  <h3>Download</h3>
-    <ul id="downloadchild" class="child">
-      <li><a class="ipad"   href="<%%= content.ipad%>">iPad</a></li>
-      <li><a class="iphone" href="<%%= content.iphone%>">iPhone</a></li>
-    </ul>
-
-  <h3>Resources</h3>
-  <ul id="morelist" class="morelist listbox">
-    <%% $.each(subcontents,function(i,s){ %>
-    <li class="<%%= s.type %>"><a href="<%%= (s.type == "Image") ? s.large : s.src %>"><%%= s.title %></a></li>
-    <%% }); %>
-  </ul>
-  <ul id="referencelist" class="referencelist listbox active">
-    <%% $.each(references,function(i,r){ %>
-    <li class="link"><%%= r.html %></li>
-    <%% }); %>
-  </ul>
-</script>
+<script type="text/template" id="buynow-template"><%= render :partial => "shared/buynow" %></script>
+<script type="text/template" id="purchasebox-template"><%= render :partial => "shared/purchasebox" %></script>
+<script type="text/template" id="courseitem-template"><%= render :partial => "shared/preview_courseitem" %></script>
+<script type="text/template" id="contentview-template"><%= render :partial => "shared/preview_contentview" %></script>
 <script type="text/javascript">
     $(function() { 
-      var courseItemListView = new CourseItemListView({basepath: "<%= courses_path %>/../p/",courseid:<%= @course.id %>});
+      window.regurl = '<%= url_for :controller => 'users', :action => 'register' %>';
+      window.loginurl = '<%= url_for :controller => 'users', :action => 'login' %>';
+      window.courseItemListView = new CourseItemListView({basepath: "<%= courses_path %>/../p/",courseid:<%= @course.id %>});
+      
     });
-
 </script>
 <% end %>

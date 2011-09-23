@@ -1,54 +1,36 @@
-<%= javascript_include_tag 'purchasebox'%>
-<div class="popup hide">
-  <div class="payment">
-  <h2>Purchase “<span id="purchase_title"></span>”</h2>
-<% if current_user.nil? %>
-    <div class="step1">
-      <p>Grab the next episode from your favourite publisher!</p>
-      <div id="login" class="login" >
-        <h3>Log In</h3>
-        <form id="frmlogin" method="post" action="">
-          <label for="email">Email:</label>
-          <input type="text" name="email" id="email" />
-          <label for="password">Password:</label>
-          <input type="password" name="password" id="password" />
-          <button type="submit" class="light_gradient">Log in</button>
-        </form>
-      </div>
-      <div id="register" class="register">
-        <h3>New user? Sign up here</h3>
-        <p>Keep track of your purchases by providing us with something to remember you by.</p>
-        <form id="frmregister" method="post" action="">
-          <label for="email">Email:</label>
-          <input type="text" name="email" id="email" />
-          <label for="password">Password:</label>
-          <input type="password" name="password" id="password" />
-          <label for="password_confirmation">Confirmation</label>
-          <input type="password" name="password_confirmation" id="password_confirmation" />
-          <button type="submit" class="light_gradient"  >Register</button>
-        </form>
-      </div>
+<div class="payment">
+<h2>Purchase “<%%= content.title %>”</h2>
+  <div class="step1">
+    <p>Grab the next episode from your favourite publisher!</p>
+    <div id="login" class="login" >
+      <h3>Log In</h3>
+      <form id="frmlogin" method="post" action="">
+        <label for="email">Email:</label>
+        <input type="text" name="email" id="email" />
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" />
+        <button type="submit" class="light_gradient">Log in</button>
+      </form>
     </div>
-
-<% else %>
-    <div class="step2">
-    <% if !current_user.purchased? Content.last  %>
-        <p>Hi, <%= current_user.email %>! Ready to purchase this?</p>
-          <!-- <a href="<%= url_for :controller => 'purchasing', :action => 'checkout' %>">Buy Now</a> -->
-          <div class="buybutton"><a href="<%= url_for :controller => 'purchasing', :action => 'checkout' %>"><img src="/images/pp-buynow.jpg" /></a></div>
-    <% else %>
-          <h2>purchased!</h2>
-    <% end %>
+    <div id="register" class="register">
+      <h3>New user? Sign up here</h3>
+      <p>Keep track of your purchases by providing us with something to remember you by.</p>
+      <form id="frmregister" method="post" action="">
+        <label for="email">Email:</label>
+        <input type="text" name="email" id="email" />
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" />
+        <label for="password_confirmation">Confirmation</label>
+        <input type="password" name="password_confirmation" id="password_confirmation" />
+        <button type="submit" class="light_gradient"  >Register</button>
+      </form>
     </div>
-<% end %>
   </div>
-  <div class="buybutton hide"><a href="<%= url_for :controller => 'purchasing', :action => 'checkout' %>"><img src="/images/pp-buynow.jpg" /></a></div>
-  <a class="close" href="#">X</a>
+  <div class="step2 hide">
+    <div class="buybutton">
+       <a href="<%= url_for :controller => 'purchasing', :action => 'checkout' %>"><img src="/images/pp-buynow.jpg" /></a>
+    </div>
 
+  </div>
 </div>
-
-
-<script type="text/javascript">
-var regurl = '<%= url_for :controller => 'users', :action => 'register' %>';
-var loginurl = '<%= url_for :controller => 'users', :action => 'login' %>';
-</script>
+<a class="close" href="#">X</a>

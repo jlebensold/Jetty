@@ -1,0 +1,26 @@
+<h1 class="title"><%%= content.title%></h1>
+<div class="player">
+  <%%= contentboxhtml%>
+</div>
+<div class="left">
+    <p class="tagline"><%%= content.tagline%></p>
+</div>
+<div class="right">
+  <h3>Download</h3>
+  <ul id="downloadchild" class="child">
+    <li><a class="ipad"   href="<%%= content.ipad%>">iPad</a></li>
+    <li><a class="iphone" href="<%%= content.iphone%>">iPhone</a></li>
+  </ul>
+
+  <h3>Resources</h3>
+  <ul id="morelist" class="morelist listbox">
+    <%% $.each(subcontents,function(i,s){ %>
+    <li class="<%%= s.type %>"><a href="<%%= (s.type == "Image") ? s.large : s.src %>"><%%= s.title %></a></li>
+    <%% }); %>
+  </ul>
+  <ul id="referencelist" class="referencelist listbox active">
+    <%% $.each(references,function(i,r){ %>
+    <li class="link"><%%= r.html %></li>
+    <%% }); %>
+  </ul>
+</div>

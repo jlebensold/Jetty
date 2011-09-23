@@ -1,0 +1,14 @@
+<%% if (content.visible) {%>
+  <a class="play" cid="<%%= content.id %>" href="#">
+    <p class="title"><%%= content.title %></p>
+    <span class="soft_gradient playbutton"><span class="icon">›</span></span>
+  </a>
+<%% } else { %>
+  <span class="play">
+    <a href="#" rel="<%%= id %>" class="buy popup_login">
+      <p class="title"><%%=  content.title %></p>
+      <button class="light_gradient amount">Buy: $<%%= amount %></button>
+    </a>
+  </span>
+<%% } %>
+<p><%%= content.tagline%></p>
