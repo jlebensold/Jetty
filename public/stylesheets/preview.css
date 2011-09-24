@@ -9,11 +9,12 @@
 .sidesec
 {
     width: 260px;
+    float: right;
     margin-left: 10px;
 }
 .mainsec
 {
-    width: 680px;
+    width: 690px;
 }
     .title
     {

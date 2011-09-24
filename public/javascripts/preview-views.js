@@ -44,6 +44,7 @@ window.PurchaseView = Backbone.View.extend({
        console.log(obj);
        $(this.el).html(this.template(obj));
        $("#purchasebox").show();
+       $(this.el).css("left",($(window).width() - $(this.el).width()) / 2);
        return this;
    }
 });
@@ -93,6 +94,7 @@ window.LoginBoxView = Backbone.View.extend({
    },
    render: function(){
        $(this.el).show();
+       $(this.el).css("left",($(window).width() - $(this.el).width()) / 2);
        var text = this.options.toptext;
        if (!this.options.toptext)
            text = "Sign Up or Log In!";   
