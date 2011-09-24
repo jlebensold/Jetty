@@ -1,4 +1,4 @@
-<%= javascript_include_tag 'preview',"preview-models","preview-views", 'templates','swfobject/swfobject'%>
+<%= javascript_include_tag "preview-models","preview-views",'swfobject/swfobject'%>
 <%= stylesheet_link_tag "preview","video-js" %>
 <div class="mainsec" id="contentview">
 </div>
@@ -19,9 +19,7 @@
 <div class="popup hide" id="purchasebox"></div>
 <div class="popup hide" id="loginbox"></div> 
 <% content_for(:javascript) do %>
-<script type="text/template" id="loginbox-template"><%= render :partial => "shared/loginbox" %>
-<a class="close" href="#">X</a>
-</script>
+<script type="text/template" id="loginbox-template"><%= render :partial => "shared/loginbox" %></script>
 <script type="text/template" id="loginstatus-template"><%= render :partial => "shared/loginstatus" %></script>
 <script type="text/template" id="buynow-template"><%= render :partial => "shared/buynow" %></script>
 <script type="text/template" id="purchasebox-template"><%= render :partial => "shared/purchasebox" %></script>
@@ -30,6 +28,7 @@
 <script type="text/javascript">
     $(function() { 
       window.app = new AppView({basepath: "<%= courses_path %>/../p/",
+                                purchasepath: "<%= url_for :controller => 'purchasing', :action => 'checkout' %>",
                                 courseid:<%= @course.id %>,
                                 regurl: '<%= url_for :controller => 'users', :action => 'register' %>',
                                 loginurl: '<%= url_for :controller => 'users', :action => 'login' %>',

@@ -1,14 +1,9 @@
+<h2><%%= toptext %></h2>
 <div class="payment">
-<h2>Purchase “<%%= content.title %>”</h2>
-  <div class="step1">
-    <p>Grab the next episode from your favourite publisher!</p>
-    <%= render :partial => "shared/loginbox" %>
-  </div>
-  <div class="step2 hide">
-    <div class="buybutton">
-       <a href="<%= url_for :controller => 'purchasing', :action => 'checkout' %>"><img src="/images/pp-buynow.jpg" /></a>
-    </div>
-
-  </div>
+    <div class="buybutton"><a href="#"><img src="/images/pp-buynow.jpg" /></a></div>
   <a class="close" href="#">X</a>
+  <form class="buy" action="<%%= path%>" method="post">
+    <input type="hidden" name="ci" value="<%%= purchaseable.id %>" ></input>
+    <input type="hidden" name="purchaseableType" value="<%%= purchaseType %>" ></input>
+  </form>
 </div>

@@ -4,13 +4,17 @@ window.Purchase = Backbone.Model.extend({
         return {
             purchaseable: null,
             user: null,
-            purchaseType: ''
+            purchaseType: '',
+            toptext: '',
+            path: ''
         };
     },
     initialize : function(){
-        console.log(this);
+    },
+    refresh : function(){
+        this.set({toptext:"Purchase “"+this.get('purchaseable').get('content').title+"”" });        
     }
-    
+   
 });
 window.User = Backbone.Model.extend({
     defaults: function(){

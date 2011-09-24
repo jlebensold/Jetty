@@ -19,18 +19,26 @@ window.PurchaseView = Backbone.View.extend({
    template: _.template($('#purchasebox-template').html()),
    el: "#purchasebox",
    events: {
-       "click a": "close"
+       "click a": "close",
+       "click .buybutton":"buy"
    },
    initialize: function() {
-      _.bindAll(this,"render","close");
+      _.bindAll(this,"render","close","buy");
       this.model.bind('change', this.render, this);
+   },
+   buy : function(e){
+       e.preventDefault();
+       $(this.el).find("form").submit();
    },
    close: function(e) {
         $(this.el).hide();
         e.preventDefault();
    },
    render: function() {
-       $(this.el).html(this.template(this.model.toJSON()));
+       this.model.refresh();
+       var obj = this.model.toJSON();
+       console.log(obj);
+       $(this.el).html(this.template(obj));
        $("#purchasebox").show();
        return this;
    }
@@ -61,6 +69,9 @@ window.LoginBoxView = Backbone.View.extend({
       for(var k in resp) {
           if(resp[k].email) this.model.signIn(resp[k].email);
       }
+      
+      if (this.options.success != undefined)
+          this.options.success();
       return null;
    },
    login: function(e) {
@@ -77,7 +88,10 @@ window.LoginBoxView = Backbone.View.extend({
    },
    render: function(){
        $(this.el).show();
-       $(this.el).html(this.template({}));     
+       var text = this.options.toptext;
+       if (!this.options.toptext)
+           text = "Sign Up or Log In!";   
+       $(this.el).html(this.template({toptext: text}));     
    }
 });
 window.LoginStatusView = Backbone.View.extend({
@@ -112,7 +126,7 @@ window.CourseItemView = Backbone.View.extend({
        "click a": "select"
    },
    initialize: function() {
-      _.bindAll(this,"render","modelchanged","rendercontent","renderpurchasebox");
+      _.bindAll(this,"render","modelchanged","rendercontent","renderpurchasebox","loginSuccessful");
       this.model.bind('change', this.render, this);
       this.model.bind('change:selected',this.modelchanged,this)
    },
@@ -122,18 +136,37 @@ window.CourseItemView = Backbone.View.extend({
        if (this.model.get("available"))
            this.model.collection.select(this.model);
        else
-           this.model.buy();
+       {
+           if (window.app.options.user.get('signedIn'))
+           {
+               this.renderpurchasebox();    
+           }
+           else
+           {
+               new LoginBoxView({model: window.app.options.user,
+                                 success:this.loginSuccessful,
+                                 toptext:"Purchase “"+this.model.get('content').title+"”"}).render();
+           }
+       }
    },
    modelchanged: function() {
        // code smell?
        if (this.model.get("available"))
            this.rendercontent();
-       else
-           this.renderpurchasebox();
+
    },
-   renderpurchasebox: function() {
-     var purchase = new Purchase({purchaseable: this.model, user: window.app.options.user, purchaseType:'item'});
-     new PurchaseView({model : purchase}).render();
+   loginSuccessful: function() {
+     this.renderpurchasebox();  
+   },
+   renderpurchasebox: function() {     
+     var purchase = new Purchase({
+         purchaseable: this.model, 
+         user: window.app.options.user, 
+         purchaseType:'item',
+         path: window.app.options.purchasepath
+     });
+     purchase.refresh();
+     new PurchaseView({model:purchase}).render();
    },
    rendercontent: function() {
     var view = new ContentView({model : this.model});
