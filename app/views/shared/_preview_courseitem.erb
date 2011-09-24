@@ -1,6 +1,6 @@
 <%% if (content.visible) {%>
   <a class="play" cid="<%%= content.id %>" href="#">
-    <p class="title"><%%= content.title %></p>
+    <p class="title"><%%= content.title %> <span class="nohover">|</span> <span class="<%%= (parseFloat(amount) > 0) ? 'green' : 'red' %>"><%%= (parseFloat(amount) > 0) ? 'New' : 'Free' %></span></p>
     <span class="soft_gradient playbutton"><span class="icon">›</span></span>
   </a>
 <%% } else { %>

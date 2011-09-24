@@ -1,0 +1,11 @@
+<h3><%%= title %></h3>
+<p class="buycourse">
+  <%% console.log(courseitems); %>
+  <%%= courseitems.length %> Videos 
+  <%% if (purchased) { %>
+  <button id="bt_buycourse" class="soft_gradient buycourse purchased">Purchased!</button>
+  <%% } else { %>
+  <button id="bt_buycourse" class="light_gradient buycourse ">Buy series: $<%%= amount %></button>
+  <%% } %>
+</p>
+<p class="description"><%%= description %></p>

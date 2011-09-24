@@ -4,21 +4,14 @@
 </div>
 <div class="sidesec">
   <div class="box">
-    <h3>
-      <%= @course.title %>
-    </h3>
-    <p class="buycourse">
-      <%= @course.course_items.count %> Videos <button id="bt_buycourse" class="light_gradient buycourse">Buy series: $<%= @course.amount %> </button>
-    </p>
-    <p class="description">
-      <%= @course.description %>
-    </p>
+    <div id="coursedesc"></div>
     <ul id="courselist" class="courselist active listbox"></ul>
   </div>
 </div>
 <div class="popup hide" id="purchasebox"></div>
 <div class="popup hide" id="loginbox"></div> 
 <% content_for(:javascript) do %>
+<script type="text/template" id="coursedesc-template"><%= render :partial => "shared/coursedesc" %></script>
 <script type="text/template" id="loginbox-template"><%= render :partial => "shared/loginbox" %></script>
 <script type="text/template" id="loginstatus-template"><%= render :partial => "shared/loginstatus" %></script>
 <script type="text/template" id="buynow-template"><%= render :partial => "shared/buynow" %></script>
@@ -29,6 +22,7 @@
     $(function() { 
       window.app = new AppView({basepath: "<%= courses_path %>/../p/",
                                 purchasepath: "<%= url_for :controller => 'purchasing', :action => 'checkout' %>",
+                                course: new Course(<%= raw  @course.as_jsonpreview(current_user).to_json %>),
                                 courseid:<%= @course.id %>,
                                 regurl: '<%= url_for :controller => 'users', :action => 'register' %>',
                                 loginurl: '<%= url_for :controller => 'users', :action => 'login' %>',

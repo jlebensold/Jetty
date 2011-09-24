@@ -24,10 +24,15 @@ class User < ActiveRecord::Base
   def playable? course_item
     return true if self.purchased?(course_item.content)
     return true if self.id == course_item.content.creator_id
+    return true if self.purchased?(course_item.course)
     false
   end
   def purchased? content
-    purchases.each { |p| return true if (p.purchaseable_id == content.id  || content.creator_id.eql?(self.id)) }
+    if(content.kind_of? Course)
+      purchases.each { |p| return true if (p.purchaseable_id == content.id && p.purchaseable_type == "Course"  || content.creator_id.eql?(self.id)) }    
+    else
+      purchases.each { |p| return true if (p.purchaseable_id == content.id && p.purchaseable_type == "Content" || content.creator_id.eql?(self.id)) }    
+    end
     false
   end
 

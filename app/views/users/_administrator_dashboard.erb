@@ -8,10 +8,21 @@ Welcome Administrator
   <fieldset>
   <legend>New Purchase</legend>
     <%= f.select :user_id, Customer.find(:all).map { |c| [c.email,c.id]}, %>
-    <%= f.select :purchaseable_id, Content.find(:all).map { |c| [c.title,c.id]}, %>
+    <%= f.select :purchaseable_id, grouped_options_for_select({"Content" => Content.find(:all).map { |c| [c.title,c.id]},"Course" => Course.find(:all).map { |c| [c.title,c.id]} }) %>
     <%= f.label :amount %>
     <%= f.text_field :amount %>
     <%= f.hidden_field :purchaseable_type, :value => "Content" %>
     <%= f.submit  %>
   </fieldset>
 <% end  %>
+
+<script>
+  $(function()
+  {
+      $("#payment_purchaseable_id").change(function()
+      {
+        $("#payment_purchaseable_type").val($("#payment_purchaseable_id option:selected").parents('optgroup').attr('label'));
+      });
+  });
+  
+</script>

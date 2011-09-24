@@ -11,6 +11,10 @@ class PController < ApplicationController
       render :json => {:contentboxhtml => "<div>not permitted</div>"}
     end    
   end
+  def course
+    
+    render :json => Course.find(params[:id]).as_jsonpreview(current_user)
+  end
   def courselist
     @course = Course.find(params[:id])
     render :json => @course.course_items.map{|c| c.as_jsonpreview(current_user) }

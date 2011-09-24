@@ -12,7 +12,10 @@ window.Purchase = Backbone.Model.extend({
     initialize : function(){
     },
     refresh : function(){
-        this.set({toptext:"Purchase “"+this.get('purchaseable').get('content').title+"”" });        
+        if (this.get('purchaseType') == 'item')
+            this.set({toptext:"Purchase “"+this.get('purchaseable').get('content').title+"”" });        
+        if (this.get('purchaseType') == 'course')
+            this.set({toptext:"Purchase “"+this.get('purchaseable').get('title')+"”" });        
     }
    
 });
@@ -85,6 +88,23 @@ window.Login = Backbone.Model.extend({
     });
     return o;
   }
+});
+window.Course = Backbone.Model.extend({
+    url: function(){ 
+        return this.get('basepath') +"course/"+this.id 
+    },
+    defaults: function(){
+        return {
+            basepath: '',
+            id: -1,
+            amount: 0,
+            courseitems: {},
+            title: '',
+            description: '',
+            purchased: false
+        }
+    },
+    initialize: function(){}
 });
 window.CourseItem = Backbone.Model.extend({
     defaults: function() {

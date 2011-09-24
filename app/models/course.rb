@@ -4,6 +4,13 @@ class Course < ActiveRecord::Base
   has_many  :course_items, :foreign_key => "course_id",  :dependent => :delete_all , :order => "ordering"
   has_many :purchases, :as => :purchaseable
 
+  def as_jsonpreview(user)
+    
+    opts = as_json
+    opts[:purchased] = user != nil && user.purchased?(self)
+    opts
+  end
+  
   def as_json(options = {})
     {
       :id => id,
@@ -13,7 +20,7 @@ class Course < ActiveRecord::Base
       :monetize => monetize,
       :monetize_return_url => monetize_return_url,      
       :default_return_url => default_return_url,
-      :default_amount => default_amount,
+      :default_amount => default_amount
     }
   end
 
