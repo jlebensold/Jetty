@@ -247,7 +247,7 @@
     border-radius: 5px;
     border: 5px solid #9F9F9F;
 }
-    .step1
+    .popup > div
     {
         position: relative;
     }
@@ -276,52 +276,51 @@
             left: 50px;
             margin: 0 0;
         }
-        .step1 > p,
-        .step2 > p
+        .popup .step1 p
         {
             position: absolute;
 
             margin-top: 40px;
             margin-left: 52px;
         }
-        .step1 .register,
-        .step1 .login
+        .popup  .register,
+        .popup .login 
         {
             position: relative;
             margin-top:60px;
             width: 40%;
             float: left;
         }
-        .step1 .login
+        .popup .login
         {
             margin-left: 20px;
         }
-        .step1 .register
+        .popup .register
         {
             width: 40%;
             margin-left: 50px;            
         }
-        #frmlogin
+        .frmlogin
         {
             border-right: 3px solid #CCC;
         }
-        .step1 .register p
+        .popup .register p
         {
             padding-bottom: 10px;
         }
-        .step1 form label
+        .popup form label
         {
             font-weight: bold;
             font-size: 12px;
             padding-left: 2px;
         }
-        .step1 form input[type=text],
-        .step1 form input[type=password]
+        .popup form input[type=text],
+        .popup form input[type=password]
         {
             margin-bottom:15px;
             font-size: 15px;
         }
-        .step1 form button
+        .popup form button
         {
             width: 150px;
             padding: 10px 0px;

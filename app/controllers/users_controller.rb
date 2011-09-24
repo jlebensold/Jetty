@@ -4,7 +4,7 @@ class UsersController < BasePublisherController
     @user = Customer.new
     if @user.update_attributes(params[:user])
       sign_in(:user , @user)
-      render :json => {:status => "SUCCESS" , :success => true, :user_id => @user.id}
+      render :json => {:user => { :email => @user.email},:status => "SUCCESS" , :success => true}
     else
       render :json => {:status => "FAIL"}
     end

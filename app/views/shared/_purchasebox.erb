@@ -2,29 +2,7 @@
 <h2>Purchase “<%%= content.title %>”</h2>
   <div class="step1">
     <p>Grab the next episode from your favourite publisher!</p>
-    <div id="login" class="login" >
-      <h3>Log In</h3>
-      <form id="frmlogin" method="post" action="">
-        <label for="email">Email:</label>
-        <input type="text" name="email" id="email" />
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" />
-        <button type="submit" class="light_gradient">Log in</button>
-      </form>
-    </div>
-    <div id="register" class="register">
-      <h3>New user? Sign up here</h3>
-      <p>Keep track of your purchases by providing us with something to remember you by.</p>
-      <form id="frmregister" method="post" action="">
-        <label for="email">Email:</label>
-        <input type="text" name="email" id="email" />
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" />
-        <label for="password_confirmation">Confirmation</label>
-        <input type="password" name="password_confirmation" id="password_confirmation" />
-        <button type="submit" class="light_gradient"  >Register</button>
-      </form>
-    </div>
+    <%= render :partial => "shared/loginbox" %>
   </div>
   <div class="step2 hide">
     <div class="buybutton">
@@ -32,5 +10,5 @@
     </div>
 
   </div>
+  <a class="close" href="#">X</a>
 </div>
-<a class="close" href="#">X</a>

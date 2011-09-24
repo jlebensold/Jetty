@@ -102,7 +102,12 @@ class Video < Content
     if (purchased_or_free)
       opts = self.as_json()
     else
-      opts = super.as_json()
+      opts = self.as_json()
+      opts[:visible] = true
+      opts[:ipad] = ''
+      opts[:iphone] = ''
+      opts[:ogv] = ''
+    
     end
     opts[:visible] = purchased_or_free
     opts

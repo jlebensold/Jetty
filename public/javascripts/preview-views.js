@@ -11,7 +11,7 @@ window.ContentView = Backbone.View.extend({
       $("#contentview").html(self.template(self.model.toJSON()));
       $(".player *").css({"width": "675px","height":"380px"});
       if (this.model.get('contentboxhtml').length > 0) return this;
-      this.model.fetch({url: "/p/contentbox/"+this.model.get('id'),success: function(){} });
+      this.model.fetch({url: "/p/contentbox/"+this.model.get('id'),success: function(){}});
       return this;
    }
 });
@@ -19,50 +19,90 @@ window.PurchaseView = Backbone.View.extend({
    template: _.template($('#purchasebox-template').html()),
    el: "#purchasebox",
    events: {
-       "click a": "close",
-       "submit #frmlogin": "login",
-       "submit #frmregister": "register"
+       "click a": "close"
    },
    initialize: function() {
-      _.bindAll(this,"render","close","login","register","stepOneSuccess","ajax");
+      _.bindAll(this,"render","close");
       this.model.bind('change', this.render, this);
    },
    close: function(e) {
         $(this.el).hide();
         e.preventDefault();
    },
-   login: function(e) {
-     $.ajax(this.ajax(loginurl,$(this.el).find("#frmlogin"),this.stepOneSuccess));
-     e.preventDefault();
-   },
-   register: function(e) {
-     $.ajax(this.ajax(regurl,$(this.el).find("#frmregister"),this.stepOneSuccess));
-     e.preventDefault();
-   },
-   ajax: function(url, form,success)
-   {
-      return {
-        url: url,
-        data: {
-              remote : true,
-              utf8 : "✓",
-              user: $(form).serializeObject()
-        },
-        type      : 'POST',
-        dataType  : 'json',
-        success   : success
-      }
-   },
-   stepOneSuccess: function(e){
-      var self = this;
-      $(this.el).find(".step1").fadeOut('fast',function(){
-        $(self.el).find(".step2").fadeIn('fast');
-      });
-   },
    render: function() {
        $(this.el).html(this.template(this.model.toJSON()));
        $("#purchasebox").show();
        return this;
+   }
+});
+window.LoginBoxView = Backbone.View.extend({
+   template: _.template($("#loginbox-template").html()),
+   el: "#loginbox",
+   events: {
+       "click a": "close",
+       "submit .frmlogin":"login",
+       "submit .frmregister":"register"
+   },
+   initialize: function(){
+        _.bindAll(this,"close","render","login","register","onSuccess");
+   },
+   close: function(e) {
+        $(this.el).hide();
+        e.preventDefault();
+   },
+   errorLoginOrRegister: function()
+   {
+     alert('failed');  
+   },
+   onSuccess: function(resp) {
+      if(resp.status && resp.status == "401")
+          return this.errorLoginOrRegister();      
+      $(this.el).fadeOut();
+      for(var k in resp) {
+          if(resp[k].email) this.model.signIn(resp[k].email);
+      }
+      return null;
+   },
+   login: function(e) {
+     new Login({url:window.app.options.loginurl, 
+               form:$(this.el).find(".frmlogin"), 
+               success: this.onSuccess}).request();
+     e.preventDefault();
+   },
+   register: function(e) {
+     new Login({url:window.app.options.regurl, 
+               form:$(this.el).find(".frmregister"), 
+               success: this.onSuccess}).request();
+     e.preventDefault();
+   },
+   render: function(){
+       $(this.el).show();
+       $(this.el).html(this.template({}));     
+   }
+});
+window.LoginStatusView = Backbone.View.extend({
+   template: _.template($("#loginstatus-template").html()),
+   el: "#loginstatus",
+   events: 
+   {
+    "click .login" : "loginclicked",
+    "click .logout" : "logoutclicked"
+   //TODO: click and view list of my purchases
+   },
+   initialize: function() {
+       _.bindAll(this,"render","loginclicked","logoutclicked");
+       this.model.bind('change',this.render,this)
+   },
+   loginclicked: function(e){
+       e.preventDefault();
+       new LoginBoxView({model: this.model}).render();
+   },
+   logoutclicked: function(e){
+       this.model.logout(window.app.options.logouturl);
+       e.preventDefault();
+   },
+   render: function(){
+       $(this.el).html(this.template(this.model.toJSON()));   
    }
 });
 window.CourseItemView = Backbone.View.extend({
@@ -92,7 +132,8 @@ window.CourseItemView = Backbone.View.extend({
            this.renderpurchasebox();
    },
    renderpurchasebox: function() {
-     new PurchaseView({model : this.model}).render();
+     var purchase = new Purchase({purchaseable: this.model, user: window.app.options.user, purchaseType:'item'});
+     new PurchaseView({model : purchase}).render();
    },
    rendercontent: function() {
     var view = new ContentView({model : this.model});
@@ -119,18 +160,23 @@ window.CourseItemView = Backbone.View.extend({
 });
 window.CourseItemListView = Backbone.View.extend({
     initialize: function () {
-        _.bindAll(this,"render","contentSelected"); 
-        this.courseitems = new CourseItemList( null, { view: this });        
+        _.bindAll(this,"render","contentSelected","initCourseItems"); 
+        this.options.user.bind('change',this.initCourseItems, this);
+        this.initCourseItems();
+    },
+    initCourseItems: function(){
+        $("#courselist").empty();
+        this.courseitems = new CourseItemList( null, {view: this});        
         this.courseitems.bind('reset',this.render, this);
         this.courseitems.basepath = this.options.basepath,
         this.courseitems.courseid = this.options.courseid;
-        this.courseitems.fetch();
+        this.courseitems.fetch();        
     },
     contentSelected: function(item) {
         this.courseitems.select(item);
     },
     render: function () {
-        this.$("#courselist").empty();
+        $("#courselist").empty();
         var self = this;
         this.courseitems.each( function(model) {
             var view = new CourseItemView({model : model});
@@ -140,6 +186,17 @@ window.CourseItemListView = Backbone.View.extend({
         this.courseitems.rendered();
         return this;
     }
+});
+window.AppView = Backbone.View.extend({
+   initialize: function() {
+       this.courseitemView = new CourseItemListView({
+                                                     basepath:this.options.basepath,
+                                                     courseid:this.options.courseid,
+                                                     user: this.options.user
+                                                    });
+       this.loginstatusView = new LoginStatusView({model: this.options.user}).render();
+   }
+   
 });
 
 

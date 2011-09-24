@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
     respond_to do |format|
       format.html  { redirect_to('/') }
-      format.json  { render :json => {:status => :signed_in} }
+      format.json  { render :json => {:foo => "Bar", :status => :signed_in} }
     end
 
   end

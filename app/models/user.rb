@@ -43,5 +43,4 @@ class User < ActiveRecord::Base
   def default_values
     self.type = "Publisher"
   end
-
 end

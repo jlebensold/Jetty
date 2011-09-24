@@ -1,7 +1,87 @@
 // models
 window.Purchase = Backbone.Model.extend({
-    defaults: function(){}
-})
+    defaults: function(){
+        return {
+            purchaseable: null,
+            user: null,
+            purchaseType: ''
+        };
+    },
+    initialize : function(){
+        console.log(this);
+    }
+    
+});
+window.User = Backbone.Model.extend({
+    defaults: function(){
+        return {
+        email : "",
+        signedIn: false,
+        logouturl: "",
+        success: function(){}
+        };
+    },
+    initialize: function()
+    {
+        if(this.get('email').length > 0)
+           this.set({"signedIn":true});
+    },
+    signIn: function(email)
+    {
+        this.set({"email":email});
+        this.set({"signedIn":true});
+    },
+    logout: function()
+    {
+        this.set({"email":''});
+        this.set({"signedIn":false});
+        $.ajax({
+        url: this.get('logouturl'),
+        type      : 'GET',
+        success   : this.get('success')
+      });
+    }
+});
+
+window.Login = Backbone.Model.extend({
+    defaults:function(){return {};},
+    initialize: function(){},
+    request: function()
+    {
+        this.ajax();  
+    },
+    ajax: function(url, form,success)
+    {
+      return $.ajax({
+        url: this.get('url'),
+        data: {
+              remote : true,
+              utf8 : "✓",
+              user: this.serializeObject($(this.get('form')))
+        },
+        type      : 'POST',
+        dataType  : 'json',
+        success   : this.get('success'),
+        error     : this.get('success')
+      });
+    },
+  serializeObject : function(obj)
+  {
+    var o = {};
+    var a = obj.serializeArray();
+    $.each(a, function() {
+        if (o[this.name]) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+  }
+});
 window.CourseItem = Backbone.Model.extend({
     defaults: function() {
       return {
@@ -25,12 +105,15 @@ window.CourseItemList = Backbone.Collection.extend({
    basepath : '',
    url: function(){ return this.basepath +"courselist/"+this.courseid },
    initialize: function() {},
+   clearSelected: function() {
+       if (this.selected().length != 0) this.selected()[0].unselect();
+   },
    rendered: function() {    
-      if (this.selected().length == 0)
+      if (this.selected().length == 0 && this.models.length > 0)
           this.models[0].select();
    },
    select: function(model){
-       if (this.selected().length != 0) this.selected()[0].unselect();
+       this.clearSelected();
        model.select();
    },
    selected: function(){
