@@ -3,7 +3,7 @@ gem "dispatcher"
 gem "thin"
 #gem "rest-client"
 #gem 'mongrel', '>= 1.2.0.pre2'
-#gem 'daemons' , '1.0.10'
+gem 'daemons' , '1.0.10'
 gem 'rails', '3.0.3'
 gem 'mysql'
 gem 'rake', '0.9.2'
@@ -23,8 +23,6 @@ gem 'devise' , '1.3.4'
 
 gem 'mime-types'
 
-# deprecated:
-gem 'simple-navigation' , '3.1.1'
 
 gem "capistrano"
 
