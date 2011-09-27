@@ -121,6 +121,9 @@ window.CourseItem = Backbone.Model.extend({
     select : function(){ this.set({selected:true});},
     buy : function(){this.set({purchase:new Purchase,selected: true})}
 });
+window.Purchase = Backbone.Model.extend({
+   
+});
 // collections
 window.CourseItemList = Backbone.Collection.extend({
    model: CourseItem,
@@ -143,4 +146,9 @@ window.CourseItemList = Backbone.Collection.extend({
    selected: function(){
        return _.select(this.models, function(i){return i.get('selected') == true});
    }
+});
+window.PurchaseList = Backbone.Collection.extend({
+   model: Purchase,
+   initialize: function() {},
+   url: function() { return this.basepath + '/../../purchases';}
 });

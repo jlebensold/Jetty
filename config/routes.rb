@@ -14,6 +14,7 @@ Jetty::Application.routes.draw do
 
   match "zencoder/:id/:label", :to => "zencoder#index"
   
+  match 'purchases' , :to => "p#purchases"
   match "p/:id",      :to => "p#preview", :via =>"get"
 
   root :to => 'home#index';
@@ -37,4 +38,5 @@ Jetty::Application.routes.draw do
   end
 
   match ':controller(/:action(/:id(.:format)))'
+
 end

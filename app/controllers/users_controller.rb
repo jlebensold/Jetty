@@ -6,7 +6,7 @@ class UsersController < BasePublisherController
       sign_in(:user , @user)
       render :json => {:user => { :email => @user.email},:status => "SUCCESS" , :success => true}
     else
-      render :json => {:status => "FAIL"}
+      render :json => {:status => "FAIL", :errors => @user.errors}
     end
   end
   def show

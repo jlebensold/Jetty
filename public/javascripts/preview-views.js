@@ -41,7 +41,6 @@ window.PurchaseView = Backbone.View.extend({
    render: function() {
        this.model.refresh();
        var obj = this.model.toJSON();
-       console.log(obj);
        $(this.el).html(this.template(obj));
        $("#purchasebox").show();
        $(this.el).css("left",($(window).width() - $(this.el).width()) / 2);
@@ -64,13 +63,22 @@ window.LoginBoxView = Backbone.View.extend({
         $(this.el).hide();
         e.preventDefault();
    },
-   errorLoginOrRegister: function()
+   errorLoginOrRegister: function(resp)
    {
-     alert('failed');  
+        $(this.el).find(".errors:hidden").fadeIn();
+        var ul = $(this.el).find('.errors ul');
+        ul.empty();
+        _.each(resp.errors,function(f,e){
+            ul.append('<li>' + e + ' ' + f + '</li>');
+        });
+        //new ErrorBoxView({model: resp}).render();
    },
    onSuccess: function(resp) {
       if(resp.status && resp.status == "401")
-          return this.errorLoginOrRegister();      
+          return this.errorLoginOrRegister({errors: {" ": $.parseJSON(resp.responseText).error }});
+      if(resp.status == 'FAIL' && resp.errors.length > 0)
+          return this.errorLoginOrRegister(resp);
+      
       $(this.el).fadeOut();
       for(var k in resp) {
           if(resp[k].email) this.model.signIn(resp[k].email);
@@ -108,12 +116,16 @@ window.LoginStatusView = Backbone.View.extend({
    events: 
    {
     "click .login" : "loginclicked",
-    "click .logout" : "logoutclicked"
-   //TODO: click and view list of my purchases
+    "click .logout" : "logoutclicked",
+    "click .purchases": "mypurchases"
    },
    initialize: function() {
-       _.bindAll(this,"render","loginclicked","logoutclicked");
+       _.bindAll(this,"render","loginclicked","logoutclicked","mypurchases");
        this.model.bind('change',this.render,this)
+   },
+   mypurchases: function(e){
+       e.preventDefault();
+       new MyPurchasesBoxView();
    },
    loginclicked: function(e){
        e.preventDefault();
@@ -127,7 +139,57 @@ window.LoginStatusView = Backbone.View.extend({
        $(this.el).html(this.template(this.model.toJSON()));   
    }
 });
-
+window.MyPurchasesBoxView = Backbone.View.extend({
+   template: _.template($("#purchases-template").html()),
+   el: "#purchasesbox",
+   events: {
+       "click a": "close"
+   },
+   initialize: function()
+   {
+       _.bindAll(this,"render","close");
+       this.collection = new PurchaseList();
+       this.collection.basepath = window.app.options.basepath;
+       this.collection.fetch();
+       this.collection.bind('reset',this.render)
+   },
+   close: function(e) {
+        $(this.el).hide();
+        e.preventDefault();
+   },
+   render: function()
+   {       
+       $(this.el).show();
+       $(this.el).css("left",($(window).width() - $(this.el).width()) / 2);
+       console.log(this.collection.toJSON());
+       var set = this.collection.toJSON();
+       $(this.el).html(this.template({courses: set[0], contents: set[1] }));     
+       return this;
+   }
+  
+});
+window.ErrorBoxView = Backbone.View.extend({
+   template: _.template($("#errorbox-template").html()),
+   el: "#errorbox",
+   events: {
+       "click a": "close"
+   },
+   initialize: function()
+   {
+       _.bindAll(this,"render");
+   },
+   close: function(e) {
+        $(this.el).hide();
+        e.preventDefault();
+   },
+   render: function()
+   {       
+       $(this.el).show();
+       $(this.el).css("left",($(window).width() - $(this.el).width()) / 2);
+       $(this.el).html(this.template(this.model));     
+   }
+   
+})
 // Right-hand panel
 window.CourseDescriptionView = Backbone.View.extend({
    el: "#coursedesc",
@@ -235,7 +297,7 @@ window.CourseItemView = Backbone.View.extend({
 window.CourseItemListView = Backbone.View.extend({
     initialize: function () {
         _.bindAll(this,"render","contentSelected","initCourseItems"); 
-        this.courseView = new CourseDescriptionView({model: this.options.course });
+        
         this.options.user.bind('change',this.initCourseItems, this);
         this.initCourseItems();
     },
@@ -249,7 +311,6 @@ window.CourseItemListView = Backbone.View.extend({
         this.courseitems.fetch();
         this.options.course.set({basepath: this.options.basepath});
         this.options.course.fetch();
-        console.log(this.options.course);
     },
     contentSelected: function(item) {
         this.courseitems.select(item);
@@ -264,6 +325,7 @@ window.CourseItemListView = Backbone.View.extend({
         });
         this.courseitems.rendered();
         window.app.options.course.set({courseitems :this.courseitems});
+        this.trigger('courselistrendered');
         return this;
     }
 });
@@ -279,7 +341,8 @@ window.AppView = Backbone.View.extend({
                                                      user: this.options.user
                                                     });
        this.loginstatusView = new LoginStatusView({model: this.options.user}).render();
-       
+       this.courseView = new CourseDescriptionView({model: this.options.course });
+       this.courseitemView.bind('courselistrendered',this.courseView.render);
    }
    
 });

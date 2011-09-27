@@ -1,0 +1,16 @@
+<h2>My Purchases</h2>
+<a class="close" href="#">X</a>
+<div class="purchases center">
+  <h3>Courses</h3>
+  <ul>
+    <%% _.each(courses, function(m){  %>
+      <li><%%= m.title %></li>
+    <%% }); %>
+  </ul>
+  <h3>Individual Content</h3>
+  <ul>
+    <%% _.each(contents, function(m){  %>
+      <li><%%= m.title %></li>
+    <%% }); %>
+  </ul>
+</div>

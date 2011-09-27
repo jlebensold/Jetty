@@ -1,0 +1,9 @@
+<h2>Oops! Something Happened</h2>
+<a class="close" href="#">X</a>
+<div class="center">
+  <ul>
+    <%% _.each(errors,function(f,e){ %>
+      <li><%%= e + ' ' + f  %></li>
+    <%% }); %>
+  </ul>
+</div>

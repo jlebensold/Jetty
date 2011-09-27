@@ -10,13 +10,18 @@
   </div>
 </div>
 <div class="popup hide" id="purchasebox"></div>
+<div class="popup hide" id="purchasesbox"></div>
 <div class="popup hide" id="loginbox"></div> 
+<div class="popup hide smallpopup" id="errorbox"></div>
 <% content_for(:javascript) do %>
+<script type="text/template" id="mypurchases-template"><%= render :partial => "shared/errorbox" %></script>
+<script type="text/template" id="errorbox-template"><%= render :partial => "shared/errorbox" %></script>
 <script type="text/template" id="coursedesc-template"><%= render :partial => "shared/coursedesc" %></script>
 <script type="text/template" id="loginbox-template"><%= render :partial => "shared/loginbox" %></script>
 <script type="text/template" id="loginstatus-template"><%= render :partial => "shared/loginstatus" %></script>
 <script type="text/template" id="buynow-template"><%= render :partial => "shared/buynow" %></script>
 <script type="text/template" id="purchasebox-template"><%= render :partial => "shared/purchasebox" %></script>
+<script type="text/template" id="purchases-template"><%= render :partial => "shared/purchasesbox" %></script>
 <script type="text/template" id="courseitem-template"><%= render :partial => "shared/preview_courseitem" %></script>
 <script type="text/template" id="contentview-template"><%= render :partial => "shared/preview_contentview" %></script>
 <script type="text/javascript">

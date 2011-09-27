@@ -12,12 +12,15 @@ class PController < ApplicationController
     end    
   end
   def course
-    
     render :json => Course.find(params[:id]).as_jsonpreview(current_user)
   end
   def courselist
     @course = Course.find(params[:id])
     render :json => @course.course_items.map{|c| c.as_jsonpreview(current_user) }
+  end
+  def purchases
+    payments = Payment.where({:user_id => current_user.id}).group_by(&:purchaseable_type)
+    render :json => [payments["Course"] ,payments["Content"] ]
   end
   def preview
     @course = Course.find(params[:id])
