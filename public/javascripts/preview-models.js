@@ -13,11 +13,11 @@ window.Purchase = Backbone.Model.extend({
     },
     refresh : function(){
         if (this.get('purchaseType') == 'item')
-            this.set({toptext:"Purchase “"+this.get('purchaseable').get('content').title+"”" });        
+            this.set({toptext:"Purchase \u201c"+this.get('purchaseable').get('content').title+"\u201d" });        
         if (this.get('purchaseType') == 'course')
-            this.set({toptext:"Purchase “"+this.get('purchaseable').get('title')+"”" });        
+            this.set({toptext:"Purchase \u201c"+this.get('purchaseable').get('titl\u201d')+"\u201d" });        
     }
-   
+    
 });
 window.User = Backbone.Model.extend({
     defaults: function(){

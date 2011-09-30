@@ -206,7 +206,7 @@ window.CourseDescriptionView = Backbone.View.extend({
        else
            new LoginBoxView({model: window.app.options.user,
                              success:this.loginSuccessful,
-                             toptext:"Purchase “"+this.model.get('title')+"”"}).render();
+                             toptext:"Purchase \u201c"+this.model.get('title')+"\u201d"}).render();
 
    },
    loginSuccessful: function() {
@@ -251,7 +251,7 @@ window.CourseItemView = Backbone.View.extend({
            else
                new LoginBoxView({model: window.app.options.user,
                                  success:this.loginSuccessful,
-                                 toptext:"Purchase “"+this.model.get('content').title+"”"}).render();
+                                 toptext:"Purchase \u201c"+this.model.get('content').title+"\u201d"}).render();
        }
    },
    modelchanged: function() {
