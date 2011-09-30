@@ -59,7 +59,7 @@ class PurchasingController < ApplicationController
     logger.info "tracker: " + params["tracking_id"].to_s
     p_split = params["tracking_id"].split('|')
     @user = User.find(p_split[1].to_i)
-    if(p_split[1].to_s == "item")
+    if(p_split[2].to_s == "item")
       @purchaseable = CourseItem.find(p_split.last.to_i)
     else
       @purchaseable = Course.find(p_split.last.to_i)
