@@ -13,8 +13,10 @@ class PurchasingController < ApplicationController
       @email = @purchaseable.creator.paypal_email
       @return_url = @purchaseable.default_return_url
     end
-    @tracking_id = request.session_options[:id].reverse + "|" + current_user.id.to_s+"|#{params[:type]}|"+@purchaseable.id.to_s
-    logger.info "[]: "+ @tracking_id
+    @tracking_id = request.session_options[:id].reverse + "|" + current_user.id.to_s+"|#{params[:type]}"
+    @tracking_id.concat("|"+Time.now.to_datetime)
+    @tracking_id.concat("|"+@purchaseable.id.to_s)
+    
     pay_request = PaypalAdaptive::Request.new
     data = {
     "returnUrl" => @return_url,
