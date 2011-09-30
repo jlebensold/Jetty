@@ -8,10 +8,10 @@ Welcome Administrator
   <fieldset>
   <legend>New Purchase</legend>
     <%= f.select :user_id, Customer.find(:all).map { |c| [c.email,c.id]}, %>
-    <%= f.select :purchaseable_id, grouped_options_for_select({"Content" => Content.find(:all).map { |c| [c.title,c.id]},"Course" => Course.find(:all).map { |c| [c.title,c.id]} }) %>
+    <%= f.select :purchaseable_id, grouped_options_for_select({"CourseItem" => CourseItem.find(:all).map { |ci| [ci.content.title,ci.id]},"Course" => Course.find(:all).map { |c| [c.title,c.id]} }) %>
     <%= f.label :amount %>
     <%= f.text_field :amount %>
-    <%= f.hidden_field :purchaseable_type, :value => "Content" %>
+    <%= f.hidden_field :purchaseable_type, :value => "CourseItem" %>
     <%= f.submit  %>
   </fieldset>
 <% end  %>

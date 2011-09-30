@@ -7,7 +7,6 @@ class Content < ActiveRecord::Base
   has_many  :course_items,  :foreign_key => "content_id",  :dependent => :delete_all
   validates :creator, :presence => true
 
-  has_many :purchases, :as => :purchaseable
 
 
 #  validates :publish, :date_or_blank => true

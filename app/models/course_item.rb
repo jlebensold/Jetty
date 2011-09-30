@@ -4,6 +4,10 @@ class CourseItem < ActiveRecord::Base
   validates :content, :presence => true
   validates :course, :presence => true
   validates :amount, :if => lambda { monetize }, :presence => true
+  
+  has_many :purchases, :as => :purchaseable
+
+  
   validates_inclusion_of :amount, :in => [0,nil], :if => lambda { !monetize }
   def is_free?
     return true if ordering == 0
