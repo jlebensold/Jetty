@@ -14,7 +14,7 @@ class PurchasingController < ApplicationController
       @return_url = @purchaseable.default_return_url
     end
     @tracking_id = request.session_options[:id].reverse + "|" + current_user.id.to_s+"|#{params[:type]}"
-    @tracking_id.concat("|"+Time.now.to_datetime)
+    @tracking_id.concat("|"+Time.now.to_datetime.to_s)
     @tracking_id.concat("|"+@purchaseable.id.to_s)
     
     pay_request = PaypalAdaptive::Request.new
