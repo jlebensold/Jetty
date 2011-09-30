@@ -1,0 +1,258 @@
+* {
+    margin: 0 0;
+    padding: 0 0;
+    font-family: Helvetica, Arial, Sans-Serif;
+}
+body
+{
+    background: #EFEFEF;
+    background-image: linear-gradient(bottom, #9A9A9A 0%, #EFEFEF 100%);
+    background-image: -o-linear-gradient(bottom, #9A9A9A 0%, #EFEFEF 100%);
+    background-image: -moz-linear-gradient(bottom, #9A9A9A 0%, #EFEFEF 100%);
+    background-image: -webkit-linear-gradient(bottom, #9A9A9A 0%, #EFEFEF 100%);
+    background-image: -ms-linear-gradient(bottom, #9A9A9A 0%, #EFEFEF 100%);
+    background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0, #9A9A9A),
+      color-stop(1, #EFEFEF)
+      );
+}
+#wrap
+{
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+    p.build
+    {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        z-index: 110;
+        padding: 10px;
+        bottom: 10px;
+        font-size: 10px;
+    }
+        p.build a
+        {
+            color: #7F7F7F;
+            text-decoration: none;
+            display: block;
+            width: 10px;
+            height: 10px;
+            overflow: hidden;
+        }
+        p.build a:hover
+        {
+            width: 60px;
+            color: #FFF;
+        }
+    #wrap #logo
+    {
+        position: absolute;
+        top:45px;
+        background: transparent url('../images/logo.png') top left no-repeat;
+        width: 119px;
+        height: 57px;
+        text-indent: -999px;
+        overflow: hidden;
+    }
+    .container
+    {
+        margin: 0 auto;
+        width: 950px;
+        position: relative;
+    }
+    .home
+    {
+        height: 700px;
+        width: 950px;        
+        margin: 0 auto;
+        z-index: 110;
+    }
+        .home h2
+        {
+            font-family: 'Quattrocento Sans', sans-serif;
+            color: #494949;
+            font-size: 35px;
+            font-weight: lighter;
+            text-shadow: 0px 1px 2px #FFF;
+            margin-bottom: 20px;
+            width: 900px;
+
+        }
+        .home h3 
+        {
+            color: #838383;
+            line-height: 25px;
+            font-weight:100;
+            font-size: 20px;
+            margin-bottom: 20px;
+
+        }
+        .home p
+        {
+            font-size: 12px;
+            color: #525252;
+        }
+        .home form
+        {
+            position: relative;
+        }
+        .home input
+        {
+            position: absolute;
+            z-index: 110;
+            height: 32px;
+            width: 350px;
+            margin: 15px 0;
+            font-size: 12px;
+            color: #474747;
+            font-style: italic;
+        }
+        .home input[type=text]
+        {
+            margin-top: 17px;
+        }
+        .home input[type=submit]
+        {
+            left: 370px;
+            height: 40px;
+            width: 141px;
+            background: transparent url('../images/signup-sprite.png') 0 0 no-repeat;
+            text-indent: -999px;
+            overflow: hidden;
+            border: none;
+        }
+        .home input[type=submit]:hover
+        {
+            cursor: pointer;
+            background-position: 0 -40px;
+        }
+    #mascot
+    {
+        position: absolute;
+        top:145px;
+        left: 80px;
+        background: transparent url('../images/jettyfish.png') top left no-repeat;
+        width: 389px;
+        height: 418px;
+        text-indent: -999px;
+        overflow: hidden;   
+        z-index: 100;
+        
+    }
+
+    .contentsec
+    {
+        position: absolute;
+        left: 340px;
+        top: 160px;
+        width: 510px;
+        height: 190px;
+        
+    }
+    #footer
+    {
+        width: 100%;
+        background: #282828;
+        height: 150px;
+        bottom: 0px;
+        position: fixed;
+        z-index: 101;
+     background-image: linear-gradient(bottom, #353535 0%, #282828 100%);
+    background-image: -o-linear-gradient(bottom, #353535 0%, #282828 100%);
+    background-image: -moz-linear-gradient(bottom, #353535 0%, #282828 100%);
+    background-image: -webkit-linear-gradient(bottom, #353535 0%, #282828 100%);
+    background-image: -ms-linear-gradient(bottom, #353535 0%, #282828 100%);
+    background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0, #353535),
+      color-stop(1, #282828)
+      );   
+    }
+    #footer .mainsec
+    {
+        width: 980px;
+        margin: 0 auto;
+    }
+        #footer .sec
+        {
+            margin-top: 10px;
+            float: left;
+            color: #888888;
+            height: 30px;
+            padding: 10px 10px;
+            width: 150px;
+            
+        }
+            #footer .sec h3
+            {
+                font-family: 'Quattrocento Sans', sans-serif;
+                font-size: 14px;
+                font-weight: normal;
+                padding-bottom: 10px;
+            }
+            #footer .sec p
+            {
+                font-size: 12px;
+            }
+        #footer .sec a
+        {
+            color: #999;
+        }
+        #footer .sec.rowtwo
+        {
+            border-left: 1px solid #444;
+            padding-left: 50px;
+        }
+        #footer .nav
+        {
+            list-style: none;
+            float: right;
+        }
+            #footer .nav li
+            {
+                float: left;
+            }
+            #footer .nav li a
+            {
+                color: #7b7b7b;
+                font-size: 10px;
+                text-decoration: none;
+                display: block;
+                padding-top: 40px;
+                width: 80px;
+                border-top: 3px solid #222;
+                text-align: center;
+            }
+            #footer .nav li a:hover
+            {
+                color: #FFF;
+                border-top: 3px solid #0da4c0;
+            }
+    #arc
+    {
+        position: absolute;
+        margin: 0 auto;
+        bottom: 130px;
+        width: 100%;
+        height: 200px;
+        background: transparent url('../images/arc.png') top center no-repeat;
+    }
+    #radial
+    {
+        position: absolute;
+        bottom:80px;
+        left: -190px;
+        background: transparent url('../images/radial.png') top left no-repeat;
+        width: 879px;
+        height: 636px;
+        z-index: 99;
+    }

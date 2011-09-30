@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jetty</title>
+  <%= stylesheet_link_tag "marketing", "jquery-ui-1.8.12.custom.css" ,"http://fonts.googleapis.com/css?family=Quattrocento+Sans"%>
+  <%= javascript_include_tag "jquery-1.5.1.js" %>
+  <%= yield :javascript %>
+  <%= yield :stylesheet %>
+  <%= csrf_meta_tag %>
+
+</head>
+<body>
+  <div id="wrap">
+    <div class="container">
+    <h1 id="logo">Jetty</h1>
+      <%= yield %>
+    </div>
+    <div id="footer">
+      <div class="mainsec">
+        <div class="sec">
+          <h3>General Inquiries</h3>
+          <p>
+            +1 617 849 8501  <br/>          
+            <a href="mailto:info@getjetty.com">info@getjetty.com</a>
+          </p>
+        </div>
+        <div class="sec rowtwo">
+          <h3>Technical Support</h3>
+          <p>
+            <a href="mailto:support@getjetty.com">support@getjetty.com</a>
+          </p>
+        </div>
+        <ul class="nav">
+          <li><a href="#">About</a></li>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms of Use</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="radial"></div>
+  <div id="arc"></div>
+  <p class="build"><a href="#">∞ <%= build() %></a></p>
+</body>
+</html>

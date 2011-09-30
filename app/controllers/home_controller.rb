@@ -1,6 +1,6 @@
 class HomeController  < ApplicationController
   before_filter :authenticate_user!, :only => :token
-
+  layout "marketing"
   def token
   end
 
