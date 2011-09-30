@@ -23,7 +23,7 @@ class PController < ApplicationController
     render :json => [payments["Course"] ,payments["Content"] ]
   end
   def preview
-    headers['X-Frame-Options'] = "GOFORIT"
+    #headers['X-Frame-Options'] = "GOFORIT"
     @course = Course.find(params[:id])
   end
   private

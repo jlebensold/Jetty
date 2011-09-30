@@ -1,7 +1,10 @@
+require 'ipn_validator'
 class PurchasingController < ApplicationController
   def index
     
   end
+  
+  
   
   def checkout
     if(params[:type] == "item")
@@ -67,5 +70,4 @@ class PurchasingController < ApplicationController
     payment.purchaseable = @purchaseable.content
     payment.save!
   end
-
 end
