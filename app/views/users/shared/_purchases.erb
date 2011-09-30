@@ -39,7 +39,7 @@
       <%= (p.purchaseable.kind_of? Course) ? p.purchaseable.title : 'foo'%>
     </td>
     <td>
-      <%= p.purchaseable.creator.email  %>
+      <%= (p.purchaseable.kind_of? Course) ?  p.purchaseable.creator.email :  p.purchaseable.content.creator.email%>
     </td>
     <td>
       <%= p.user.email  %>
