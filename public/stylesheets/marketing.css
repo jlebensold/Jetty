@@ -111,13 +111,15 @@ body
             height: 32px;
             width: 350px;
             margin: 15px 0;
-            font-size: 12px;
+            font-size: 15px;
             color: #474747;
-            font-style: italic;
+            
         }
-        .home input[type=text]
+        .home input[type=email]
         {
             margin-top: 17px;
+            padding: 5px;
+            height: 23px;
         }
         .home input[type=submit]
         {
@@ -160,23 +162,23 @@ body
     #footer
     {
         width: 100%;
-        background: #282828;
+        background: #343434;
         height: 150px;
         bottom: 0px;
         position: fixed;
         z-index: 121;
-     background-image: linear-gradient(bottom, #353535 0%, #282828 100%);
-    background-image: -o-linear-gradient(bottom, #353535 0%, #282828 100%);
-    background-image: -moz-linear-gradient(bottom, #353535 0%, #282828 100%);
-    background-image: -webkit-linear-gradient(bottom, #353535 0%, #282828 100%);
-    background-image: -ms-linear-gradient(bottom, #353535 0%, #282828 100%);
-    background-image: -webkit-gradient(
-      linear,
-      left bottom,
-      left top,
-      color-stop(0, #353535),
-      color-stop(1, #282828)
-      );   
+        background-image: linear-gradient(bottom, #282828 0%, #343434 100%);
+        background-image: -o-linear-gradient(bottom, #282828 0%, #343434 100%);
+        background-image: -moz-linear-gradient(bottom, #282828 0%, #343434 100%);
+        background-image: -webkit-linear-gradient(bottom, #282828 0%, #343434 100%);
+        background-image: -ms-linear-gradient(bottom, #282828 0%, #343434 100%);
+        background-image: -webkit-gradient(
+          linear,
+          left bottom,
+          left top,
+          color-stop(0, #282828),
+          color-stop(1, #343434)
+          );   
     }
     #footer .mainsec
     {
@@ -208,10 +210,15 @@ body
         {
             color: #999;
         }
+        #footer .sec a:hover
+        {
+            color: #FFF;
+        }
         #footer .sec.rowtwo
         {
             border-left: 1px solid #444;
             padding-left: 50px;
+            height: 50px;
         }
         #footer .nav
         {
@@ -228,14 +235,14 @@ body
                 font-size: 10px;
                 text-decoration: none;
                 display: block;
-                padding-top: 43px;
+                padding-top: 23px;
                 width: 80px;
                 text-align: center;
             }
             #footer .nav li a:hover
             {
                 color: #FFF;
-                padding-top: 40px;
+                padding-top: 20px;
                 border-top: 3px solid #0da4c0;
             }
     #arc
