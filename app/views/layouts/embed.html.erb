@@ -11,6 +11,7 @@
   <%= yield :javascript %>
   <%= yield :stylesheet %>
   <%= csrf_meta_tag %>
+  <base target="_parent" />
 </head>
 <body class="embed">
   <div id="flash">
