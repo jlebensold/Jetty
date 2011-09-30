@@ -22,16 +22,16 @@ class User < ActiveRecord::Base
     "files/#{id}"
   end
   def playable? course_item
-    return true if self.purchased?(course_item.content)
+    return true if self.purchased?(course_item)
     return true if self.id == course_item.content.creator_id
     return true if self.purchased?(course_item.course)
     false
   end
-  def purchased? content
-    if(content.kind_of? Course)
-      purchases.each { |p| return true if (p.purchaseable_id == content.id && p.purchaseable_type == "Course"  || content.creator_id.eql?(self.id)) }    
+  def purchased? course_item
+    if(course_item.kind_of? Course)
+      purchases.each { |p| return true if (p.purchaseable_id == course_item.id && p.purchaseable_type == "Course"  || course_item.creator_id.eql?(self.id)) }    
     else
-      purchases.each { |p| return true if (p.purchaseable_id == content.id && p.purchaseable_type == "Content" || content.creator_id.eql?(self.id)) }    
+      purchases.each { |p| return true if (p.purchaseable_id == course_item.id && p.purchaseable_type == "CourseItem" || course_item.content.creator_id.eql?(self.id)) }    
     end
     false
   end
