@@ -36,7 +36,7 @@
       <%= p.amount %>
     </td>
     <td>
-      <%= (p.purchaseable.kind_of? Course) ? p.purchaseable.title : 'foo'%>
+      <%= (p.purchaseable.kind_of? Course) ? p.purchaseable.title : p.purchaseable.content.title%>
     </td>
     <td>
       <%= (p.purchaseable.kind_of? Course) ?  p.purchaseable.creator.email :  p.purchaseable.content.creator.email%>
