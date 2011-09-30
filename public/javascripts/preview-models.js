@@ -5,13 +5,13 @@ window.Purchase = Backbone.Model.extend({
             purchaseable: null,
             user: null,
             purchaseType: '',
-            toptext: '',
+            toptext: 'fasds',
             path: ''
         };
     },
     initialize : function(){
     },
-    refresh : function(){
+    foobar : function(){
         if (this.get('purchaseType') == 'item')
             this.set({toptext:"Purchase \u201c"+this.get('purchaseable').get('content').title+"\u201d" });        
         if (this.get('purchaseType') == 'course')

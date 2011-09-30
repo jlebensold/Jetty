@@ -39,7 +39,7 @@ window.PurchaseView = Backbone.View.extend({
         e.preventDefault();
    },
    render: function() {
-       this.model.refresh();
+//       this.model.refresh();
        var obj = this.model.toJSON();
        $(this.el).html(this.template(obj));
        $("#purchasebox").show();
@@ -219,7 +219,8 @@ window.CourseDescriptionView = Backbone.View.extend({
          purchaseType:'course',
          path: window.app.options.purchasepath
      });
-     purchase.refresh();
+     console.log(purchase.get('purchaseable'));
+//     purchase.refresh();
      new PurchaseView({model:purchase}).render();
    },
    render: function() {
@@ -268,7 +269,9 @@ window.CourseItemView = Backbone.View.extend({
          purchaseType:'item',
          path: window.app.options.purchasepath
      });
-     purchase.refresh();
+     purchase.set({toptext: 'asd'});
+     //console.log(purchase.get('purchaseable'));
+     //purchase.refresh();
      new PurchaseView({model:purchase}).render();
    },
    rendercontent: function() {
