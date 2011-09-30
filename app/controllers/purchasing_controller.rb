@@ -67,7 +67,7 @@ class PurchasingController < ApplicationController
     
     payment = Payment.new
     payment.user = @user
-    payment.purchaseable = @purchaseable.content
+    payment.purchaseable = @purchaseable
     payment.save!
   end
 end
