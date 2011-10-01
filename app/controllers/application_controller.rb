@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
     
     respond_to do |format|
       format.html  { redirect_to('/') }
-      format.json  { render :json => {:status => :signed_in} }
+      format.json  { render :json => {:status => :signed_in, :email => current_user.email.to_s, :name => current_user.name.to_s} }
     end
 
   end
@@ -23,9 +23,6 @@ class ApplicationController < ActionController::Base
 
   private  
     def current_user  
-      logger.info "session:" 
-      logger.info session
-      
       @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]  
     end
     

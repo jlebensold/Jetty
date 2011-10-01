@@ -50,4 +50,14 @@ class User < ActiveRecord::Base
   def default_values
     self.type = "Publisher"
   end
+  def as_jsonpreview(options = {})
+    if (options == nil)
+      options = {}
+    end
+    options.merge({
+      :id => id,
+      :name =>name.to_s,
+      :email => email.to_s
+    })
+  end
 end

@@ -1,5 +1,5 @@
 class UsersController < BasePublisherController
-  before_filter :authenticate_user!, :except => [:register,:logmein]
+  before_filter :authenticate_user!, :except => [:register]
   def register
     @user = Customer.new
     if @user.update_attributes(params[:user])
@@ -22,15 +22,13 @@ class UsersController < BasePublisherController
     redirect_to :action => "index"
   end
   def logout
+    logger.info 'need to kill session!'
+    session[:user_id] = nil
+    session[:service_id] = nil
+    session.delete :user_id
+    session.delete :service_id
+
     sign_out(current_user) if not current_user.nil? 
-    
-    if current_user
-      session[:user_id] = nil
-      session[:service_id] = nil
-      session.delete :user_id
-      session.delete :service_id
-    end  
-    
     redirect_to :action => "index", :controller => "home"
   end
   def index

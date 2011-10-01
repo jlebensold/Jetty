@@ -1,10 +1,12 @@
 class ServicesController < ApplicationController
   before_filter :authenticate_user!, :except => [:create, :signin, :signup, :newaccount, :failure]
-  protect_from_forgery :except => :create     
+  #protect_from_forgery :except => :create     
+  #protect_from_forgery :except => :create 
 
   # GET all authentication services assigned to the current user
   def index
     @services = current_user.services.order('provider asc')
+    redirect_to services_path
   end
 
   # POST to remove an authentication service
@@ -23,13 +25,11 @@ class ServicesController < ApplicationController
 
   # POST from signup view
   def newaccount
-    logger.info "session"
-    logger.info session
     
     if params[:commit] == "Cancel"
       session[:authhash] = nil
       session.delete :authhash
-      redirect_to root_url
+      redirect_to redirect_url
     else  # create account
       @newuser = User.find_by_email(session[:authhash][:email])
       if (@newuser == nil)
@@ -43,16 +43,22 @@ class ServicesController < ApplicationController
         # in the session his user id and the service id used for signing in is stored
         session[:user_id] = @newuser.id
         session[:service_id] = @newuser.services.first.id
-        
+        #TODO: add more publisher-related branding here
         flash[:notice] = 'Your account has been created and you have been signed in!'
-        redirect_to root_url
+        redirect_to redirect_url
       else
         flash[:error] = 'This is embarrassing! There was an error while creating your account from which we were not able to recover.'
-        redirect_to root_url
+        redirect_to redirect_url
       end  
     end
   end  
-  
+  def redirect_url
+    if (session[:publisher_origin])
+      session[:publisher_origin]
+    else
+      root_url    
+    end    
+  end
   # Sign out current user
   def signout 
     if current_user
@@ -62,20 +68,13 @@ class ServicesController < ApplicationController
       session.delete :service_id
       flash[:notice] = 'You have been signed out!'
     end  
-    if (session[:publisher_origin])
-      redirect_to session[:publisher_origin]
-    else
-      redirect_to root_url    
-    end
-    
+    redirect_to redirect_url    
   end
   
   # callback: success
   # This handles signing in and adding an authentication service to existing accounts itself
   # It renders a separate view if there is a new user to create
   def create
-    logger.info "session"
-    logger.info session
 
     # get the service parameter from the Rails router
     params[:service] ? service_route = params[:service] : service_route = 'No service recognized (invalid callback)'
@@ -123,7 +122,7 @@ class ServicesController < ApplicationController
             session[:service_id] = auth.id
           
             flash[:notice] = 'Signed in successfully via ' + @authhash[:provider].capitalize + '.'
-            redirect_to root_url
+            redirect_to redirect_url
           else
             # this is a new user; show signup; @authhash is available to the view and stored in the sesssion for creation of a new user
             session[:authhash] = @authhash
@@ -143,6 +142,6 @@ class ServicesController < ApplicationController
   # callback: failure
   def failure
     flash[:error] = 'There was an error at the remote authentication service. You have not been signed in.'
-    redirect_to root_url
+    redirect_to redirect_url
   end
 end

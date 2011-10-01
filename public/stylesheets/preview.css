@@ -449,3 +449,29 @@
 body{
     background: #FFF;
 }
+.oauth 
+{
+    border-top: 1px solid #333;
+    margin-top:10px;
+}
+.oauth p
+{
+    font-size: 12px;
+}
+.oauth ul 
+{
+    list-style: none;
+}
+    .oauth ul li
+    {
+        float: left;
+        text-indent: 10px;
+        margin: 0px 10px;
+    }
+    .oauth ul li img
+    {
+        display: block;
+        padding: 0px;
+        margin: 0px;
+        
+    }
