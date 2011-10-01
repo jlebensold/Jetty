@@ -11,11 +11,17 @@ window.Purchase = Backbone.Model.extend({
     },
     initialize : function(){
     },
-    foobar : function(){
+    baz : function()
+    {
+        
+        console.log('baz');
+        return 'aaaa';
+    },
+    refresh : function(){
         if (this.get('purchaseType') == 'item')
             this.set({toptext:"Purchase \u201c"+this.get('purchaseable').get('content').title+"\u201d" });        
         if (this.get('purchaseType') == 'course')
-            this.set({toptext:"Purchase \u201c"+this.get('purchaseable').get('titl\u201d')+"\u201d" });        
+            this.set({toptext:"Purchase \u201c"+this.get('purchaseable').get('title')+"\u201d" });        
     }
     
 });
@@ -120,9 +126,6 @@ window.CourseItem = Backbone.Model.extend({
     unselect: function(){this.set({selected:false});},
     select : function(){ this.set({selected:true});},
     buy : function(){this.set({purchase:new Purchase,selected: true})}
-});
-window.Purchase = Backbone.Model.extend({
-   
 });
 // collections
 window.CourseItemList = Backbone.Collection.extend({

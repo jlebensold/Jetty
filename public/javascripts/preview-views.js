@@ -39,7 +39,7 @@ window.PurchaseView = Backbone.View.extend({
         e.preventDefault();
    },
    render: function() {
-//       this.model.refresh();
+       this.model.refresh();
        var obj = this.model.toJSON();
        $(this.el).html(this.template(obj));
        $("#purchasebox").show();
@@ -161,7 +161,6 @@ window.MyPurchasesBoxView = Backbone.View.extend({
    {       
        $(this.el).show();
        $(this.el).css("left",($(window).width() - $(this.el).width()) / 2);
-       console.log(this.collection.toJSON());
        var set = this.collection.toJSON();
        $(this.el).html(this.template({courses: set[0], contents: set[1] }));     
        return this;
@@ -200,7 +199,6 @@ window.CourseDescriptionView = Backbone.View.extend({
      this.model.bind('change',this.render,this);
    },
    buycourse: function(){
-       console.log(window.app.options.user.get('signedIn'));
        if (window.app.options.user.get('signedIn'))
            this.renderpurchasebox();    
        else
@@ -219,8 +217,7 @@ window.CourseDescriptionView = Backbone.View.extend({
          purchaseType:'course',
          path: window.app.options.purchasepath
      });
-     console.log(purchase.get('purchaseable'));
-//     purchase.refresh();
+     purchase.refresh();
      new PurchaseView({model:purchase}).render();
    },
    render: function() {
@@ -269,9 +266,7 @@ window.CourseItemView = Backbone.View.extend({
          purchaseType:'item',
          path: window.app.options.purchasepath
      });
-     purchase.set({toptext: 'asd'});
-     //console.log(purchase.get('purchaseable'));
-     //purchase.refresh();
+     purchase.refresh();
      new PurchaseView({model:purchase}).render();
    },
    rendercontent: function() {
