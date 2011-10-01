@@ -11,12 +11,6 @@ window.Purchase = Backbone.Model.extend({
     },
     initialize : function(){
     },
-    baz : function()
-    {
-        
-        console.log('baz');
-        return 'aaaa';
-    },
     refresh : function(){
         if (this.get('purchaseType') == 'item')
             this.set({toptext:"Purchase \u201c"+this.get('purchaseable').get('content').title+"\u201d" });        
@@ -29,20 +23,40 @@ window.User = Backbone.Model.extend({
     defaults: function(){
         return {
         email : "",
+        name : "",
         signedIn: false,
         logouturl: "",
+        signInName: "",
         success: function(){}
         };
     },
+    setSignInName : function()
+    {
+        if(this.get('email').length > 0 && this.get('name').length > 0)
+            this.set({'signInName':this.get('name') + "&lt;"+this.get('email')+"&gt;"});
+        else if(this.get('email').length > 0)
+            this.set({'signInName':this.get('email')});
+        else if(this.get('name').length > 0)
+            this.set({'signInName':this.get('name')});
+        else
+            this.set({'signInName':''});
+    },
     initialize: function()
     {
-        if(this.get('email').length > 0)
+        if(this.signedIn())
            this.set({"signedIn":true});
+        this.setSignInName();
     },
-    signIn: function(email)
+    signedIn: function()
     {
-        this.set({"email":email});
+        return this.get('email').length > 0 || this.get('name').length > 0;
+    },
+    signIn: function(obj)
+    {
+        this.set({"email":obj.email});
+        this.set({"name":obj.name});
         this.set({"signedIn":true});
+        this.setSignInName();
     },
     logout: function()
     {

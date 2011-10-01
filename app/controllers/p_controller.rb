@@ -23,8 +23,8 @@ class PController < ApplicationController
     render :json => [payments["Course"] ,payments["Content"] ]
   end
   def preview
-    #headers['X-Frame-Options'] = "GOFORIT"
     @course = Course.find(params[:id])
+    session[:publisher_origin] = @course.default_return_url
   end
   private
   def get_subcontents c

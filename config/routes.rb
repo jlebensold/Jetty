@@ -2,13 +2,32 @@ Jetty::Application.routes.draw do
   # Account
   devise_for(:users,
     :path => '/users',
-    :path_names => { :sign_in => 'login', :sign_out => 'logout' })
+    :path_names => { :sign_in => 'login', :sign_out => 'logout' },
+    :controllers => { :sessions => 'sessions' })
 
+  # Omniauth pure
+  match "/signin" => "users#signin"
+  match "/signout" => "users#signout"
+
+  match '/auth/:service/callback' => 'services#create' 
+  match '/auth/failure' => 'services#failure'
+
+  resources :services, :only => [:index, :create, :destroy] do
+    collection do
+      get 'signin'
+      get 'signout'
+      get 'signup'
+      post 'newaccount'
+      get 'failure'
+    end
+  end
+
+  
   resources :contents
   resources :courses
   
   resources :payments
-
+  
   match "users",               :to => "user", :via =>"post"
   match "users/register",      :to => "users#register", :via =>"post"
 

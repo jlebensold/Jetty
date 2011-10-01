@@ -17,7 +17,9 @@ gem "grit"
 gem "paperclip", "~> 2.3"
 gem 'delayed_job'
 gem 'delayed_job_admin'
-gem 'activemerchant'
+#gem 'activemerchant'
+gem "omniauth"
+gem 'oa-openid', :require => 'omniauth/openid'
 
 gem 'devise' , '1.3.4'
 
@@ -33,6 +35,7 @@ gem "capistrano"
 # group :development, :test do
 #   gem 'webrat'
 # end
+gem "mongrel", "1.2.0.pre2", :group => :development
 
 group :development, :test do
 end

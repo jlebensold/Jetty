@@ -7,9 +7,9 @@ module ApplicationHelper
   end
   def user_for_embed
     if(user_signed_in?)
-      {:logouturl => destroy_user_session_path, :email => current_user.email}.as_json.to_json
+      {:logouturl => destroy_user_session_path, :email => current_user.email , :name => current_user.name }.as_json.to_json
     else
-      {:logouturl => destroy_user_session_path, :email => ''}.as_json.to_json
+      {:logouturl => destroy_user_session_path, :email => '', :name => '' }.as_json.to_json
     end
   end
 end

@@ -1,0 +1,5 @@
+<div class="home">  
+  <%=  link_to "sign in with yahoo", user_omniauth_authorize_path(:open_id, :openid_url => "http://yahoo.com") %>
+  <%=  link_to "sign in with google", user_omniauth_authorize_path(:open_id, :gmail) %>
+
+</div>

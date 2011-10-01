@@ -23,7 +23,7 @@ window.PurchaseView = Backbone.View.extend({
    template: _.template($('#purchasebox-template').html()),
    el: "#purchasebox",
    events: {
-       "click a": "close",
+       "click a.close": "close",
        "click .buybutton":"buy"
    },
    initialize: function() {
@@ -52,7 +52,7 @@ window.LoginBoxView = Backbone.View.extend({
    template: _.template($("#loginbox-template").html()),
    el: "#loginbox",
    events: {
-       "click a": "close",
+       "click a.close": "close",
        "submit .frmlogin":"login",
        "submit .frmregister":"register"
    },
@@ -81,7 +81,7 @@ window.LoginBoxView = Backbone.View.extend({
       
       $(this.el).fadeOut();
       for(var k in resp) {
-          if(resp[k].email) this.model.signIn(resp[k].email);
+          if(resp[k].email || resp[k].name) this.model.signIn(resp[k]);
       }
       
       if (this.options.success != undefined)
@@ -143,7 +143,7 @@ window.MyPurchasesBoxView = Backbone.View.extend({
    template: _.template($("#purchases-template").html()),
    el: "#purchasesbox",
    events: {
-       "click a": "close"
+       "click a.close": "close"
    },
    initialize: function()
    {

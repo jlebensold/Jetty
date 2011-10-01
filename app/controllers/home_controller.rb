@@ -21,5 +21,8 @@ class HomeController  < ApplicationController
   def almostdone
   end
   def index
+     logger.info "current user"
+      logger.info current_user
+
   end
 end

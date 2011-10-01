@@ -24,6 +24,13 @@
       <input type="password" name="password_confirmation" id="password_confirmation" />
       <button type="submit" class="light_gradient"  >Register</button>
     </form>
+	<p>
+	You can sign up or sign in using one of your existing accounts at Facebook, Google, Yahoo, MyOpenID and other OpenID services. Please select the provider you want to use:
+	</p>
+	<div>
+		<%= render "services/services_list" %>
+	</div>
+
   </div>
   <div class="errors hide">
     <h3>Oops! Something went wrong</h3>
